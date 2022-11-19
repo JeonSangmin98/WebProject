@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.project.mapper.ReplyMapper">
+ 	<insert id="insert">
+ 		insert into book_reply(rno, bno, reply, replyer)
+ 		values(seq_book_reply.nextval, #{bno}, #{reply}, #{replyer})
+ 	</insert>
+ 	
+ 	<select id="read" resultType="com.project.domain.ReplyVO">
+ 		select * from book_reply where rno = #{rno}
+ 	</select>
+ 	
+ 	<delete id="delete">
+ 		delete from book_reply where rno = #{rno}
+ 	</delete>
+ 	
+ 	<update id="update">
+ 		update book_reply set reply = #{reply}, 
+ 		updateDate = sysdate where rno = #{rno}
+ 	</update>
+ 	
+ 	<select id="getListWithPaging" resultType="com.project.domain.ReplyVO">
+ 		<![CDATA[
+		select bno, rno, reply, replyer, replyDate, updatedate
+		from
+		    (select /*+INDEX(book_reply idx_book_reply) */ 
+		    rownum rn, bno, rno, reply, replyer, replyDate, updatedate
+		    from book_reply
+		    where bno = #{bno} 
+		    and rno > 0
+		    and rownum <=#{cri.pageNum} * #{cri.amount})
+		where rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
+ 	</select>
+ 	<select id="getCountByBno" resultType="int">
+		select count(*) from book_reply where bno = #{bno} 
+	</select>
+ </mapper>

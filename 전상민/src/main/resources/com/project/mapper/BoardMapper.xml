@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.BoardMapper">
+	<!-- 반복되는 sql문을 만듦 -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'W'.toString()">
+							writer like '%' || #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<select id="getList" resultType="com.project.domain.BoardVO">
+		select * from book_board order by bno desc
+	</select>
+	
+	<select id="getListWithPaging" resultType="com.project.domain.BoardVO">
+		<![CDATA[
+		select bno, title, content, writer, regdate, updateDate, replyCnt, reviewCnt
+		from ( select /*+ INDEX_DESC(book_board pk_book_board) */
+					rownum rn, bno, title, content, writer, regdate, updateDate, replyCnt, reviewCnt
+					from book_board 
+					where 
+		]]>
+		<include refid="criteria"></include>	<!-- include를 이용해서 sql문 삽입 -->
+		<![CDATA[
+					rownum <=#{pageNum} * #{amount})
+		where rn > (#{pageNum}-1) * #{amount}
+		]]>
+	</select>
+	
+	<insert id="insert">
+		insert into book_board(bno,title,content,writer)
+		values(seq_book_board.nextval, #{title}, #{content}, #{writer})
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+			select seq_book_board.nextval from dual
+		</selectKey>
+		insert into book_board(bno,title,content,writer)
+		values(#{bno},#{title},#{content},#{writer})
+	</insert>
+	
+	<select id="read" resultType="com.project.domain.BoardVO">
+		select * from book_board where bno = #{bno}
+	</select>
+	
+	<delete id="delete">
+		delete from book_board where bno = #{bno}
+	</delete>
+	
+	<update id="update">
+		update book_board 
+		set title = #{title},
+		content = #{content},
+		writer = #{writer},
+		updateDate = sysdate
+		where bno = #{bno}
+	</update>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from book_board 
+		where
+		<include refid="criteria"></include>
+		bno > 0
+	</select>
+	
+	<update id="updateReplyCnt">
+		update book_board set replyCnt = replyCnt + #{amount} where bno = #{bno}
+	</update>
+	<update id="updateReviewCnt">
+		update book_board set reviewCnt = reviewCnt + #{amount} where bno = #{bno}
+	</update>
+</mapper>
