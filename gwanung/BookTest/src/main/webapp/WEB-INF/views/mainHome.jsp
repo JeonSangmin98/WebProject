@@ -16,7 +16,6 @@
 	</div>
 	
 	<div style="border: 1px solid black;">
-		<p style="text-align: center;">test</p>
 	</div>
 </body>
 </html>

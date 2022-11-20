@@ -34,8 +34,8 @@ select bno, title, content from
     where rn > 10;
     
 create table book_reply(
-    rno number(10,0), -- 댓글 번호  
-    bno number(10,0) not null,  -- 게시글  번호    
+    replyNo number(10,0), -- 댓글 번호  
+    boardNo number(10,0) not null,  -- 게시글  번호    
     reply varchar2(1000) not null,  -- 댓글 내용    
     replyer varchar2(50) not null,  -- 댓글 작성자   
     replyDate date default sysdate, -- 작성일  

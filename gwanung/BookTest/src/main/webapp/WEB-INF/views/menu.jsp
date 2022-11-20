@@ -19,7 +19,7 @@
 						<span class="visually-hidden" style="user-select: auto;">(current)</span>
 				</a></li>
 				<li class="nav-item" style="user-select: auto;"><a
-					class="nav-link" href="#" style="user-select: auto;">로그인</a></li>
+					class="nav-link" href="/member/login" style="user-select: auto;">로그인</a></li>
 				<li class="nav-item" style="user-select: auto;"><a
 					class="nav-link" href="/book/list" style="user-select: auto;">도서
 						리스트</a></li>
@@ -32,7 +32,7 @@
 				<li class="nav-item" style="user-select: auto;"><a
 					class="nav-link" href="#" style="user-select: auto;">주문/배송</a></li>
 				<li class="nav-item" style="user-select: auto;"><a
-					class="nav-link" href="#" style="user-select: auto;">자유게시판</a></li>
+					class="nav-link" href="/board/list" style="user-select: auto;">자유게시판</a></li>
 			</ul>
 			<form class="d-flex searchForm" style="user-select: auto;"
 				action="/book/searchList">
@@ -41,7 +41,6 @@
 					<option value="">--</option>
 					<option value="T">제목</option>
 					<option value="A">저자</option>
-					<option value="P">출판사</option>
 				</select> <input class="form-control me-sm-2" type="text" placeholder="도서 검색"
 					style="user-select: auto;" name="keyword">
 				<button class="btn btn-secondary my-2 my-sm-0" type="submit"
@@ -57,15 +56,14 @@
 
 	$(".searchForm button").on("click", function() {
 		if (!searchForm.find("option:selected").val()) {
-			alert("종류 입력 해라");
+			alert("종류를 선택 해 주세요!");
 			return false;
 		}
 
 		if (!searchForm.find("input[name='keyword']").val()) {
-			alert("검색 입력 해라");
+			alert("검색 내용을 입력 해 주세요!");
 			return false;
 		}
-		e.preventDefault();
 		searchForm.submit();
 	});
 </script>
