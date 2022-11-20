@@ -142,8 +142,10 @@
 	padding-right : 100px;
 }
 </style>
-<script src="/resources/js/reply.js"></script>
-<script src="/resources/js/review.js"></script>
+<script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js?ver=1"></script>
+<script type="text/javascript" src="/resources/js/bootstrap.min.js?ver=1"></script>
+<script src="/resources/js/reply.js?ver=1"></script>
+<script src="/resources/js/review.js?ver=1"></script>
 <script>
 	$(function() {
 		/* console.log(replyService);
@@ -183,6 +185,7 @@
 					replyUL.html(str);
 					showReplyPage(replyCnt);
 				});
+			
 			reviewService.getList({boardNo : boardNoValue, page : page || 1 },
 					function(reviewCnt, list) {
 						
@@ -198,7 +201,7 @@
 							return;
 						}// end if
 						for (var i = 0, len = list.length || 0; i < len; i++) {
-							str += '<li class="list-group-item" data-replyNo="' + list[i].replyNo + '">';
+							str += '<li class="list-group-item" data-replyNo="' + list[i].reviewNo + '">';
 							str += '<div>';
 							str += '<div class="card-body">';
 							str += '<strong>' + list[i].reviewer + '</strong>';
@@ -368,16 +371,16 @@
 			});
 		});//replyUL.on('click','li'
 		reviewUL.on('click','li', function(){
-			var replyNo = $(this).data('replyNo');
+			var reviewNo = $(this).data('reviewNo');
 			//console.log(replyNo);
-			reviewService.get(replyNo, function(data){
+			reviewService.get(reviewNo, function(data){
 				console.log(data);
 				modalInputReview.val(data.review);
 				modalInputReviewer.val(data.reviewer);
 				modalInputReviewDate.val(reviewService.displayTime(data.reviewDate))
 					.attr("readonly","readonly");
 				reviewModalRegisterBtn.hide();
-				review_modal.data("replyNo", data.replyNo);
+				review_modal.data("reviewNo", data.reviewNo);
 				review_modal.modal("show");
 				
 				review_modal.find('button[id != "review-modalCloseBtn"]').hide();
@@ -400,8 +403,8 @@
 		});//modalModBtn.on('click'
 		reviewModalModBtn.on('click', function(){
 			var reply = {
-					replyNo : review_modal.data('replyNo'),
-					reply : modalInputReview.val(),
+					reviewNo : review_modal.data('reviewNo'),
+					review : modalInputReview.val(),
 					boardNo : boardNoValue
 			};
 			reviewService.update(review, function(result){
@@ -420,8 +423,8 @@
 			});
 		});//modalRemoveBtn.on("click"
 		reviewModalRemoveBtn.on("click", function(){
-			var replyNo = review_modal.data("replyNo");
-			reviewService.remove(replyNo, function(result){
+			var reviewNo = review_modal.data("reviewNo");
+			reviewService.remove(reviewNo, function(result){
 				alert(result);
 				review_modal.modal("hide");
 				showList(pageNum);

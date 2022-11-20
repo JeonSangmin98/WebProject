@@ -34,7 +34,7 @@
 		where rn > (#{cri.pageNum} - 1) * #{cri.amount}
 		]]>
  	</select>
- 	<select id="getCountByBno" resultType="int">
+ 	<select id="getCountByBoardNo" resultType="int">
 		select count(*) from tbl_reply where boardNo = #{boardNo} 
 	</select>
  </mapper>

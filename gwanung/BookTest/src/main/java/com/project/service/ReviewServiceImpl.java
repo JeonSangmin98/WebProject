@@ -25,13 +25,13 @@ public class ReviewServiceImpl implements ReviewService {
 	@Transactional
 	@Override
 	public int register(ReviewVO vo) {
-		boardMapper.updateReviewCnt(vo.getBno(), 1);
+		boardMapper.updateReviewCnt(vo.getBoardNo(), 1);
 		return mapper.insert(vo);
 	}
 
 	@Override
-	public ReviewVO get(Long rno) {
-		return mapper.read(rno);
+	public ReviewVO get(Long reviewNo) {
+		return mapper.read(reviewNo);
 	}
 
 	@Override
@@ -41,22 +41,22 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Transactional
 	@Override
-	public int remove(Long rno) {
-		ReviewVO vo = mapper.read(rno);
-		boardMapper.updateReviewCnt(vo.getBno(), -1);
-		return mapper.delete(rno);
+	public int remove(Long reviewNo) {
+		ReviewVO vo = mapper.read(reviewNo);
+		boardMapper.updateReviewCnt(vo.getBoardNo(), -1);
+		return mapper.delete(reviewNo);
 	}
 
 	@Override
-	public List<ReviewVO> getList(Criteria cri, Long bno) {
-		return mapper.getListWithPaging(cri, bno);
+	public List<ReviewVO> getList(Criteria cri, Long boardNo) {
+		return mapper.getListWithPaging(cri, boardNo);
 	}
 
 	@Override
-	public ReviewDTO getListPage(Criteria cri, Long bno) {
+	public ReviewDTO getListPage(Criteria cri, Long boardNo) {
 		return new ReviewDTO(
-				mapper.getCountByBno(bno), 
-				mapper.getListWithPaging(cri, bno));
+				mapper.getCountByBoardNo(boardNo), 
+				mapper.getListWithPaging(cri, boardNo));
 	}
 
 }

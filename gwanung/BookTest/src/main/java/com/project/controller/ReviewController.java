@@ -26,7 +26,7 @@ import lombok.extern.log4j.Log4j;
 public class ReviewController {
 	@Autowired
 	ReviewService service;
-	
+
 	// 댓글 생성
 	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> create(@RequestBody ReviewVO vo) {
@@ -37,40 +37,40 @@ public class ReviewController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}// create
 
-	@GetMapping(value = "/pages/{bno}/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
+	@GetMapping(value = "/pages/{boardNo}/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<ReviewDTO> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno) {
+	public ResponseEntity<ReviewDTO> getList(@PathVariable("page") int page, @PathVariable("boardNo") Long boardNo) {
 		log.info("getList ----------");
 		Criteria cri = new Criteria(page, 10);
 		log.info(cri);
-		return new ResponseEntity<>(service.getListPage(cri, bno), HttpStatus.OK);
+		return new ResponseEntity<>(service.getListPage(cri, boardNo), HttpStatus.OK);
 	}// getList
-	
+
 //	댓글 조회
-	@GetMapping(value = "/{rno}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE,
-			MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<ReviewVO> get(@PathVariable("rno")Long rno){
-		log.info("get-rno : " + rno);
-		return new ResponseEntity<>(service.get(rno), HttpStatus.OK);
-	}//get
+	@GetMapping(value = "/{reviewNo}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<ReviewVO> get(@PathVariable("reviewNo") Long reviewNo) {
+		log.info("get-reviewNo : " + reviewNo);
+		return new ResponseEntity<>(service.get(reviewNo), HttpStatus.OK);
+	}// get
 //	댓글 삭제
-	@DeleteMapping(value = "/{rno}", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> remove(@PathVariable("rno") Long rno){
-		log.info("remove-rno : " + rno);
-		return service.remove(rno) == 1 ? new ResponseEntity<>("success",HttpStatus.OK)
+
+	@DeleteMapping(value = "/{reviewNo}", produces = { MediaType.TEXT_PLAIN_VALUE })
+	public ResponseEntity<String> remove(@PathVariable("reviewNo") Long reviewNo) {
+		log.info("remove-reviewNo : " + reviewNo);
+		return service.remove(reviewNo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}//remove
-	
+	}// remove
+
 //	댓글 수정
-	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
-			value = "/{rno}",
-			consumes = "application/json",
-			produces = { MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> modify(@RequestBody ReviewVO vo, @PathVariable("rno")Long rno){
-		log.info("modify-ron : " + rno);
+	@RequestMapping(method = { RequestMethod.PUT,
+			RequestMethod.PATCH }, value = "/{reviewNo}", consumes = "application/json", produces = {
+					MediaType.TEXT_PLAIN_VALUE })
+	public ResponseEntity<String> modify(@RequestBody ReviewVO vo, @PathVariable("reviewNo") Long reviewNo) {
+		log.info("modify-ron : " + reviewNo);
 		log.info("ReviewVO : " + vo);
-		vo.setRno(rno);
-		return service.modify(vo) == 1 ? new ResponseEntity<>("success",HttpStatus.OK)
+		vo.setReviewNo(reviewNo);
+		return service.modify(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

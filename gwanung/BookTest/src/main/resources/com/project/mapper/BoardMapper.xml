@@ -29,14 +29,12 @@
 		boardNo desc
 	</select>
 
-
-	<!-- reviewCnt 넣어주기 -->
 	<select id="getListWithPaging"
 		resultType="com.project.domain.BoardVO">
 		<![CDATA[
-		select boardNo, title, content, writer, regdate, updateDate, replyCnt
+		select boardNo, title, content, writer, regdate, updateDate, replyCnt, reviewCnt
 		from ( select /*+ INDEX_DESC(tbl_board pk_tbl_board) */
-					rownum rn, boardNo, title, content, writer, regdate, updateDate, replyCnt
+					rownum rn, boardNo, title, content, writer, regdate, updateDate, replyCnt, reviewCnt
 					from tbl_board 
 					where 
 		]]>

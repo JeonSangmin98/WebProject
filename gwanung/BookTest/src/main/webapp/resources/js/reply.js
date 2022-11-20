@@ -19,10 +19,10 @@ var replyService = (function() {
 	}// end add
 	
 	function getList(param, callback, error) {
-		var bno = param.bno;
+		var boardNo = param.boardNo;
 		var page = param.page || 1;
 		
-		$.getJSON("/replies/pages/" + bno + "/" + page + ".json",
+		$.getJSON("/replies/pages/" + boardNo + "/" + page + ".json",
 			function(data) {
 				if(callback) {
 					// callback(data); //댓글 목록만 가져오는 경우 
@@ -33,10 +33,10 @@ var replyService = (function() {
 			});
 	}// getList
 	
-	function remove(rno, callback, error) {
+	function remove(replyNo, callback, error) {
 		$.ajax({
 			type : 'delete',
-			url : '/replies/' + rno,
+			url : '/replies/' + replyNo,
 			success : function(result, status, xhr) {
 				if(callback) {
 					callback(result);
@@ -51,7 +51,7 @@ var replyService = (function() {
 	function update(reply, callback, error) {
 		$.ajax({
 			type : 'put',
-			url : '/replies/' + reply.rno,
+			url : '/replies/' + reply.replyNo,
 			data : JSON.stringify(reply),
 			contentType : 'application/json;charset=UTF-8',
 			success : function(result, status, xhr) {
@@ -65,8 +65,8 @@ var replyService = (function() {
 		});
 	}//update
 	
-	function get(rno, callback, error) {
-		$.get("/replies/" + rno + ".json", function(result){
+	function get(replyNo, callback, error) {
+		$.get("/replies/" + replyNo + ".json", function(result){
 			if(callback) {
 				callback(result);
 			}

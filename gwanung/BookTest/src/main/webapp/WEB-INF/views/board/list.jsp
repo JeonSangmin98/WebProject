@@ -43,7 +43,7 @@
 						<tr>
 							<th scope="row">${board.boardNo}</th>
 							<td><a class='move' href='${board.boardNo}'>${board.title}
-								<span class="badge badge-primary">${board.replyCnt}</span></a></td>
+								<b class="text-danger">${board.replyCnt}</b></a></td>
 							<td>${board.writer}</td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${board.regdate}" /></td>
@@ -114,6 +114,8 @@
 		padding-bottom : 10px;
 	}
 </style>
+<script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script>
 	$(function() {
 		var result = '${result}';

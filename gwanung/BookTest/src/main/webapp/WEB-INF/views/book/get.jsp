@@ -102,7 +102,7 @@ img {
 			type : "post",
 			data : data,
 			success : function(result) {
-				console.log("성공");
+				alert("성공");
 				self.location = "/cart/list";
 			},
 			error : function(error) {

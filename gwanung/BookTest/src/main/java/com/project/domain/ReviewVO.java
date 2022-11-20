@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class ReviewVO {
-	private Long rno;	// 댓글 번호
-	private Long bno;	// 도서 상품 번호
+	private Long reviewNo;	// 댓글 번호
+	private Long boardNo;	// 도서 상품 번호
 	
 	private String review;	// 리뷰 내용
 	private String reviewer;	// 리뷰 작성자

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="../menu.jsp"%>
-
+<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <div class="jumbotron">
 	<div class="page-header">
 		<h1 id="tables">게시글 수정</h1>
@@ -38,6 +38,8 @@
 	</form>
 </div>
 <%-- <%@ include file="../includes/footer.jsp"%> --%>
+<script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script>
 	 $(function(){
 		var formObj = $("form"); 
