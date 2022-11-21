@@ -59,19 +59,21 @@ th, td {
 					<td style="user-select: auto;" class="cartTotal"><input
 						type="checkbox" class="form-check-input checkCart"
 						checked="checked"><input type="hidden"
-						class="hiddenCartDiscount" value="${cart.discount}"> <input
-						type="hidden" class="hiddenCartCount" value="${cart.count}"></td>
+						class="hiddenCartDiscount" value="${cart.totalPrice}"> <input
+						type="hidden" class="hiddenCartCount" value="${cart.count}">
 					<td style="user-select: auto;"><img src="${cart.image}"></td>
 					<td style="user-select: auto;">${cart.title}</td>
 					<td style="user-select: auto;">${cart.category}</td>
-					<td style="user-select: auto;">${cart.discount}</td>
+					<td style="user-select: auto;">${cart.totalPrice}</td>
 					<td style="user-select: auto;">
 						<div>
 							<button class="btn btn-outline-dark minusBtn" type="button">-</button>
-							<input type="text" class="input-sm countValue" value="1">
+							<input type="text" class="input-sm countValue"
+								value="${cart.count}" name="count">
 							<button class="btn btn-outline-dark plusBtn" type="button">+</button>
-							<button class="btn btn-dark updateCountBtn" data-cartBno="${cart.cartBno}">변경</button>
 						</div>
+							<button class="btn btn-dark updateCountBtn"
+								data-cartBno="${cart.cartBno}">변경</button>
 					</td>
 					<td style="user-select: auto;">
 						<button class="btn btn-danger deleteBtn"
@@ -94,6 +96,8 @@ th, td {
 		<input type="hidden" name="cartBno" class="deleteCartBno">
 	</form>
 
+	<%--추가 form --%>
+	<form action=""></form>
 
 	<div class="container">
 		<p>
@@ -113,39 +117,36 @@ th, td {
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 
-
 	//장바구니 수량 조절 +
 	$(".plusBtn").on("click", function() {
-		var countValue = $(this).parent("div").find("input").val(); 
+		let countValue = $(this).parent("div").find("input").val();
 		$(this).parent("div").find("input").val(++countValue);
 	});
 
 	//장바구니 수량 조절 -
 	$(".minusBtn").on("click", function() {
-		var countValue = $(this).parent("div").find("input").val();
-		if(countValue > 1){
+		let countValue = $(this).parent("div").find("input").val();
+		if (countValue > 1) {
 			$(this).parent("div").find("input").val(--countValue);
 		}
 	});
-	
+
 	//장바구니 수량 수정 버튼 -> 최종 DB 전달
-	$(".updateCountBtn").on("click", function () {
-		var cartBno = $(this).data("cartbno");
-		var count = $(this).parent("td").find("input").val();
+	$(".updateCountBtn").on("click", function() {
+		let cartBno = $(this).data("cartbno");
+		let count = $(this).parent("td").find("input").val();
+		/* let count = $(".countValue").val(); */
 		//수량 변경 버튼 클릭 시 Controller를 통해 DB에 전달
-		$(".updateCartBno").val(cartBno); 
+		$(".updateCartBno").val(cartBno);
 		$(".updateCartCount").val(count);
-		$(".updateForm").submit(); 
+		$(".updateForm").submit();
 	})
-	
-	
-	
 
 	//장바구니 총 수량 가격 정보
 	function setCartTotal() {
 
-		var totalPrice = 0; //총 가격
-		var totalCount = 0; // 총 개수
+		let totalPrice = 0; //총 가격
+		let totalCount = 0; // 총 개수
 
 		$(".cartTotal").each(function(index, element) {
 
@@ -176,7 +177,7 @@ th, td {
 	$(".deleteBtn").on("click", function(e) {
 		e.preventDefault();
 		/* console.log("click delete"); */
-		var cartBno = $(this).data("cartbno");
+		let cartBno = $(this).data("cartbno");
 		console.log(cartBno);
 		$(".deleteCartBno").val(cartBno);
 		$(".deleteForm").submit();

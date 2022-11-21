@@ -46,20 +46,21 @@ img {
 			상세정보:<br> ${info.description}
 		</p>
 
-		<button type="button" class="btn btn-primary"
-			style="user-select: auto;">구매하기</button>
-		<button type="button" class="btn btn-info" style="user-select: auto;"
-			id="basketBtn">장바구니</button>
-		<button type="button" class="btn btn-warning"
-			style="user-select: auto;">대여하기</button>
 		<button type="button" class="btn btn-secondary"
 			style="user-select: auto;" id="backBtn">뒤로가기</button>
+		<button type="button" class="btn btn-info" style="user-select: auto;"
+			id="basketBtn">장바구니 담기</button>
+		<input type="text" class="inputCount" value="1"> <span>
+			<button class="minus_btn">-</button>
+			<button class="plus_btn">+</button>
+		</span>
 		<form action="/book/list" id="operForm" method="get">
-			<input type="hidden" name="bno" value="${board.bno}"> <input
+			<input type="hidden" name="bno" value="${info.bno}"> <input
 				type="hidden" name="pageNum" value="${cri.pageNum}"> <input
 				type="hidden" name="amount" value="${cri.amount}">
-
 		</form>
+
+		<form action=""></form>
 
 	</div>
 	<hr>
@@ -72,6 +73,25 @@ img {
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+	let countValue = $(".inputCount").val();
+	$(".plus_btn").on("click", function() {
+		$(".inputCount").val(++countValue);
+	});
+	$(".minus_btn").on("click", function() {
+		if (quantity > 1) {
+			$(".inputCount").val(--countValue);
+		}
+	});
+
+	function cartAlert(result) {
+		if (result == '0')
+			alert("장바구니 추가 불가");
+		else if (result == '1')
+			alert("장바구니 추가 완료");
+		else if (result == '2')
+			alert("장바구니에 이미 추가가 되어있습니다.");
+	}
+
 	$(function() {
 
 		//뒤로가기 
@@ -83,18 +103,22 @@ img {
 	//장바구니 추가
 	$("#basketBtn").on("click", function() {
 
-		var image = '${info.image}';
-		var title = '${info.title}';
-		var discount = '${info.discount}';
-		var category = '${info.category}';
-		var bno = '${info.bno}';
+		const image = '${info.image}';
+		const title = '${info.title}';
+		const discount = '${info.discount}';
+		const category = '${info.category}';
+		const bno = '${info.bno}';
+		const count = $(".inputCount").val();
+		const totalPrice = discount * count;
 
-		var data = {
+		const data = {
 			bno : bno,
 			title : title,
 			discount : discount,
 			category : category,
 			image : image,
+			count : count,
+			totalPrice : totalPrice
 		};
 
 		$.ajax({
@@ -102,7 +126,7 @@ img {
 			type : "post",
 			data : data,
 			success : function(result) {
-				alert("성공");
+				cartAlert(result);
 				self.location = "/cart/list";
 			},
 			error : function(error) {

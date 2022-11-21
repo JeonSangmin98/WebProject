@@ -33,9 +33,14 @@ public class CartController {
 	
 	//장바구니 추가
 	@ResponseBody
-	@RequestMapping(value = "/addCart", method = RequestMethod.POST)
- 	public void addCart(CartDTO cart, HttpSession session) throws Exception{
-		service.addCart(cart);
+//	@RequestMapping(value = "/addCart", method = RequestMethod.POST)
+	@PostMapping("/addCart")
+ 	public String addCart(CartDTO cart, HttpSession session) throws Exception{
+		
+		int result = service.addCart(cart);
+		
+		return result + "";
+		
 	}
 
 	//장바구니 수량 수정

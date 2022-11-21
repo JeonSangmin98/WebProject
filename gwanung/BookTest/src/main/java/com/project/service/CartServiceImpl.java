@@ -22,14 +22,34 @@ public class CartServiceImpl implements CartService{
 	
 	//장바구니 추가
 	@Override
-	public void addCart(CartDTO cart) {
-			mapper.addCart(cart);
+	public int addCart(CartDTO cart){
+		CartDTO checkCart = mapper.checkCart(cart);
+		
+		//장바구니에 등록하려는 데이터가 DB에 존재하지 않는다면 장바구니에 추가하고 DB에 존재하면 2를 반환
+		if(checkCart != null) { 
+			return 2;
+		}
+		
+		//장바구니 등록 시 1 반환 / 에러 시 0 반환
+		try {
+			return mapper.addCart(cart);
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 
 	//장바구니 리스트
 	@Override
 	public List<CartDTO> getCartList() {
-		return mapper.getCart();
+		
+		//장바구니 총 가격 전달
+		List<CartDTO> cart = mapper.getCart();
+		
+		for(CartDTO dto : cart) {
+			dto.totalPrice();
+		}
+		
+		return cart;
 	}
 
 	//장바구니 수량 수정

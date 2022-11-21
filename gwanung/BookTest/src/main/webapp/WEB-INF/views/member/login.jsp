@@ -22,8 +22,8 @@
 			</div>
 		</div>
 	</div>
-	
-	<form action="" method="post" class="loginForm">
+
+	<form action="/member/login" method="post" class="loginForm">
 		<label class="form-label mt-4" style="user-select: auto;">아이디</label>
 		<input type="text" class="form-control inputId" placeholder="ID"
 			style="user-select: auto;" name="memberId">
@@ -32,7 +32,17 @@
 			<input type="password" class="form-control" placeholder="Password"
 				style="user-select: auto;" name="memberPw">
 		</div>
-			<input type="button" class="btn btn-lg btn-primary loginBtn" value="로그인">
+		<input type="button" class="btn btn-lg btn-primary loginBtn"
+			value="로그인">
 	</form>
 </body>
+<script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+	$(".loginBtn").click(function() {
+		$(".loginForm").submit();
+	});
+</script>
+
 </html>

@@ -19,4 +19,13 @@ public class CartDTO {
 	//회원 값
 	private Long memberNo; // 회원 아이디 (PK)
 	
+	//총 가격
+	private long totalPrice;
+	
+	//장바구니 총 가격
+	public void totalPrice() {
+		this.totalPrice = this.discount * this.count;
+		
+	}
+	
 }

@@ -31,9 +31,13 @@ public class CartMapperTests {
 	@Test
 	public void addCart() {
 		CartDTO cart = new CartDTO();
-		cart.setBno(1L);
-		cart.setTitle("제목 테스트");
-		log.info(mapper.addCart(cart));
+		cart.setBno(2L);
+		cart.setCount(2L);
+		
+		int result = 0;
+		result = mapper.addCart(cart);
+		System.out.println("test:" + result);
+		
 	}
 	
 	@Test

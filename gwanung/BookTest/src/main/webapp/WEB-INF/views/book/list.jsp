@@ -126,7 +126,9 @@ img {
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-	var actionForm = $("#actionForm");
+	const actionForm = $("#actionForm");
+	
+	
 
 	$(".pageBno a").on("click", function(e) {
 		e.preventDefault(); // a태그 역할 봉인
