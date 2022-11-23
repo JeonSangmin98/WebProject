@@ -60,7 +60,8 @@
 	</insert>
 
 	<select id="read" resultType="com.project.domain.BoardVO">
-		select * from tbl_board where boardNo
+		select * from tbl_board where
+		boardNo
 		= #{boardNo}
 	</select>
 
@@ -71,11 +72,13 @@
 	<update id="update">
 		update tbl_board
 		set title = #{title},
-		content = #{content},
+		content =
+		#{content},
 		writer = #{writer},
 		updateDate =
 		sysdate
-		where boardNo = #{boardNo}
+		where boardNo =
+		#{boardNo}
 	</update>
 
 	<select id="getTotalCount" resultType="int">
@@ -89,8 +92,8 @@
 		update tbl_board set replyCnt = replyCnt + #{amount}
 		where boardNo = #{boardNo}
 	</update>
-<!-- 	<update id="updateReviewCnt">
+	<update id="updateReviewCnt">
 		update tbl_board set reviewCnt = reviewCnt +
 		#{amount} where boardNo = #{boardNo}
-	</update> -->
+	</update>
 </mapper>
