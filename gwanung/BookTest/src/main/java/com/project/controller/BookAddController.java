@@ -33,7 +33,7 @@ public class BookAddController {
 	public void naver() throws ParseException {
 
 		URI uri = UriComponentsBuilder.fromUriString("https://openapi.naver.com").path("/v1/search/book.json")
-				.queryParam("query", "유니티").queryParam("display", 10).queryParam("start", 1).queryParam("sort", "sim")
+				.queryParam("query", "최초의 역사 수메르").queryParam("display", 10).queryParam("start", 1).queryParam("sort", "sim")
 				.encode() // 여기서 query 내용 encoding 해줌
 				.build().toUri();
 
@@ -83,7 +83,7 @@ public class BookAddController {
 		  dto.setPubdate(pubdate);
 		  dto.setIsbn(isbn);
 		  dto.setImage(image);
-		  dto.setCategory("IT");
+		  dto.setCategory("역사");
 		  dto.setPublisher(publisher);
 		  dto.setDescription(description);
 		  service.register(dto);
@@ -93,7 +93,7 @@ public class BookAddController {
 	public String navarAddList() {
 
 		URI uri = UriComponentsBuilder.fromUriString("https://openapi.naver.com").path("/v1/search/book.json")
-				.queryParam("query", "유니티").queryParam("display", 10).queryParam("start", 1).queryParam("sort", "sim")
+				.queryParam("query", "최초의 역사 수메르").queryParam("display", 10).queryParam("start", 1).queryParam("sort", "sim")
 				.encode() // 여기서 query 내용 encoding 해줌
 				.build().toUri();
 

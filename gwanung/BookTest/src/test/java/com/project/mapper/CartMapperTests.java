@@ -32,7 +32,7 @@ public class CartMapperTests {
 	public void addCart() {
 		CartDTO cart = new CartDTO();
 		cart.setBno(2L);
-		cart.setCount(2L);
+//		cart.setCount(2L);
 		
 		int result = 0;
 		result = mapper.addCart(cart);

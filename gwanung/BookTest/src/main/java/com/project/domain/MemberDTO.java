@@ -17,5 +17,4 @@ public class MemberDTO {
 	private String memberAddr2;//회원 주소
 	private String memberAddr3;//회원 상세주소
 	
-	
 }

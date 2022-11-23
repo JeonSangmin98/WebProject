@@ -32,7 +32,7 @@
 					<li class="nav-item" style="user-select: auto;"><a
 						class="nav-link" href="#" style="user-select: auto;">마이페이지</a></li>
 					<li class="nav-item" style="user-select: auto;"><a
-						class="nav-link" href="/cart/list" style="user-select: auto;">장바구니</a></li>
+						class="nav-link" href="/cart/list/${member.memberId}" style="user-select: auto;">장바구니</a></li>
 				</c:if>
 				<li class="nav-item" style="user-select: auto;"><a
 					class="nav-link" href="/book/list" style="user-select: auto;">도서

@@ -60,7 +60,7 @@ th, td {
 						type="checkbox" class="form-check-input checkCart"
 						checked="checked"><input type="hidden"
 						class="hiddenCartDiscount" value="${cart.totalPrice}"> <input
-						type="hidden" class="hiddenCartCount" value="${cart.count}">
+						type="hidden" class="hiddenCartCount" value="${cart.cartCount}">
 					<td style="user-select: auto;"><img src="${cart.image}"></td>
 					<td style="user-select: auto;">${cart.title}</td>
 					<td style="user-select: auto;">${cart.category}</td>
@@ -69,7 +69,7 @@ th, td {
 						<div>
 							<button class="btn btn-outline-dark minusBtn" type="button">-</button>
 							<input type="text" class="input-sm countValue"
-								value="${cart.count}" name="count">
+								value="${cart.cartCount}" name="cartCount">
 							<button class="btn btn-outline-dark plusBtn" type="button">+</button>
 						</div>
 							<button class="btn btn-dark updateCountBtn"
@@ -134,11 +134,11 @@ th, td {
 	//장바구니 수량 수정 버튼 -> 최종 DB 전달
 	$(".updateCountBtn").on("click", function() {
 		let cartBno = $(this).data("cartbno");
-		let count = $(this).parent("td").find("input").val();
+		let cartCount = $(this).parent("td").find("input").val();
 		/* let count = $(".countValue").val(); */
 		//수량 변경 버튼 클릭 시 Controller를 통해 DB에 전달
 		$(".updateCartBno").val(cartBno);
-		$(".updateCartCount").val(count);
+		$(".updateCartCount").val(cartCount);
 		$(".updateForm").submit();
 	})
 
