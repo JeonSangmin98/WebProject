@@ -65,7 +65,7 @@
 					<label>내용</label><input class="form-control" name="reply" value="New Reply!!">
 				</div>
 				<div class="form-group">
-					<label>작성자</label><input class="form-control" name="replyer" value="replyer" disabled>
+					<label>작성자</label><input class="form-control" name="replyer" value="replyer">
 				</div>
 				<div class="form-group">
 					<label>작성일</label><input class="form-control" name="replyDate" value="2022-11-23" disabled>

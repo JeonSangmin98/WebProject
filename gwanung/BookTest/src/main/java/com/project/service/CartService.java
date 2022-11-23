@@ -10,7 +10,7 @@ public interface CartService {
 	public int addCart(CartDTO cart);
 	
 	//장바구니 리스트
-	public List<CartDTO> getCartList();
+	public List<CartDTO> getCartList(String memberId);
 	
 	//장바구니 수량 수정
 	public int modifyCount(CartDTO cart);

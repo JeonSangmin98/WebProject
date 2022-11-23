@@ -32,8 +32,8 @@ public class BookController {
 	//도서 리스트
 	@GetMapping("/list")
 	public void test(Criteria cri, Model model) {
-		model.addAttribute("bookList", service.getList(cri));
 		int total = service.getTotal(cri);
+		model.addAttribute("bookList", service.getList(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		
 	

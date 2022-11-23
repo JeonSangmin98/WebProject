@@ -40,15 +40,14 @@ public class CartServiceImpl implements CartService{
 
 	//장바구니 리스트
 	@Override
-	public List<CartDTO> getCartList() {
+	public List<CartDTO> getCartList(String memberId) {
 		
 		//장바구니 총 가격 전달
-		List<CartDTO> cart = mapper.getCart();
+		List<CartDTO> cart = mapper.getCart(memberId);
 		
 		for(CartDTO dto : cart) {
 			dto.totalPrice();
 		}
-		
 		return cart;
 	}
 

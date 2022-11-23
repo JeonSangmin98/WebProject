@@ -15,5 +15,5 @@ public class ReviewVO {
 	private Date reviewDate;	// 리뷰 작성일
 	private Date updateDate;	// 리뷰 수정일
 	
-	//private int rating;	// 	리뷰 별점
+	private double rating;	// 	리뷰 별점
 }

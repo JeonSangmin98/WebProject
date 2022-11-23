@@ -27,7 +27,7 @@ public class ReviewController {
 	@Autowired
 	ReviewService service;
 
-	// 댓글 생성
+	// 리뷰 생성
 	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> create(@RequestBody ReviewVO vo) {
 		log.info("ReviewVO : " + vo);

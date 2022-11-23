@@ -59,9 +59,6 @@ img {
 				type="hidden" name="pageNum" value="${cri.pageNum}"> <input
 				type="hidden" name="amount" value="${cri.amount}">
 		</form>
-
-		<form action=""></form>
-
 	</div>
 	<hr>
 	<div>
@@ -90,6 +87,8 @@ img {
 			alert("장바구니 추가 완료");
 		else if (result == '2')
 			alert("장바구니에 이미 추가가 되어있습니다.");
+		else if (result == '5')
+			alert("로그인이 필요합니다.");
 	}
 
 	$(function() {
@@ -108,8 +107,9 @@ img {
 		const discount = '${info.discount}';
 		const category = '${info.category}';
 		const bno = '${info.bno}';
-		const count = $(".inputCount").val();
-		const totalPrice = discount * count;
+		const cartCount = $(".inputCount").val();
+		const totalPrice = discount * cartCount;
+		const memberId = '${member.memberId}';
 
 		const data = {
 			bno : bno,
@@ -117,8 +117,9 @@ img {
 			discount : discount,
 			category : category,
 			image : image,
-			count : count,
-			totalPrice : totalPrice
+			cartCount : cartCount,
+			totalPrice : totalPrice,
+			memberId : memberId
 		};
 
 		$.ajax({
@@ -127,7 +128,6 @@ img {
 			data : data,
 			success : function(result) {
 				cartAlert(result);
-				self.location = "/cart/list";
 			},
 			error : function(error) {
 				console.log(error);

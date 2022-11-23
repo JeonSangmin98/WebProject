@@ -56,7 +56,7 @@ img {
 	</div>
 	
 	<div class="card mb-3">
-		<h3 class="card-header">리뷰 <span class="badge badge-danger">${book.reviewCnt}</span></h3>
+		<h3 class="card-header">리뷰</h3>
 		<button id="addReviewBtn" type="button" 
 			class="btn btn-outline-info">새 리뷰</button>
 		<div class="card-body">
@@ -73,7 +73,7 @@ img {
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">리뷰창</h5>
+					<h5 class="modal-title">리뷰창<span></span></h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
@@ -85,8 +85,18 @@ img {
 							value="새로운 리뷰!!">
 					</div>
 					<div class="form-group">
+						<label>별점</label>
+						<select class="form-select" id="rating" name="rating">
+							<option value="1">★☆☆☆☆</option>
+		                    <option value="2">★★☆☆☆</option>
+		                    <option value="3">★★★☆☆</option>
+		                    <option value="4">★★★★☆</option>
+		                    <option value="5" selected>★★★★★</option>
+                    </select>
+					</div>
+					<div class="form-group">
 						<label>작성자</label><input class="form-control" name="reviewer"
-							value="reviewer" disabled>
+							value="reviewer">
 					</div>
 					<div class="form-group">
 						<label>작성일</label><input class="form-control" name="reviewDate"
@@ -150,10 +160,14 @@ img {
 							return;
 						}// end if
 						for (var i = 0, len = list.length || 0; i < len; i++) {
+							console.log(list[i]);
 							str += '<li class="list-group-item" data-reviewNo="' + list[i].reviewNo + '">';
 							str += '<div>';
 							str += '<div class="card-body">';
 							str += '<strong>' + list[i].reviewer + '</strong>';
+							str += '<div class="pull-right">';
+							str += '<span class="badge bg-warning">평점 : '+ list[i].rating +'</span>';
+							str += '</div>';
 							str += '<small class="d-flex w-100 justify text-muted">'
 									+ reviewService.displayTime(list[i].reviewDate)
 									+ '</small>';
@@ -208,6 +222,7 @@ img {
 		var modalInputReview = review_modal.find("input[name='review']");
 		var modalInputReviewer = review_modal.find("input[name='reviewer']");
 		var modalInputReviewDate = review_modal.find("input[name='reviewDate']");
+		var modalInputRating = review_modal.find("select[name='rating']");
 		
 		var reviewModalRegisterBtn = $("#review-modalRegisterBtn");
 		var reviewModalModBtn = $("#review-modalModBtn");
@@ -229,6 +244,7 @@ img {
 			var review = {
 					review : modalInputReview.val(),
 					reviewer : modalInputReviewer.val(),
+					rating : modalInputRating.val(),
 					bno : bnoValue
 			};
 			reviewService.add(review, function(result){
@@ -246,8 +262,8 @@ img {
 				console.log(data);
 				modalInputReview.val(data.review);
 				modalInputReviewer.val(data.reviewer);
-				modalInputReviewDate.val(reviewService.displayTime(data.reviewDate))
-					.attr("readonly","readonly");
+				modalInputRating.val(data.rating);
+				modalInputReviewDate.val(reviewService.displayTime(data.reviewDate)).attr("readonly","readonly");
 				reviewModalRegisterBtn.hide();
 				review_modal.data("reviewNo", data.reviewNo);
 				review_modal.modal("show");
@@ -262,6 +278,7 @@ img {
 			var review = {
 					reviewNo : review_modal.data('reviewNo'),
 					review : modalInputReview.val(),
+					rating : modalInputRating.val(),
 					bno : bnoValue
 			};
 			reviewService.update(review, function(result){

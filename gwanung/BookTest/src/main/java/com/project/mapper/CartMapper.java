@@ -16,7 +16,7 @@ public interface CartMapper {
 	public int modifyCount(CartDTO cart);
 	
 	//카트 목록 
-	public List<CartDTO> getCart();
+	public List<CartDTO> getCart(String memberId);
 	
 	//카트 중복 확인
 	public CartDTO checkCart(CartDTO cart);
