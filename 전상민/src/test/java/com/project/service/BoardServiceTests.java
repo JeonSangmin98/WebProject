@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.project.domain.BoardVO;
+import com.project.domain.Criteria;
 
 import lombok.extern.log4j.Log4j;
 
@@ -29,11 +30,12 @@ public class BoardServiceTests {
 		vo.setContent("새로 작성하는 글");
 		vo.setWriter("newbie3");
 		service.register(vo);
-		log.info("========== testRegister : " + vo.getBno());
+		log.info("========== testRegister : " + vo.getBoardNo());
 	}
 	
 	@Test
 	public void testGetList() {
-		service.getList();
+//		service.getList();
+		service.getList(new Criteria(2,10)).forEach(board -> log.info(board));
 	}
 }

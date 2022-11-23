@@ -2,8 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ include file="../includes/menu.jsp"%>
-
+<%@ include file="../menu.jsp"%>
+<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <div class="jumbotron">
 	<div class="page-header">
 		<h1 id="tables">자유 게시판</h1>

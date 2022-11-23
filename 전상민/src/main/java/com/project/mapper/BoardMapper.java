@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-//import org.apache.ibatis.annotations.Select;
-
 import com.project.domain.BoardVO;
 import com.project.domain.Criteria;
 
@@ -22,10 +20,10 @@ public interface BoardMapper {
 	public void insertSelectKey(BoardVO board);
 	
 //	데이터 조회
-	public BoardVO read(Long bno);
+	public BoardVO read(Long boardNo);
 	
 //	데이터 삭제
-	public int delete(Long bno);
+	public int delete(Long boardNo);
 	
 //	데이터 수정
 	public int update(BoardVO board);
@@ -34,7 +32,7 @@ public interface BoardMapper {
 	public int getTotalCount(Criteria cri);
 	
 //	게시글의 댓글이 추가/삭제 될때마다 댓글 수 업데이트
-	public void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
+	public void updateReplyCnt(@Param("boardNo") Long boardNo, @Param("amount") int amount);
 	
-	public void updateReviewCnt(@Param("bno") Long bno, @Param("amount") int amount);
+	
 }

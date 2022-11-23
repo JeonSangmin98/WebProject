@@ -1,6 +1,6 @@
 //console.log("Review Module.........");
 var reviewService = (function() {
-	function add(review, callback) {
+	function add(review, callback, error) {
 		console.log("add review..........");
 		$.ajax({
 			type : 'post',
@@ -25,18 +25,18 @@ var reviewService = (function() {
 		$.getJSON("/reviews/pages/" + bno + "/" + page + ".json",
 			function(data) {
 				if(callback) {
-					// callback(data); //댓글 목록만 가져오는 경우 
-					callback(data.reviewCnt, data.list); //댓글 숫자와 목록을 가져오는 경우
+					// callback(data); //리뷰 목록만 가져오는 경우 
+					callback(data.reviewCnt, data.list); //리뷰 숫자와 목록을 가져오는 경우
 				}
 			}).fail(function(xhr, status, err) {
 				if(error) { error(er) }
 			});
 	}// getList
 	
-	function remove(rno, callback, error) {
+	function remove(reviewNo, callback, error) {
 		$.ajax({
 			type : 'delete',
-			url : '/reviews/' + rno,
+			url : '/reviews/' + reviewNo,
 			success : function(result, status, xhr) {
 				if(callback) {
 					callback(result);
@@ -51,7 +51,7 @@ var reviewService = (function() {
 	function update(review, callback, error) {
 		$.ajax({
 			type : 'put',
-			url : '/reviews/' + review.rno,
+			url : '/reviews/' + review.reviewNo,
 			data : JSON.stringify(review),
 			contentType : 'application/json;charset=UTF-8',
 			success : function(result, status, xhr) {
@@ -65,8 +65,8 @@ var reviewService = (function() {
 		});
 	}//update
 	
-	function get(rno, callback, error) {
-		$.get("/reviews/" + rno + ".json", function(result){
+	function get(reviewNo, callback, error) {
+		$.get("/reviews/" + reviewNo + ".json", function(result){
 			if(callback) {
 				callback(result);
 			}

@@ -10,7 +10,7 @@ public interface BoardService {
 	public BoardVO get(Long bno);
 	public int modify(BoardVO vo);
 	public int remove(Long bno);
-	public List<BoardVO> getList();
+//	public List<BoardVO> getList();
 	
 	public List<BoardVO> getList(Criteria cri);
 	public int getTotal(Criteria cri);

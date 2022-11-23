@@ -25,13 +25,13 @@ public class ReplyServiceImpl implements ReplyService {
 	@Transactional
 	@Override
 	public int register(ReplyVO vo) {
-		boardMapper.updateReplyCnt(vo.getBno(), 1);
+		boardMapper.updateReplyCnt(vo.getBoardNo(), 1);
 		return mapper.insert(vo);
 	}
 
 	@Override
-	public ReplyVO get(Long rno) {
-		return mapper.read(rno);
+	public ReplyVO get(Long replyNo) {
+		return mapper.read(replyNo);
 	}
 
 	@Override
@@ -41,22 +41,22 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Transactional
 	@Override
-	public int remove(Long rno) {
-		ReplyVO vo = mapper.read(rno);
-		boardMapper.updateReplyCnt(vo.getBno(), -1);
-		return mapper.delete(rno);
+	public int remove(Long replyNo) {
+		ReplyVO vo = mapper.read(replyNo);
+		boardMapper.updateReplyCnt(vo.getBoardNo(), -1);
+		return mapper.delete(replyNo);
 	}
 
 	@Override
-	public List<ReplyVO> getList(Criteria cri, Long bno) {
-		return mapper.getListWithPaging(cri, bno);
+	public List<ReplyVO> getList(Criteria cri, Long boardNo) {
+		return mapper.getListWithPaging(cri, boardNo);
 	}
 
 	@Override
-	public ReplyDTO getListPage(Criteria cri, Long bno) {
+	public ReplyDTO getListPage(Criteria cri, Long boardNo) {
 		return new ReplyDTO(
-				mapper.getCountByBno(bno), 
-				mapper.getListWithPaging(cri, bno));
+				mapper.getCountByBoardNo(boardNo), 
+				mapper.getListWithPaging(cri, boardNo));
 	}
 
 }

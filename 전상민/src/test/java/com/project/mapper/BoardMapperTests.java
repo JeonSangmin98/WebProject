@@ -67,7 +67,7 @@ public class BoardMapperTests {
 		BoardVO board = new BoardVO();
 		
 //		2번 게시물 수정
-		board.setBno(2L);
+		board.setBoardNo(2L);
 		board.setTitle("수정된 제목");
 		board.setContent("수정된 내용");
 		board.setWriter("admin");
@@ -77,13 +77,13 @@ public class BoardMapperTests {
 	@Test
 	public void testPaging() {
 		log.info("--------------------");
-		mapper.getListWithPaging(new Criteria(2,10));
+		mapper.getListWithPaging(new Criteria(1,10));
 	}//testPaging
 	
 	@Test
 	public void testSearch() {
 		Criteria cri = new Criteria();
-		cri.setKeyword("test");
+		cri.setKeyword("새로");
 		cri.setType("TC");
 		mapper.getListWithPaging(cri);
 	}//testSearch

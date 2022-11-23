@@ -28,11 +28,11 @@ public class BoardController {
 	public void list(Criteria cri, Model model) {
 		log.info("list ----------");
 		log.info("cri: " + cri);
+//		model.addAttribute("pageMaker", new PageDTO(cri, 123)); // 임의의 값 123
 		
 		int total = service.getTotal(cri);
-		
+		log.info("total : " + total); 
 		model.addAttribute("list", service.getList(cri));
-//		model.addAttribute("pageMaker", new PageDTO(cri, 123)); // 임의의 값 123
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 
@@ -47,16 +47,16 @@ public class BoardController {
 	public String register(BoardVO board, RedirectAttributes rttr) {
 		log.info("register : " + board);
 		service.register(board);
-		rttr.addFlashAttribute("result", board.getBno());
+		rttr.addFlashAttribute("result", board.getBoardNo());
 
 		return "redirect:/board/list";
 	}
 
 //	조회 처리
 	@GetMapping({"/get","/modify"})
-	public void get(Long bno, @ModelAttribute("cri")Criteria cri, Model model) {
+	public void get(Long boardNo, @ModelAttribute("cri")Criteria cri, Model model) {
 		log.info("get or modify");
-		model.addAttribute("board", service.get(bno));
+		model.addAttribute("board", service.get(boardNo));
 	}
 
 //	수정 처리
@@ -77,9 +77,9 @@ public class BoardController {
 
 //	삭제 처리
 	@PostMapping("/remove")
-	public String remove(Long bno, @ModelAttribute("cri")Criteria cri, RedirectAttributes rttr) {
-		log.info("remove : " + bno);
-		if (service.remove(bno) == 1) {
+	public String remove(Long boardNo, @ModelAttribute("cri")Criteria cri, RedirectAttributes rttr) {
+		log.info("remove : " + boardNo);
+		if (service.remove(boardNo) == 1) {
 			rttr.addFlashAttribute("result", "success");
 		}
 		

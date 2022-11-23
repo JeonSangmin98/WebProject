@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class BoardVO {
-	private Long bno;	// 게시글 번호
+	private Long boardNo;	// 게시글 번호
 	private String title;	// 게시글 제목
 	private String content;	// 게시글 내용
 	private String writer;	// 게시글 작성자

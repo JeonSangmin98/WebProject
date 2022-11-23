@@ -23,67 +23,67 @@
 			</foreach>
 		</trim>
 	</sql>
-	
+
 	<select id="getList" resultType="com.project.domain.BoardVO">
-		select * from book_board order by bno desc
+		select /*+ INDEX_DESC(tbl_board pk_board) */ * from tbl_board
 	</select>
-	
-	<select id="getListWithPaging" resultType="com.project.domain.BoardVO">
+
+	<select id="getListWithPaging"
+		resultType="com.project.domain.BoardVO">
 		<![CDATA[
-		select bno, title, content, writer, regdate, updateDate, replyCnt, reviewCnt
-		from ( select /*+ INDEX_DESC(book_board pk_book_board) */
-					rownum rn, bno, title, content, writer, regdate, updateDate, replyCnt, reviewCnt
-					from book_board 
-					where 
-		]]>
-		<include refid="criteria"></include>	<!-- include를 이용해서 sql문 삽입 -->
-		<![CDATA[
-					rownum <=#{pageNum} * #{amount})
-		where rn > (#{pageNum}-1) * #{amount}
+			select boardNo, title, content, writer, regdate, updateDate, replyCnt from
+    			(select /*+ INDEX_DESC(tbl_board pk_board) */ 
+    				rownum rn, boardNo, title, content, writer, regdate, updateDate, replyCnt
+        			from tbl_board where 
+        ]]>		
+        <include refid="criteria"></include>
+        <![CDATA[	
+        			rownum <= #{pageNum} * #{amount})
+   				 where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-	
+
 	<insert id="insert">
-		insert into book_board(bno,title,content,writer)
-		values(seq_book_board.nextval, #{title}, #{content}, #{writer})
+		insert into tbl_board(boardNo,title,content,writer)
+		values(seq_board.nextval, #{title}, #{content}, #{writer})
 	</insert>
-	
+
 	<insert id="insertSelectKey">
-		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
-			select seq_book_board.nextval from dual
+		<selectKey keyProperty="boardNo" order="BEFORE"
+			resultType="long">
+			select seq_board.nextval from dual
 		</selectKey>
-		insert into book_board(bno,title,content,writer)
-		values(#{bno},#{title},#{content},#{writer})
+		insert into tbl_board(boardNo,title,content,writer)
+		values(#{boardNo},#{title},#{content},#{writer})
 	</insert>
-	
+
 	<select id="read" resultType="com.project.domain.BoardVO">
-		select * from book_board where bno = #{bno}
+		select * from tbl_board where boardNo = #{boardNo}
 	</select>
-	
+
 	<delete id="delete">
-		delete from book_board where bno = #{bno}
+		delete from tbl_board where boardNo = #{boardNo}
 	</delete>
-	
+
 	<update id="update">
-		update book_board 
+		update tbl_board
 		set title = #{title},
 		content = #{content},
 		writer = #{writer},
 		updateDate = sysdate
-		where bno = #{bno}
+		where boardNo = #{boardNo}
 	</update>
-	
+
 	<select id="getTotalCount" resultType="int">
-		select count(*) from book_board 
+		select count(*) from tbl_board
 		where
 		<include refid="criteria"></include>
-		bno > 0
+		boardNo > 0
 	</select>
-	
+
 	<update id="updateReplyCnt">
-		update book_board set replyCnt = replyCnt + #{amount} where bno = #{bno}
+		update tbl_board set replyCnt = replyCnt + #{amount}
+		where boardNo = #{boardNo}
 	</update>
-	<update id="updateReviewCnt">
-		update book_board set reviewCnt = reviewCnt + #{amount} where bno = #{bno}
-	</update>
+	
 </mapper>

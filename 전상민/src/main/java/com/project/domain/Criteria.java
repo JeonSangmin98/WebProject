@@ -13,8 +13,8 @@ public class Criteria {	// 검색의 기준
 	private int pageNum;	// 게시판 페이지 번호
 	private int amount;		// 	게시글 수
 	
-	private String type;
-	private String keyword;
+	private String type;	// 검색 유형
+	private String keyword;		// 검색 키워드
 	
 	
 //	기본값을 1페이지, 10개로 지정
@@ -32,7 +32,7 @@ public class Criteria {	// 검색의 기준
 //	T : title / C : content / W : writer
 	public String[] getTypeArr() {
 		return type == null ? new String[] {}: type.split("");
-	}
+	}//getTypeArr
 	
 //	여러개의 파라미터들을 연결해서 URL형태로 만들어 줌
 	public String getListLink() {
@@ -43,5 +43,5 @@ public class Criteria {	// 검색의 기준
 				.queryParam("keyword", this.getKeyword());
 		
 		return builder.toUriString();
-	}
+	}//getListLink
 }

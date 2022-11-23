@@ -20,8 +20,8 @@ import lombok.extern.log4j.Log4j;
 public class ReplyMapperTests {
 	@Autowired
 	private ReplyMapper mapper;
-	// book_board 에 있는 게시물 번호 / pk 와 fk로 묶여있기 때문
-	private Long[] bnoArr = { 40L, 38L, 37L, 36L, 35L }; 
+	// tbl_board 에 있는 게시물 번호 / pk 와 fk로 묶여있기 때문
+	private Long[] bnoArr = { 2817L, 2816L, 2815L, 2814L, 2813L }; 
 
 	@Test
 	public void testMapper() {
@@ -34,7 +34,7 @@ public class ReplyMapperTests {
 		IntStream.rangeClosed(1, 10).forEach(i -> {
 			ReplyVO vo = new ReplyVO();
 			// 게시물 번호
-			vo.setBno(bnoArr[i % 5]);
+			vo.setBoardNo(bnoArr[i % 5]);
 			vo.setReply("댓글 테스트 " + i);
 			vo.setReplyer("replyer " + i);
 			mapper.insert(vo);
@@ -57,7 +57,7 @@ public class ReplyMapperTests {
 	
 	@Test
 	public void testUpdate() {
-		ReplyVO vo = mapper.read(2L); 
+		ReplyVO vo = mapper.read(10L); 
 		vo.setReply("Update Reply");
 		int count = mapper.update(vo);
 		log.info("---------- testUpdate : " + count);

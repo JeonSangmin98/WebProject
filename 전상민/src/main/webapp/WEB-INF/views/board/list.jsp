@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ include file="../includes/menu.jsp"%>
+<%@ include file="../menu.jsp"%>
+<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <div class="jumbotron">
 	<!-- <h1 class="display-3">자유 게시판</h1> -->
 	<div class="page-header">
@@ -40,9 +41,9 @@
 				<tbody>
 					<c:forEach items="${list}" var="board">
 						<tr>
-							<th scope="row">${board.bno}</th>
-							<td><a class='move' href='${board.bno}'>${board.title}
-								<span class="badge badge-primary">${board.replyCnt}</span></a></td>
+							<th scope="row">${board.boardNo}</th>
+							<td><a class='move' href='${board.boardNo}'>${board.title}
+								<span class="text-danger">${board.replyCnt}</span></a></td>
 							<td>${board.writer}</td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${board.regdate}" /></td>
@@ -60,21 +61,25 @@
 				<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}"> 
 			</form>
 				<ul class="pagination">
-				<c:if test="${pageMaker.prev}">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="${pageMaker.startPage - 1}">«</a>
-                  </li>
-				</c:if>
-				<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                  <li class="page-item active ${pageMaker.cri.pageNum == num ? 'active' : ''}">
-                    <a class="page-link" href="${num}">${num}</a>
-                  </li>
-				</c:forEach>
-                <c:if test="${pageMaker.next}">
-                  <li class="page-item">
-                    <a class="page-link" href="${pageMarker.endPage + 1}">»</a>
-                  </li>
-                </c:if>
+				
+					<c:if test="${pageMaker.prev}">
+	                  <li class="page-item previous">
+	                    <a class="page-link" href="${pageMaker.startPage - 1}">«</a>
+	                  </li>
+					</c:if>
+				
+					<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+	                  <li class="page-item active ${pageMaker.cri.pageNum == num ? 'active' : ''}">
+	                    <a class="page-link" href="${num}">${num}</a>
+	                  </li>
+					</c:forEach>
+				
+	                <c:if test="${pageMaker.next}">
+	                  <li class="page-item next">
+	                    <a class="page-link" href="${pageMaker.endPage + 1}">»</a>
+	                  </li>
+	                </c:if>
+                
                 </ul>
 			</div>
 			<button id="regBtn" type="button" class="btn btn-outline-info">글쓰기</button>
@@ -113,13 +118,17 @@
 		padding-bottom : 10px;
 	}
 </style>
+<script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script>
 	$(function() {
 		var result = '${result}';
 
 		checkModal(result);
+		
 		history.replaceState({}, null, null);
-		console.log('${pageMarker}');
+		
+		console.log('${pageMaker}');
 		function checkModal(result) {
 			if (result === '' || history.state) {
 				return;
@@ -147,7 +156,7 @@
 		
 		$('.move').on('click',function(e){
 			e.preventDefault();
-			actionForm.append('<input type="hidden" name="bno" value="' + $(this).attr('href') + '">');
+			actionForm.append('<input type="hidden" name="boardNo" value="' + $(this).attr('href') + '">');
 			actionForm.attr('action','/board/get');
 			actionForm.submit();
 		});
@@ -169,3 +178,5 @@
 	});
 </script>
 <%-- <%@ include file="../includes/footer.jsp"  %> --%>
+</body>
+</html>

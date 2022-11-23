@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.domain.Criteria;
 import com.project.domain.ReviewDTO;
 import com.project.domain.ReviewVO;
-import com.project.mapper.BoardMapper;
+import com.project.mapper.BookMapper;
 import com.project.mapper.ReviewMapper;
 
 import lombok.extern.log4j.Log4j;
@@ -20,18 +20,18 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private ReviewMapper mapper;
 	@Autowired
-	private BoardMapper boardMapper;
+	private BookMapper bookMapper;
 
 	@Transactional
 	@Override
 	public int register(ReviewVO vo) {
-		boardMapper.updateReviewCnt(vo.getBno(), 1);
+		bookMapper.updateReviewCnt(vo.getBno(), 1);
 		return mapper.insert(vo);
 	}
 
 	@Override
-	public ReviewVO get(Long rno) {
-		return mapper.read(rno);
+	public ReviewVO get(Long reviewNo) {
+		return mapper.read(reviewNo);
 	}
 
 	@Override
@@ -41,10 +41,10 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Transactional
 	@Override
-	public int remove(Long rno) {
-		ReviewVO vo = mapper.read(rno);
-		boardMapper.updateReviewCnt(vo.getBno(), -1);
-		return mapper.delete(rno);
+	public int remove(Long reviewNo) {
+		ReviewVO vo = mapper.read(reviewNo);
+		bookMapper.updateReviewCnt(vo.getBno(), -1);
+		return mapper.delete(reviewNo);
 	}
 
 	@Override

@@ -11,17 +11,17 @@ public interface ReviewService {
 	public int register(ReviewVO vo);
 	
 	// 조회
-	public ReviewVO get(Long rno);
+	public ReviewVO get(Long reviewNo);
 	
 	// 수정
 	public int modify(ReviewVO vo);
 	
 	// 삭제
-	public int remove(Long rno);
+	public int remove(Long reviewNo);
 	
 	// 목록
 	public List<ReviewVO> getList(Criteria cri, Long bno);
 	
-	// 댓글 목록
+	// 리뷰 목록
 	public ReviewDTO getListPage(Criteria cri, Long bno);
 }

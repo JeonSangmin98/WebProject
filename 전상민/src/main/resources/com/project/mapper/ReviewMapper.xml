@@ -4,37 +4,37 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.project.mapper.ReviewMapper">
  	<insert id="insert">
- 		insert into book_review(rno, bno, review, reviewer)
- 		values(seq_book_review.nextval, #{bno}, #{review}, #{reviewer})
+ 		insert into tbl_review(reviewNo, bno, review, reviewer)
+ 		values(seq_review.nextval, #{bno}, #{review}, #{reviewer})
  	</insert>
  	
  	<select id="read" resultType="com.project.domain.ReviewVO">
- 		select * from book_review where rno = #{rno}
+ 		select * from tbl_review where reviewNo = #{reviewNo}
  	</select>
  	
  	<delete id="delete">
- 		delete from book_review where rno = #{rno}
+ 		delete from tbl_review where reviewNo = #{reviewNo}
  	</delete>
  	
  	<update id="update">
- 		update book_review set review = #{review}, 
- 		updateDate = sysdate where rno = #{rno}
+ 		update tbl_review set review = #{review}, 
+ 		updateDate = sysdate where reviewNo = #{reviewNo}
  	</update>
  	
  	<select id="getListWithPaging" resultType="com.project.domain.ReviewVO">
  		<![CDATA[
-		select bno, rno, review, reviewer, reviewDate, updatedate
+		select bno, reviewNo, review, reviewer, reviewDate, updatedate
 		from
-		    (select /*+INDEX(book_review idx_book_review) */ 
-		    rownum rn, bno, rno, review, reviewer, reviewDate, updatedate
-		    from book_review
+		    (select /*+INDEX(tbl_review idx_review) */ 
+		    rownum rn, bno, reviewNo, review, reviewer, reviewDate, updatedate
+		    from tbl_review
 		    where bno = #{bno} 
-		    and rno > 0
+		    and reviewNo > 0
 		    and rownum <=#{cri.pageNum} * #{cri.amount})
 		where rn > (#{cri.pageNum} - 1) * #{cri.amount}
 		]]>
  	</select>
  	<select id="getCountByBno" resultType="int">
-		select count(*) from book_review where bno = #{bno} 
+		select count(*) from tbl_review where bno = #{bno} 
 	</select>
  </mapper>

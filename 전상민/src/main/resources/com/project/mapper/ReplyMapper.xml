@@ -4,37 +4,37 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.project.mapper.ReplyMapper">
  	<insert id="insert">
- 		insert into book_reply(rno, bno, reply, replyer)
- 		values(seq_book_reply.nextval, #{bno}, #{reply}, #{replyer})
+ 		insert into tbl_reply(replyNo, boardNo, reply, replyer)
+ 		values(seq_reply.nextval, #{boardNo}, #{reply}, #{replyer})
  	</insert>
  	
  	<select id="read" resultType="com.project.domain.ReplyVO">
- 		select * from book_reply where rno = #{rno}
+ 		select * from tbl_reply where replyNo = #{replyNo}
  	</select>
  	
  	<delete id="delete">
- 		delete from book_reply where rno = #{rno}
+ 		delete from tbl_reply where replyNo = #{replyNo}
  	</delete>
  	
  	<update id="update">
- 		update book_reply set reply = #{reply}, 
- 		updateDate = sysdate where rno = #{rno}
+ 		update tbl_reply set reply = #{reply}, 
+ 			updateDate = sysdate where replyNo = #{replyNo}
  	</update>
  	
  	<select id="getListWithPaging" resultType="com.project.domain.ReplyVO">
  		<![CDATA[
-		select bno, rno, reply, replyer, replyDate, updatedate
+		select replyNo, boardNo, reply, replyer, replyDate, updatedate
 		from
-		    (select /*+INDEX(book_reply idx_book_reply) */ 
-		    rownum rn, bno, rno, reply, replyer, replyDate, updatedate
-		    from book_reply
-		    where bno = #{bno} 
-		    and rno > 0
+		    (select /*+INDEX(tbl_reply idx_reply) */ 
+		    rownum rn, boardNo, replyNo, reply, replyer, replyDate, updatedate
+		    from tbl_reply
+		    where boardNo = #{boardNo} 
+		    and replyNo > 0
 		    and rownum <=#{cri.pageNum} * #{cri.amount})
 		where rn > (#{cri.pageNum} - 1) * #{cri.amount}
 		]]>
  	</select>
- 	<select id="getCountByBno" resultType="int">
-		select count(*) from book_reply where bno = #{bno} 
+ 	<select id="getCountByBoardNo" resultType="int">
+		select count(*) from tbl_reply where boardNo = #{boardNo} 
 	</select>
  </mapper>

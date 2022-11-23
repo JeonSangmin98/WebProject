@@ -1,7 +1,5 @@
 package com.project.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -39,39 +37,41 @@ public class ReplyController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}// create
 
-	@GetMapping(value = "/pages/{bno}/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
+//	댓글 목록 조회
+	@GetMapping(value = "/pages/{boardNo}/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<ReplyDTO> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno) {
+	public ResponseEntity<ReplyDTO> getList(@PathVariable("page") int page, @PathVariable("boardNo") Long boardNo) {
 		log.info("getList ----------");
 		Criteria cri = new Criteria(page, 10);
 		log.info(cri);
-		return new ResponseEntity<>(service.getListPage(cri, bno), HttpStatus.OK);
+		return new ResponseEntity<>(service.getListPage(cri, boardNo), HttpStatus.OK);
 	}// getList
 	
 //	댓글 조회
-	@GetMapping(value = "/{rno}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE,
+	@GetMapping(value = "/{replyNo}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE,
 			MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<ReplyVO> get(@PathVariable("rno")Long rno){
-		log.info("get-rno : " + rno);
-		return new ResponseEntity<>(service.get(rno), HttpStatus.OK);
+	public ResponseEntity<ReplyVO> get(@PathVariable("replyNo")Long replyNo){
+		log.info("get-replyNo : " + replyNo);
+		return new ResponseEntity<>(service.get(replyNo), HttpStatus.OK);
 	}//get
+	
 //	댓글 삭제
-	@DeleteMapping(value = "/{rno}", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> remove(@PathVariable("rno") Long rno){
-		log.info("remove-rno : " + rno);
-		return service.remove(rno) == 1 ? new ResponseEntity<>("success",HttpStatus.OK)
+	@DeleteMapping(value = "/{replyNo}", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> remove(@PathVariable("replyNo") Long replyNo){
+		log.info("remove-rno : " + replyNo);
+		return service.remove(replyNo) == 1 ? new ResponseEntity<>("success",HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}//remove
 	
 //	댓글 수정
 	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
-			value = "/{rno}",
+			value = "/{replyNo}",
 			consumes = "application/json",
 			produces = { MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> modify(@RequestBody ReplyVO vo, @PathVariable("rno")Long rno){
-		log.info("modify-ron : " + rno);
+	public ResponseEntity<String> modify(@RequestBody ReplyVO vo, @PathVariable("replyNo")Long replyNo){
+		log.info("modify-ron : " + replyNo);
 		log.info("ReplyVO : " + vo);
-		vo.setRno(rno);
+		vo.setReplyNo(replyNo);;
 		return service.modify(vo) == 1 ? new ResponseEntity<>("success",HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
