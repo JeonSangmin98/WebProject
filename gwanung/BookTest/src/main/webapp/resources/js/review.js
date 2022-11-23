@@ -1,6 +1,6 @@
 //console.log("Review Module.........");
 var reviewService = (function() {
-	function add(review, callback) {
+	function add(review, callback, error) {
 		console.log("add review..........");
 		$.ajax({
 			type : 'post',

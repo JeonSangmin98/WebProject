@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary"
 	style="user-select: auto;">
 	<div class="container-fluid" style="user-select: auto;">
@@ -14,21 +15,30 @@
 		<div class="collapse navbar-collapse" id="navbarColor01"
 			style="user-select: auto;">
 			<ul class="navbar-nav me-auto" style="user-select: auto;">
-				<li class="nav-item" style="user-select: auto;"><a
-					class="nav-link active" href="/member/join" style="user-select: auto;">회원가입
-						<span class="visually-hidden" style="user-select: auto;">(current)</span>
-				</a></li>
-				<li class="nav-item" style="user-select: auto;"><a
-					class="nav-link" href="/member/login" style="user-select: auto;">로그인</a></li>
+				<c:if test="${member == null}">
+					<li class="nav-item" style="user-select: auto;"><a
+						class="nav-link active" href="/member/join"
+						style="user-select: auto;">회원가입 </a></li>
+					<li class="nav-item" style="user-select: auto;"><a
+						class="nav-link" href="/member/login" style="user-select: auto;">로그인</a></li>
+				</c:if>
+
+				<c:if test="${member != null}">
+					<li class="nav-item" style="user-select: auto;"><a
+						class="nav-link" href="/member/login" style="user-select: auto;"><strong
+							class="text-muted">${member.memberName}</strong> 회원님</a></li>
+					<li class="nav-item" style="user-select: auto;"><a
+						class="nav-link logoutBtn" style="user-select: auto;">로그아웃</a></li>
+					<li class="nav-item" style="user-select: auto;"><a
+						class="nav-link" href="#" style="user-select: auto;">마이페이지</a></li>
+					<li class="nav-item" style="user-select: auto;"><a
+						class="nav-link" href="/cart/list" style="user-select: auto;">장바구니</a></li>
+				</c:if>
 				<li class="nav-item" style="user-select: auto;"><a
 					class="nav-link" href="/book/list" style="user-select: auto;">도서
 						리스트</a></li>
 				<li class="nav-item" style="user-select: auto;"><a
-					class="nav-link" href="#" style="user-select: auto;">마이페이지</a></li>
-				<li class="nav-item" style="user-select: auto;"><a
 					class="nav-link" href="#" style="user-select: auto;">도서 대여</a></li>
-				<li class="nav-item" style="user-select: auto;"><a
-					class="nav-link" href="/cart/list" style="user-select: auto;">장바구니</a></li>
 				<li class="nav-item" style="user-select: auto;"><a
 					class="nav-link" href="#" style="user-select: auto;">주문/배송</a></li>
 				<li class="nav-item" style="user-select: auto;"><a
@@ -53,7 +63,8 @@
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	var searchForm = $(".searchForm");
-
+	
+	//검색 기능
 	$(".searchForm button").on("click", function() {
 		if (!searchForm.find("option:selected").val()) {
 			alert("종류를 선택 해 주세요!");
@@ -66,4 +77,22 @@
 		}
 		searchForm.submit();
 	});
+	
+	//로그아웃 
+	$(".logoutBtn").click(function () {
+		/* alert("test logout"); */
+		
+		$.ajax({
+			
+			type: "POST",
+			url: "/member/logout",
+			success: function (result) {
+				alert("로그아웃 완료");
+				document.location.reload();
+			}
+		});// end ajax
+		
+	});// end funcion
+	
+	
 </script>

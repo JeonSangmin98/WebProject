@@ -6,7 +6,7 @@
   		<!-- 회원가입 -->
   		<insert id="memberJoin">
   			insert into tbl_member
-  			 values (#{memberId}, #{memberPw}, #{memberName}, #{memberMail}, sysdate)
+  			 values (#{memberId}, #{memberPw}, #{memberName}, #{memberMail}, #{memberAddr1}, #{memberAddr2}, #{memberAddr3}, sysdate)
   		</insert>
   		
   		<!-- 아이디 중복 검사 -->
@@ -17,9 +17,12 @@
   		</select>
   		
   		<!-- 로그인 -->
-  		<select id="memberLogin">
-  			select memberId, memberName 
+  		<select id="memberLogin" resultType="com.project.domain.MemberDTO">
+  			select memberId, memberPw, memberName 
   			from tbl_member 
-  			where memberId = #{memberId} and memberPw = #{memberPw} 
+  			where memberId = #{memberId}
   		</select>
+  	<!-- 	select memberId, memberName 
+  			from tbl_member 
+  			where memberId = #{memberId} and memberPw = #{memberPw}  -->
   </mapper>
