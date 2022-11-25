@@ -56,14 +56,14 @@ public class CartController {
 	@PostMapping("/update")
 	public String updateCartPost(CartDTO cart) {
 		service.modifyCount(cart);
-		return "redirect:/cart/list" + cart.getMemberId(); 
+		return "redirect:/cart/list/" + cart.getMemberId(); 
 	}
 	
 	//장바구니 삭제
 	@PostMapping("/delete")
 	public String deleteCartPost(CartDTO cart) {
 		service.deleteCart(cart.getCartBno());
-		return "redirect:/cart/list" + cart.getMemberId();
+		return "redirect:/cart/list/" + cart.getMemberId();
 	}
 	
 	

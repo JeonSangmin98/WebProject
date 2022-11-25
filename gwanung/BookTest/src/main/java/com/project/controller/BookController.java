@@ -1,6 +1,6 @@
 package com.project.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,12 +23,11 @@ public class BookController {
 	@Autowired
 	private BookService service;
 	
-	
 	//책 검색
 	@GetMapping("/searchList")
 	public void list(@RequestParam(value = "type") String type, @RequestParam(value = "keyword") String keyword, Model model) {
-		BookDTO bookDto = service.searchList(type, keyword);
-		model.addAttribute("t", bookDto);
+		List<BookDTO> bookDto = service.searchList(type, keyword);
+		model.addAttribute("search", bookDto);
 	}
 	
 	//도서 리스트
@@ -38,7 +37,6 @@ public class BookController {
 		int total = service.getTotal(cri);
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		
-	
 	}
 	
 	//도서 상세정보

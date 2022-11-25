@@ -30,7 +30,7 @@
 					<li class="nav-item" style="user-select: auto;"><a
 						class="nav-link logoutBtn" style="user-select: auto;">로그아웃</a></li>
 					<li class="nav-item" style="user-select: auto;"><a
-						class="nav-link" href="#" style="user-select: auto;">마이페이지</a></li>
+						class="nav-link" href="/member/info" style="user-select: auto;">마이페이지</a></li>
 					<li class="nav-item" style="user-select: auto;"><a
 						class="nav-link" href="/cart/list/${member.memberId}" style="user-select: auto;">장바구니</a></li>
 				</c:if>
