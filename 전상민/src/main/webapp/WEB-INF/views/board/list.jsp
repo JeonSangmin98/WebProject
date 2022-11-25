@@ -54,35 +54,38 @@
 				</tbody>
 			</table>
 			<div class="pull-right">
-			<form id="actionForm" action="/board/list" method="get">
-				<input type="hidden" name="pageNum" value='${pageMaker.cri.pageNum}'>
-				<input type="hidden" name="amount" value='${pageMaker.cri.amount}'>
-				<input type="hidden" name="type" value="${pageMaker.cri.type}">
-				<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}"> 
-			</form>
-				<ul class="pagination">
-				
-					<c:if test="${pageMaker.prev}">
-	                  <li class="page-item previous">
-	                    <a class="page-link" href="${pageMaker.startPage - 1}">«</a>
-	                  </li>
-					</c:if>
-				
-					<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-	                  <li class="page-item active ${pageMaker.cri.pageNum == num ? 'active' : ''}">
-	                    <a class="page-link" href="${num}">${num}</a>
-	                  </li>
-					</c:forEach>
-				
-	                <c:if test="${pageMaker.next}">
-	                  <li class="page-item next">
-	                    <a class="page-link" href="${pageMaker.endPage + 1}">»</a>
-	                  </li>
-	                </c:if>
-                
-                </ul>
+				<form id="actionForm" action="/board/list" method="get">
+					<input type="hidden" name="pageNum" value='${pageMaker.cri.pageNum}'>
+					<input type="hidden" name="amount" value='${pageMaker.cri.amount}'>
+					<input type="hidden" name="type" value="${pageMaker.cri.type}">
+					<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+					<input type="hidden" name="memberId" value="${member.memberId}"> 
+				</form>
+				<div>
+	                <ul class="pagination">
+	                  	<c:if test="${pageMaker.prev}">
+		                  <li class="page-item previous">
+		                    <a class="page-link" href="${pageMaker.startPage - 1}">«</a>
+		                  </li>
+						</c:if>
+						
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+		                  <li class="page-item active ${pageMaker.cri.pageNum == num ? 'active' : ''}">
+		                    <a class="page-link" href="${num}">${num}</a>
+		                  </li>
+						</c:forEach>
+						
+						 <c:if test="${pageMaker.next}">
+		                  <li class="page-item next">
+		                    <a class="page-link" href="${pageMaker.endPage + 1}">»</a>
+		                  </li>
+		                </c:if>
+	                </ul>
+              </div>
 			</div>
-			<button id="regBtn" type="button" class="btn btn-outline-info">글쓰기</button>
+			<c:if test="${member.memberId != null}">
+				<button id="regBtn" type="button" class="btn btn-outline-info">글쓰기</button>
+			</c:if>
 		</div>
 	</div>
 </div>
@@ -92,16 +95,12 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">알림창</h5>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
 			</div>
 			<div class="modal-body">
 				<p></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-secondary" id="modalCloseBtn" data-dismiss="modal" aria-label="Close">닫기</button>
 			</div>
 		</div>
 	</div>
@@ -141,9 +140,13 @@
 			}
 			$(".modal").modal('show');
 		}//checkModal
-
+		
 		$("#regBtn").click(function() {
 			self.location = "/board/register";
+		});
+		
+		$("#modalCloseBtn").click(function(){
+			$(".modal").modal('hide');
 		});
 		
 		var actionForm = $('#actionForm');

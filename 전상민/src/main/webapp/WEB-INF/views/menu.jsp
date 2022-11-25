@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,12 +20,29 @@
 
                   <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
-                      <li class="nav-item">
-                        <a class="nav-link" href="/member/join">회원가입</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">로그인</a>
-                      </li>
+                    	<c:if test="${member == null}">
+	                      <li class="nav-item">
+	                        <a class="nav-link" href="/member/join">회원가입</a>
+	                      </li>
+	                      <li class="nav-item">
+	                        <a class="nav-link" href="/member/login">로그인</a>
+	                      </li>
+                    	</c:if>
+                    	
+                    	<c:if test="${member != null}">
+                    		<li class="nav-item">
+	                      	  <a class="nav-link" href="/member/login"><strong class="text-muted">${member.memberName}</strong> 회원님</a>
+	                     	</li>
+	                      	<li class="nav-item">
+	                      		<a class="nav-link logoutBtn">로그아웃</a>
+	                      	</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">마이페이지</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="/cart/list/${member.memberId}">장바구니</a>
+							</li>
+                    	</c:if>
                       <li class="nav-item">
                         <a class="nav-link" href="/book/list">도서 리스트</a>
                       </li>
@@ -35,29 +53,50 @@
                         <a class="nav-link" href="#">도서 대여</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">장바구니</a>
-                      </li>
-                      <li class="nav-item">
                         <a class="nav-link" href="#">주문 / 배송</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="/board/list">게시판</a>
-                      </li>
-                      <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
+                        <a class="nav-link" href="/board/list">자유 게시판</a>
                       </li>
                     </ul>
-                    <form class="d-flex">
-                      <input class="form-control me-sm-2" type="text" placeholder="Search">
-                      <button class="btn btn-secondary my-2 my-sm-0" type="submit">검색</button>
-                    </form>
+                    <form class="d-flex searchForm" action="/book/searchList">
+						<select class="form-control search-select text-secondary" name="type">
+							<option value="">--</option>
+							<option value="T">제목</option>
+							<option value="A">저자</option>
+						</select> 
+						<input class="form-control me-sm-2" type="text" placeholder="도서 검색" name="keyword">
+						<button class="btn btn-secondary my-2 my-sm-0" type="submit">검색</button>
+					</form>
                   </div>
                 </div>
               </nav>
+<script>
+	var searchForm = $(".searchForm");
+	
+	// 검색 기능
+	$(".searchForm button").on('click', function(){
+		if(!searchForm.find("option:selected").val()){
+			alert("종류를 선택해 주세요!");
+			return false;
+		}
+		
+		if(!searchForm.find("input[name='keyword']").val()){
+			alert("검색 내용을 입력해 주세요!");
+			return false;
+		}
+		searchForm.submit();
+	});
+	
+	// 로그아웃 버튼	
+	$(".logoutBtn").click(function(){
+		$.ajax({
+			type : "POST",
+			url : "/member/logout",
+			success : function(result){
+				alert('로그 아웃 완료!!');
+				document.location.reload();
+			}
+		});// end ajax
+	});// end click
+</script>

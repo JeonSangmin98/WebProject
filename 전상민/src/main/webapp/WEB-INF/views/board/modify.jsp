@@ -18,7 +18,7 @@
 		<input type="hidden" name="type" value="${cri.type}">
 		<div class="form-group">
 			<label>글 번호</label> <input class="form-control" name="boardNo"
-			value="${board.boardNo}" readonly>
+			value="${board.boardNo}" readonly disabled="disabled">
 		</div>
 		<div class="form-group">
 			<label>글 제목</label> <input class="form-control" name="title"
@@ -30,7 +30,7 @@
 		</div>
 		<div class="form-group">
 			<label>작성자</label> <input class="form-control" name="writer"
-			value="${board.writer}" readonly>
+			value="${board.writer}" readonly disabled="disabled">
 		</div>
 		<button class="btn btn-success" data-oper="list">목록</button>
 		<button class="btn btn-warning" data-oper="modify">수정</button>

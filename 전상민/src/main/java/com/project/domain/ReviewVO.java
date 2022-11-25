@@ -16,4 +16,6 @@ public class ReviewVO {
 	private Date updateDate;	// 리뷰 수정일
 	
 	private double rating;	// 	리뷰 별점
+	
+//	private String memberId;	// 회원 아이디
 }

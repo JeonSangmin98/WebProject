@@ -60,17 +60,17 @@ public class MemberController {
 		HttpSession session = request.getSession(); // 세션 사용
 		String beforePw = ""; // 사용자 입력 비밀번호
 		String encodePw = ""; // 인코딩 비밀번호
-
+		log.info(member);
 		MemberDTO loginDTO = service.memberLogin(member);
-
+		
 		if (loginDTO != null) { // 아이디 일치 시
 
-			// log.info("아이디 일치");
+			log.info("아이디 일치");
 			beforePw = member.getMemberPw();
 			encodePw = loginDTO.getMemberPw();
 
 			if (pwEncoder.matches(beforePw, encodePw) == true) { // 비밀번호 인코딩 일치여부 확인
-				// log.info("비밀번호 일치");
+				log.info("비밀번호 일치");
 				loginDTO.setMemberPw(""); // 인코딩 비밀번호 정보 삭제
 				session.setAttribute("member", loginDTO); // session에 사용자정보 저장
 				return "redirect:/mainHome"; // 로그인 성공 시 main 화면으로 이동

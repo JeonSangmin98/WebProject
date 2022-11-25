@@ -1,5 +1,8 @@
 package com.project.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.Criteria;
+import com.project.domain.MemberDTO;
 import com.project.domain.ReplyDTO;
 import com.project.domain.ReplyVO;
 import com.project.service.ReplyService;
@@ -29,8 +33,12 @@ public class ReplyController {
 	
 	// 댓글 생성
 	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> create(@RequestBody ReplyVO vo) {
+	public ResponseEntity<String> create(@RequestBody ReplyVO vo, HttpServletRequest request) {
 		log.info("ReplyVO : " + vo);
+		HttpSession session = request.getSession();
+		MemberDTO replyer = (MemberDTO) session.getAttribute("member");
+		String memberId = replyer.getMemberId();
+		vo.setReplyer(memberId);
 		int insertCount = service.register(vo);
 		log.info("insertCount : " + insertCount);
 		return insertCount == 1 ? new ResponseEntity<>("success", HttpStatus.OK)

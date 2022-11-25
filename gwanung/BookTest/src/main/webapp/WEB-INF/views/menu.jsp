@@ -12,6 +12,7 @@
 			style="user-select: auto;">
 			<span class="navbar-toggler-icon" style="user-select: auto;"></span>
 		</button>
+		
 		<div class="collapse navbar-collapse" id="navbarColor01"
 			style="user-select: auto;">
 			<ul class="navbar-nav me-auto" style="user-select: auto;">

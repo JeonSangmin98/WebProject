@@ -13,7 +13,7 @@
 <div class="panel-body">
 	<div class="form-group">
 		<label>글 번호</label> <input class="form-control" name="boardNo"
-			value="${board.boardNo}" readonly>
+			value="${board.boardNo}" readonly disabled="disabled">
 	</div>
 	<div class="form-group">
 		<label>글 제목</label> <input class="form-control" name="title"
@@ -25,10 +25,12 @@
 	</div>
 	<div class="form-group">
 		<label>작성자</label> <input class="form-control" name="writer"
-			value="${board.writer}" readonly>
+			value="${board.writer}" readonly disabled="disabled">
 	</div>
 	<button id="btn" class="btn btn-success listBtn" data-oper="list">목록</button>
-	<button id="btn" class="btn btn-warning modBtn" data-oper="modify">수정</button>
+	<c:if test="${member.memberId != null && member.memberId == board.writer}">
+		<button id="btn" class="btn btn-warning modBtn" data-oper="modify">수정</button>
+	</c:if>
 	<form id='actionForm' action="/board/list" method="get">
 		<input type="hidden" name="boardNo" value="${board.boardNo}"> 
 		<input type="hidden" name="pageNum" value="${cri.pageNum}">
@@ -40,8 +42,9 @@
 
 <div class="card mb-3">
 	<h3 class="card-header">댓글</h3>
-	<button id="addReplyBtn" type="button" class="btn btn-outline-info">새
-		댓글</button>
+	<c:if test="${member.memberId != null}">
+		<button id="addReplyBtn" type="button" class="btn btn-outline-info">새 댓글</button>
+	</c:if>
 	<div class="card-body">
 		<ul class="list-group list-group-flush chat">
 		</ul>
@@ -50,37 +53,32 @@
 	</div>
 </div>
 
-<div class="modal" id="reply-modal">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">댓글 알림창</h5>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<label>내용</label><input class="form-control" name="reply" value="New Reply!!">
+	<div class="modal" id="reply-modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">댓글 알림창</h5>
 				</div>
-				<div class="form-group">
-					<label>작성자</label><input class="form-control" name="replyer" value="replyer">
+				<div class="modal-body">
+					<div class="form-group">
+						<label>내용</label><input class="form-control" name="reply" value="New Reply!!">
+					</div>
+					<div class="form-group">
+						<label>작성자</label><input class="form-control" name="replyer" placeholder="${member.memberId}" value="${member.memberId}" disabled="disabled">
+					</div>
+					<div class="form-group">
+						<label>작성일</label><input class="form-control" name="replyDate" value="2022-11-23" disabled>
+					</div>
 				</div>
-				<div class="form-group">
-					<label>작성일</label><input class="form-control" name="replyDate" value="2022-11-23" disabled>
+				<div class="modal-footer">
+					<button id="modalRegisterBtn" type="button" class="btn btn-primary">등록</button>
+					<button id="modalModBtn" type="button" class="btn btn-warning">수정</button>
+					<button id="modalRemoveBtn" type="button" class="btn btn-danger">삭제</button>
+					<button id="modalCloseBtn" type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 				</div>
-			</div>
-			<div class="modal-footer">
-				<button id="modalRegisterBtn" type="button" class="btn btn-primary">등록</button>
-				<button id="modalModBtn" type="button" class="btn btn-warning">수정</button>
-				<button id="modalRemoveBtn" type="button" class="btn btn-danger">삭제</button>
-				<button id="modalCloseBtn" type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
-</div>
-
 <style>
 .pull-right{
 		float : right;
@@ -188,7 +186,7 @@
 		var modalModBtn = $("#modalModBtn");
 		var modalRemoveBtn = $("#modalRemoveBtn");
 		
-		
+		let memberId = '${member.memberId}';
 		
 		$("#modalCloseBtn").click(function(){
 			reply_modal.modal('hide');
@@ -197,6 +195,7 @@
 		
 		$("#addReplyBtn").click(function(){
 			reply_modal.find('input').val("");
+			console.log(memberId);
 			modalInputReplyDate.closest('div').hide();
 			reply_modal.find('button[id != "modalCloseBtn"]').hide();
 			modalRegisterBtn.show();
@@ -211,6 +210,7 @@
 					boardNo : boardNoValue
 			};// end reply
 			replyService.add(reply, function(result){
+				//console.log(replyer);
 				alert(result);
 				reply_modal.find('input').val("");
 				reply_modal.modal("hide");
@@ -218,7 +218,6 @@
 			});// end add
 		});//modalRegisterBtn.on('click'
 		
-				
 		replyUL.on('click','li', function(){
 			var replyNo = $(this).data('replyno');
 			//console.log(replyNo);
@@ -226,11 +225,18 @@
 				console.log(data);
 				modalInputReply.val(data.reply);
 				modalInputReplyer.val(data.replyer);
+				
+				let d_replyer = data.replyer;
+				console.log(d_replyer);
 				modalInputReplyDate.val(replyService.displayTime(data.replyDate))
 					.attr("readonly","readonly");
 				modalRegisterBtn.hide();
 				reply_modal.data("replyNo", data.replyNo);
-				reply_modal.modal("show");
+				if(d_replyer == memberId || memberId == 'admin'){
+					reply_modal.modal("show");
+				}else if(d_replyer != memberId){
+					alert('회원님의 댓글이 아닙니다!!');
+				}
 				
 				reply_modal.find('button[id != "modalCloseBtn"]').hide();
 				modalModBtn.show();

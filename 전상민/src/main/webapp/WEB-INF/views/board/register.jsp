@@ -13,19 +13,32 @@
 	<!-- <h1 class="display-3">글쓰기</h1> -->
 </div>
 <div class="panel-body">
-	<form action="/board/register" role="form" method="post">
+	<form action="/board/register" role="form" method="post" class="regForm">
 		<div class="form-group">
-			<label>글 제목</label> <input class="form-control" name="title">
+			<label>글 제목</label> <input class="form-control" name="title" id="title">
 		</div>
 		<div class="form-group">
 			<label>글 내용</label>
-			<textarea class="form-control" rows="3" name="content"></textarea>
+			<textarea class="form-control" rows="3" name="content" id="content"></textarea>
 		</div>
 		<div class="form-group">
-			<label>작성자</label> <input class="form-control" name="writer">
+			<label>작성자</label> <input class="form-control" name="writer" id="memberId" placeholder="${member.memberId}" value="${member.memberId}" disabled="disabled">
 		</div>
-		<button type="submit" class="btn btn-success">등록</button>
-		<button type="reset" class="btn btn-warning">초기화</button>
+		<div class="regBtn">
+			<button type="submit" class="btn btn-success" id="submit">등록</button>
+			<button type="reset" class="btn btn-warning" id="reset">초기화</button>
+		</div>
 	</form>
 </div>
+<script>
+	
+</script>
+<style>
+.form-group{
+	padding : 10px;
+}
+.regBtn{
+	padding : 10px;
+}
+</style>
 <%-- <%@ include file="../includes/footer.jsp"%> --%>

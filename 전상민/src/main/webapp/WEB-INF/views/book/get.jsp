@@ -1,21 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <title>도서 상세정보</title>
-<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/bootstrap.min.css?ver=1" rel="stylesheet">
 <style type="text/css">
 img {
 	width: 400px;
 	height: 400px;
 	text-align: center;
 }
+.bookImg{
+	padding :10px;
+	padding-left : 30px;
+	padding-right : 30px;
+	float : left;
+}
+.info-title{
+	padding : 10px;
+}
+.bookInfo{
+	padding : 30px;
+}
 </style>
 	<jsp:include page="../menu.jsp" />
 	<div class="container" style="user-select: auto;">
 		<div class="page-header" id="banner" style="user-select: auto;">
 			<div class="row" style="user-select: auto;">
-				<div class="col-lg-8 col-md-7 col-sm-6" style="user-select: auto;">
-					<h1 style="user-select: auto;">도서 상세정보</h1>
+				<div class="col-lg-8 col-md-7 col-sm-6 info-title" style="user-select: auto;">
+					<h1 style="user-select: auto;">도서 상세정보${member.memberId}${member.memberName}</h1>
 					<p class="text-info" style="user-select: auto;">상세정보 테스트</p>
 				</div>
 				<div class="col-lg-4 col-md-5 col-sm-6" style="user-select: auto;">
@@ -25,40 +38,40 @@ img {
 		</div>
 	</div>
 
-	<div class="col-lg-4 col-md-4 col-sm-4" style="user-select: auto;">
-		<img src="${info.image}" class="img-responsive center-block">
+	<div>
+		<div class="col-lg-4 bookImg">
+			<img src="${info.image}" class="img-responsive center-block">
+		</div>
+		<div class="col-lg-4 col-md-4 col-sm-4 bookInfo">
+			<p class="c_title">책 제목: ${info.title}</p>
+			<p class="c_author">저자: ${info.author}</p>
+			<p class="c_discount">가격: ${info.discount}</p>
+			<p>
+				<fmt:formatDate value="${info.pubdate}" pattern="yyyy-MM-dd" />
+			</p>
+			<p>
+				상세정보:<br> ${info.description}
+			</p>
+			<%-- <form action="/book/list" id="operForm" method="get">
+				<input type="hidden" name="bno" value="${board.bno}"> <input
+					type="hidden" name="pageNum" value="${cri.pageNum}"> <input
+					type="hidden" name="amount" value="${cri.amount}">
+			</form> --%>
+			<div class="bookBtn">
+				<button type="button" class="btn btn-primary">구매하기</button>
+				<button type="button" class="btn btn-info" id="basketBtn">장바구니</button>
+				<button type="button" class="btn btn-warning">대여하기</button>
+				<button type="button" class="btn btn-secondary" id="backBtn">뒤로가기</button>
+			</div>
+		</div>
 	</div>
-	<div class="col-lg-4 col-md-4 col-sm-4" style="user-select: auto;">
-		<p class="c_title">책 제목: ${info.title}</p>
-		<p class="c_author">저자: ${info.author}</p>
-		<p class="c_discount">가격: ${info.discount}</p>
-		<p>
-			<fmt:formatDate value="${info.pubdate}" pattern="yyyy-MM-dd" />
-		</p>
-		<p>
-			상세정보:<br> ${info.description}
-		</p>
-
-		<button type="button" class="btn btn-primary"
-			style="user-select: auto;">구매하기</button>
-		<button type="button" class="btn btn-info" style="user-select: auto;"
-			id="basketBtn">장바구니</button>
-		<button type="button" class="btn btn-warning"
-			style="user-select: auto;">대여하기</button>
-		<button type="button" class="btn btn-secondary"
-			style="user-select: auto;" id="backBtn">뒤로가기</button>
-		<%-- <form action="/book/list" id="operForm" method="get">
-			<input type="hidden" name="bno" value="${board.bno}"> <input
-				type="hidden" name="pageNum" value="${cri.pageNum}"> <input
-				type="hidden" name="amount" value="${cri.amount}">
-		</form> --%>
-
-	</div>
+	
 	
 	<div class="card mb-3">
 		<h3 class="card-header">리뷰</h3>
-		<button id="addReviewBtn" type="button" 
-			class="btn btn-outline-info">새 리뷰</button>
+		<c:if test="${member.memberId != null}">
+			<button id="addReviewBtn" type="button" class="btn btn-outline-info">새 리뷰</button>
+		</c:if>
 		<div class="card-body">
 			<ul class="list-group list-group-flush review">
 			</ul>
@@ -74,15 +87,11 @@ img {
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">리뷰창<span></span></h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">×</span>
-					</button>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
 						<label>내용</label><input class="form-control" name="review"
-							value="새로운 리뷰!!">
+							value="새로운 리뷰!!" maxlength="30" placeholder="최대 30자 까지 입력해주세요...">
 					</div>
 					<div class="form-group">
 						<label>별점</label>
@@ -95,8 +104,8 @@ img {
                     </select>
 					</div>
 					<div class="form-group">
-						<label>작성자</label><input class="form-control" name="reviewer"
-							value="reviewer">
+						<label>작성자</label><input class="form-control reviewer" name="reviewer"
+							value="reviewer" placeholder="${member.memberId}" value="${member.memberId}" disabled>
 					</div>
 					<div class="form-group">
 						<label>작성일</label><input class="form-control" name="reviewDate"
@@ -117,9 +126,9 @@ img {
 		</div>
 	</div>
 	<!-- 제이쿼리 먼지 등록 / 부트스트랩에서 제이쿼리를 사용 -->
-<script src="/resources/js/review.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+<script src="/resources/js/review.js"></script>
 <style>
 .pull-right{
 		float : right;
@@ -143,6 +152,7 @@ img {
 		console.log("JS TEST"); */
 		var bnoValue = '${info.bno}';
 		var reviewUL = $(".review");
+		
 		showList(1);
 		function showList(page){
 			reviewService.getList({bno : bnoValue, page : page || 1 },
@@ -207,14 +217,16 @@ img {
 			reviewPageFooter.html(str);
 		}//showReviewPage()
 		
-				
+		var reviewer = '${reply.reviewr}';
 		reviewPageFooter.on('click', 'li a',function(e){
 			e.preventDefault();
 			console.log("page click");
-			var targetPageNum = $(this).attr('href');
-			console.log('targetPageNum : ' + targetPageNum);
-			pageNum = targetPageNum;
-			showList(pageNum);
+			if(reviewr === memberId){
+				var targetPageNum = $(this).attr('href');
+				console.log('targetPageNum : ' + targetPageNum);
+				pageNum = targetPageNum;
+				showList(pageNum);
+			}
 		});//reviewPageFooter.on('click'
 		
 		var review_modal = $("#review-modal");
@@ -227,6 +239,8 @@ img {
 		var reviewModalRegisterBtn = $("#review-modalRegisterBtn");
 		var reviewModalModBtn = $("#review-modalModBtn");
 		var reviewModalRemoveBtn = $("#review-modalRemoveBtn");
+		
+		let memberId = '${member.memberId}';
 		
 		$("#review-modalCloseBtn").click(function(){
 			review_modal.modal('hide');
@@ -263,10 +277,17 @@ img {
 				modalInputReview.val(data.review);
 				modalInputReviewer.val(data.reviewer);
 				modalInputRating.val(data.rating);
+				
+				let d_reviewer = data.reviewer;
+				console.log(d_reviewer);
 				modalInputReviewDate.val(reviewService.displayTime(data.reviewDate)).attr("readonly","readonly");
 				reviewModalRegisterBtn.hide();
 				review_modal.data("reviewNo", data.reviewNo);
-				review_modal.modal("show");
+				if(d_reviewer == memberId || memberId == 'admin'){
+					review_modal.modal("show");
+				} else {
+					alert('회원님의 리뷰가 아닙니다!!');
+				}
 				
 				review_modal.find('button[id != "review-modalCloseBtn"]').hide();
 				reviewModalModBtn.show();

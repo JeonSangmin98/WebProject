@@ -1,5 +1,8 @@
 package com.project.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.Criteria;
+import com.project.domain.MemberDTO;
 import com.project.domain.ReviewDTO;
 import com.project.domain.ReviewVO;
 import com.project.service.ReviewService;
@@ -29,8 +33,12 @@ public class ReviewController {
 
 	// 리뷰 생성
 	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> create(@RequestBody ReviewVO vo) {
+	public ResponseEntity<String> create(@RequestBody ReviewVO vo, HttpServletRequest request) {
 		log.info("ReviewVO : " + vo);
+		HttpSession session = request.getSession();
+		MemberDTO reviewer = (MemberDTO) session.getAttribute("member");
+		String memberId = reviewer.getMemberId();
+		vo.setReviewer(memberId);
 		int insertCount = service.register(vo);
 		log.info("insertCount : " + insertCount);
 		return insertCount == 1 ? new ResponseEntity<>("success", HttpStatus.OK)

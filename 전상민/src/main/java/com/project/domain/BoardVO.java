@@ -14,4 +14,10 @@ public class BoardVO {
 	private Date updateDate;	// 게시글 수정 시간
 	
 	private int replyCnt;	// 게시글의 댓글 수
+	
+//	private String memberId;	// 회원 아이디
+
+//	public void setWriter(MemberDTO memberId) {
+//		this.writer = ;
+//	}
 }

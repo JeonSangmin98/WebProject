@@ -31,8 +31,8 @@
 	<select id="getListWithPaging"
 		resultType="com.project.domain.BoardVO">
 		<![CDATA[
-			select boardNo, title, content, writer, regdate, updateDate, replyCnt from
-    			(select /*+ INDEX_DESC(tbl_board pk_board) */ 
+			select boardNo, title, content, writer, regdate, updateDate, replyCnt 
+			from (select /*+ INDEX_DESC(tbl_board pk_board) */ 
     				rownum rn, boardNo, title, content, writer, regdate, updateDate, replyCnt
         			from tbl_board where 
         ]]>		
