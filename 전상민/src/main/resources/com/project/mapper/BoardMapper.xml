@@ -86,4 +86,8 @@
 		where boardNo = #{boardNo}
 	</update>
 	
+	<!-- <delete id="allDelete">
+		delete from tbl_board
+		where boardNo = #{boardNo} 
+	</delete> -->
 </mapper>

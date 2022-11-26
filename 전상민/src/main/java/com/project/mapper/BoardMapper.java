@@ -35,5 +35,7 @@ public interface BoardMapper {
 //	게시글의 댓글이 추가/삭제 될때마다 댓글 수 업데이트
 	public void updateReplyCnt(@Param("boardNo") Long boardNo, @Param("amount") int amount);
 	
+//  댓글 있는 게시글 삭제
+	public int allDelete(Long boardNo);
 	
 }

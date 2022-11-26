@@ -4,13 +4,28 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="../menu.jsp"%>
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
-<div class="jumbotron">
-	<!-- <h1 class="display-3">자유 게시판</h1> -->
-	<div class="page-header">
-		<h1 id="tables">자유 게시판</h1>
-	</div>
+<style>
+	.pull-right{
+		float : right;
+	}
+	.panel-heading{
+		padding : 10px;
+	}
+	#searchForm{
+		float : right;
+		padding-bottom : 10px;
+	}
+	.page-header{
+		padding-top : 30px;
+	}
+	#boardTitle{
+		margin : 20px;
+		text-align : center;
+	}
+</style>
+<div class="page-header">
+	<h1 id="boardTitle">자유 게시판</h1>
 </div>
-
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel-heading">
@@ -30,7 +45,7 @@
 			</form>
 			<table class="table table-hover">
 				<thead>
-					<tr>
+					<tr class="table-primary">
 						<th scope="col">번호</th>
 						<th scope="col">글 제목</th>
 						<th scope="col">작성자</th>
@@ -42,8 +57,8 @@
 					<c:forEach items="${list}" var="board">
 						<tr>
 							<th scope="row">${board.boardNo}</th>
-							<td><a class='move' href='${board.boardNo}'>${board.title}
-								<span class="text-danger">${board.replyCnt}</span></a></td>
+							<td><a class='move' href='${board.boardNo}'>${board.title} ...  
+								<span class="badge bg-secondary">${board.replyCnt}</span></a></td>
 							<td>${board.writer}</td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${board.regdate}" /></td>
@@ -84,7 +99,7 @@
               </div>
 			</div>
 			<c:if test="${member.memberId != null}">
-				<button id="regBtn" type="button" class="btn btn-outline-info">글쓰기</button>
+				<button id="regBtn" type="button" class="btn btn-info">글쓰기</button>
 			</c:if>
 		</div>
 	</div>
@@ -105,18 +120,6 @@
 		</div>
 	</div>
 </div>
-<style>
-	.pull-right{
-		float : right;
-	}
-	.panel-heading{
-		padding : 10px;
-	}
-	#searchForm{
-		float : right;
-		padding-bottom : 10px;
-	}
-</style>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script>
@@ -180,6 +183,5 @@
 		});
 	});
 </script>
-<%-- <%@ include file="../includes/footer.jsp"  %> --%>
 </body>
 </html>

@@ -77,9 +77,9 @@ public class ReplyController {
 			consumes = "application/json",
 			produces = { MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> modify(@RequestBody ReplyVO vo, @PathVariable("replyNo")Long replyNo){
-		log.info("modify-ron : " + replyNo);
+		log.info("modify-rno : " + replyNo);
 		log.info("ReplyVO : " + vo);
-		vo.setReplyNo(replyNo);;
+		vo.setReplyNo(replyNo);
 		return service.modify(vo) == 1 ? new ResponseEntity<>("success",HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}

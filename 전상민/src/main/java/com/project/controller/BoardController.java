@@ -28,8 +28,6 @@ import lombok.extern.log4j.Log4j;
 public class BoardController {
 	@Autowired
 	private BoardService service;
-	@Autowired
-	private MemberService mservice;
 
 //	목록 처리
 	@GetMapping("/list")
@@ -37,7 +35,6 @@ public class BoardController {
 		log.info("list ----------");
 		log.info("cri: " + cri);
 //		model.addAttribute("pageMaker", new PageDTO(cri, 123)); // 임의의 값 123
-//		model.addAttribute("memberId", mservice.getMemberId(memberId));
 		int total = service.getTotal(cri);
 		log.info("total : " + total); 
 		model.addAttribute("list", service.getList(cri));
@@ -87,9 +84,14 @@ public class BoardController {
 	@PostMapping("/remove")
 	public String remove(Long boardNo, @ModelAttribute("cri")Criteria cri, RedirectAttributes rttr) {
 		log.info("remove : " + boardNo);
+		log.info("removeAll : "+ boardNo);
 		if (service.remove(boardNo) == 1) {
 			rttr.addFlashAttribute("result", "success");
 		}
+		
+//		if(service.removeAll(boardNo) == 1) {
+//			rttr.addFlashAttribute("result", "success");
+//		}
 		
 		return "redirect:/board/list" + cri.getListLink();
 	}

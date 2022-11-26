@@ -15,5 +15,4 @@ public class ReplyVO {
 	private Date replyDate;		// 댓글 작성일
 	private Date updateDate;	// 댓글 수정일
 	
-//	private String memberId;	// 회원 아이디
 }

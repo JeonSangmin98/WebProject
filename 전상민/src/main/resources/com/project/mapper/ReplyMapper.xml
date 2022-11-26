@@ -37,4 +37,10 @@
  	<select id="getCountByBoardNo" resultType="int">
 		select count(*) from tbl_reply where boardNo = #{boardNo} 
 	</select>
+	
+	<delete id="allDeleteReply">
+		delete from tbl_reply
+		where boardNo = #{boardNo}
+	</delete>
+	
  </mapper>

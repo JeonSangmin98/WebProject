@@ -3,6 +3,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="../menu.jsp"%>
+<style>
+.pull-right{
+		float : right;
+	}
+.panel-body{
+	padding-top : 10px;
+	padding-bottom : 10px;
+	padding-left : 100px;
+	padding-right : 100px;
+}
+.card{
+	padding-top : 10px;
+	padding-bottom : 10px;
+	padding-left : 100px;
+	padding-right : 100px;
+}
+.editBtn{
+	padding-top : 10px;
+}
+</style>
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <div class="jumbotron">
 	<div class="page-header">
@@ -27,10 +47,12 @@
 		<label>작성자</label> <input class="form-control" name="writer"
 			value="${board.writer}" readonly disabled="disabled">
 	</div>
-	<button id="btn" class="btn btn-success listBtn" data-oper="list">목록</button>
-	<c:if test="${member.memberId != null && member.memberId == board.writer}">
-		<button id="btn" class="btn btn-warning modBtn" data-oper="modify">수정</button>
-	</c:if>
+	<div class="editBtn">
+		<button id="btn" class="btn btn-success listBtn" data-oper="list">목록</button>
+		<c:if test="${member.memberId != null && member.memberId == board.writer || member.memberId eq 'admin'}">
+			<button id="btn" class="btn btn-warning modBtn" data-oper="modify">수정</button>
+		</c:if>
+	</div>
 	<form id='actionForm' action="/board/list" method="get">
 		<input type="hidden" name="boardNo" value="${board.boardNo}"> 
 		<input type="hidden" name="pageNum" value="${cri.pageNum}">
@@ -53,49 +75,33 @@
 	</div>
 </div>
 
-	<div class="modal" id="reply-modal">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">댓글 알림창</h5>
+<div class="modal" id="reply-modal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">댓글 알림창</h5>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label>내용</label><input class="form-control" name="reply" value="New Reply!!">
 				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label>내용</label><input class="form-control" name="reply" value="New Reply!!">
-					</div>
-					<div class="form-group">
-						<label>작성자</label><input class="form-control" name="replyer" placeholder="${member.memberId}" value="${member.memberId}" disabled="disabled">
-					</div>
-					<div class="form-group">
-						<label>작성일</label><input class="form-control" name="replyDate" value="2022-11-23" disabled>
-					</div>
+				<div class="form-group">
+					<label>작성자</label><input class="form-control" name="replyer" placeholder="${member.memberId}" value="${member.memberId}" disabled="disabled">
 				</div>
-				<div class="modal-footer">
-					<button id="modalRegisterBtn" type="button" class="btn btn-primary">등록</button>
-					<button id="modalModBtn" type="button" class="btn btn-warning">수정</button>
-					<button id="modalRemoveBtn" type="button" class="btn btn-danger">삭제</button>
-					<button id="modalCloseBtn" type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				<div class="form-group">
+					<label>작성일</label><input class="form-control" name="replyDate" value="2022-11-23" disabled>
 				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="modalRegisterBtn" type="button" class="btn btn-primary">등록</button>
+				<button id="modalModBtn" type="button" class="btn btn-warning">수정</button>
+				<button id="modalRemoveBtn" type="button" class="btn btn-danger">삭제</button>
+				<button id="modalCloseBtn" type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
-<style>
-.pull-right{
-		float : right;
-	}
-.panel-body{
-	padding-top : 10px;
-	padding-bottom : 10px;
-	padding-left : 100px;
-	padding-right : 100px;
-}
-.card{
-	padding-top : 10px;
-	padding-bottom : 10px;
-	padding-left : 100px;
-	padding-right : 100px;
-}
-</style>
+</div>
+
 <script src="/resources/js/reply.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
@@ -261,7 +267,7 @@
 		
 				
 		modalRemoveBtn.on("click", function(){
-			var replyNo = reply_modal.data("replyNo");
+			var replyNo = reply_modal.data("replyno");
 			replyService.remove(replyNo, function(result){
 				alert(result);
 				reply_modal.modal("hide");

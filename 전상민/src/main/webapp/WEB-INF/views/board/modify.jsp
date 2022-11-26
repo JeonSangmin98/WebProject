@@ -18,7 +18,7 @@
 		<input type="hidden" name="type" value="${cri.type}">
 		<div class="form-group">
 			<label>글 번호</label> <input class="form-control" name="boardNo"
-			value="${board.boardNo}" readonly disabled="disabled">
+			value="${board.boardNo}"  >
 		</div>
 		<div class="form-group">
 			<label>글 제목</label> <input class="form-control" name="title"

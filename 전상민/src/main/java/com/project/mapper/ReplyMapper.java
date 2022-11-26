@@ -23,4 +23,7 @@ public interface ReplyMapper {
 	
 	// 게시글 번호 카운트
 	public int getCountByBoardNo(Long boardNo);
+	
+	// 전체 댓글 삭제
+	public void allDeleteReply(Long boardNo);
 }

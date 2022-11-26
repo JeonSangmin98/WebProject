@@ -22,13 +22,31 @@ img {
 .bookInfo{
 	padding : 30px;
 }
+.infoDiv{
+	padding-bottom : 10px;
+}
+.pull-right{
+		float : right;
+	}
+.panel-body{
+	padding-top : 10px;
+	padding-bottom : 10px;
+	padding-left : 100px;
+	padding-right : 100px;
+}
+.card{
+	padding-top : 10px;
+	padding-bottom : 10px;
+	padding-left : 100px;
+	padding-right : 100px;
+}
 </style>
 	<jsp:include page="../menu.jsp" />
 	<div class="container" style="user-select: auto;">
 		<div class="page-header" id="banner" style="user-select: auto;">
 			<div class="row" style="user-select: auto;">
 				<div class="col-lg-8 col-md-7 col-sm-6 info-title" style="user-select: auto;">
-					<h1 style="user-select: auto;">도서 상세정보${member.memberId}${member.memberName}</h1>
+					<h1 style="user-select: auto;">도서 상세정보</h1>
 					<p class="text-info" style="user-select: auto;">상세정보 테스트</p>
 				</div>
 				<div class="col-lg-4 col-md-5 col-sm-6" style="user-select: auto;">
@@ -38,18 +56,18 @@ img {
 		</div>
 	</div>
 
-	<div>
-		<div class="col-lg-4 bookImg">
-			<img src="${info.image}" class="img-responsive center-block">
-		</div>
-		<div class="col-lg-4 col-md-4 col-sm-4 bookInfo">
-			<p class="c_title">책 제목: ${info.title}</p>
-			<p class="c_author">저자: ${info.author}</p>
-			<p class="c_discount">가격: ${info.discount}</p>
+	<div class="infoDiv">
+		<div class="card border-light bookInfo">
+			<h3 class="card-header c_title">책 제목: ${info.title}</h3>
+			<div class="col-lg-4 bookImg">
+				<img src="${info.image}" class="d-block user-select-none img-responsive center-block">
+			</div>
+			<h5 class="card-title c_author">저자: ${info.author}</h5>
+			<h5 class="card-title c_discount">가격: ${info.discount}</h5>
 			<p>
 				<fmt:formatDate value="${info.pubdate}" pattern="yyyy-MM-dd" />
 			</p>
-			<p>
+			<p class="card-text">
 				상세정보:<br> ${info.description}
 			</p>
 			<%-- <form action="/book/list" id="operForm" method="get">
@@ -129,23 +147,6 @@ img {
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script src="/resources/js/review.js"></script>
-<style>
-.pull-right{
-		float : right;
-	}
-.panel-body{
-	padding-top : 10px;
-	padding-bottom : 10px;
-	padding-left : 100px;
-	padding-right : 100px;
-}
-.card{
-	padding-top : 10px;
-	padding-bottom : 10px;
-	padding-left : 100px;
-	padding-right : 100px;
-}
-</style>
 <script>
 	$(function() {
 		/* console.log(replyService);
@@ -176,7 +177,19 @@ img {
 							str += '<div class="card-body">';
 							str += '<strong>' + list[i].reviewer + '</strong>';
 							str += '<div class="pull-right">';
-							str += '<span class="badge bg-warning">평점 : '+ list[i].rating +'</span>';
+							str += '<span class="badge bg-warning">평점 : ';
+							if(list[i].rating == 1){
+								str += '★☆☆☆☆ ';
+							} else if(list[i].rating == 2) {
+								str += '★★☆☆☆ ';
+							} else if(list[i].rating == 3) {
+								str += '★★★☆☆ ';
+							} else if(list[i].rating == 4) {
+								str += '★★★★☆ ';
+							} else if(list[i].rating == 5) {
+								str += '★★★★★ ';
+							}
+							str += list[i].rating + '</span>';
 							str += '</div>';
 							str += '<small class="d-flex w-100 justify text-muted">'
 									+ reviewService.displayTime(list[i].reviewDate)
