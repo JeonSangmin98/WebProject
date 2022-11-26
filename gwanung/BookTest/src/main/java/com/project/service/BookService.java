@@ -1,6 +1,7 @@
 package com.project.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.project.domain.BookDTO;
 import com.project.domain.Criteria;
@@ -14,7 +15,7 @@ public interface BookService {
 	
 	public BookDTO get(Long bno);  // 도서 상세정보
 	
-	public BookDTO searchList(String type, String keyword); // 도서 검색
+	public List<BookDTO> searchList(String type, String keyword); // 도서 검색
 	
 	public int getTotal(Criteria cri); //총 도서 개수
 	

@@ -1,6 +1,7 @@
 package com.project.mapper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -17,7 +18,7 @@ public interface BookMapper {
 	
 	public BookDTO read(Long bno); // 책 상세조회
 	
-	public BookDTO searchList(@Param("type") String type, @Param("keyword") String keyword);//도서 검색
+	public List<BookDTO> searchList(@Param("type") String type, @Param("keyword") String keyword);//도서 검색
 	
 	public int getTotalCount(Criteria cri); //총 도서 개수
 	

@@ -72,8 +72,8 @@ th, td {
 								value="${cart.cartCount}" name="cartCount">
 							<button class="btn btn-outline-dark plusBtn" type="button">+</button>
 						</div>
-							<button class="btn btn-dark updateCountBtn"
-								data-cartBno="${cart.cartBno}">변경</button>
+						<button class="btn btn-dark updateCountBtn"
+							data-cartBno="${cart.cartBno}">변경</button>
 					</td>
 					<td style="user-select: auto;">
 						<button class="btn btn-danger deleteBtn"
@@ -87,13 +87,15 @@ th, td {
 	<%--수량 수정 form --%>
 	<form action="/cart/update" method="post" class="updateForm">
 		<input type="hidden" name="cartBno" class="updateCartBno"> <input
-			type="hidden" name="count" class="updateCartCount">
+			type="hidden" name="cartCount" class="updateCartCount"> <input
+			type="hidden" name="memberId" value="${member.memberId}">
 	</form>
 
 
 	<%--삭제 form --%>
 	<form action="/cart/delete" method="post" class="deleteForm">
-		<input type="hidden" name="cartBno" class="deleteCartBno">
+		<input type="hidden" name="cartBno" class="deleteCartBno"> <input
+			type="hidden" name="memberId" value="${member.memberId}">
 	</form>
 
 	<%--추가 form --%>
@@ -116,7 +118,6 @@ th, td {
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-
 	//장바구니 수량 조절 +
 	$(".plusBtn").on("click", function() {
 		let countValue = $(this).parent("div").find("input").val();
@@ -135,7 +136,6 @@ th, td {
 	$(".updateCountBtn").on("click", function() {
 		let cartBno = $(this).data("cartbno");
 		let cartCount = $(this).parent("td").find("input").val();
-		/* let count = $(".countValue").val(); */
 		//수량 변경 버튼 클릭 시 Controller를 통해 DB에 전달
 		$(".updateCartBno").val(cartBno);
 		$(".updateCartCount").val(cartCount);
