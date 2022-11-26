@@ -353,7 +353,7 @@
 		});//reviewModalRegisterBtn.on('click'
 				
 		replyUL.on('click','li', function(){
-			var replyNo = $(this).data('replyNo');
+			var replyNo = $(this).data('replyno');
 			//console.log(replyNo);
 			replyService.get(replyNo, function(data){
 				console.log(data);
@@ -371,7 +371,7 @@
 			});
 		});//replyUL.on('click','li'
 		reviewUL.on('click','li', function(){
-			var reviewNo = $(this).data('reviewNo');
+			var reviewNo = $(this).data('reviewno');
 			//console.log(replyNo);
 			reviewService.get(reviewNo, function(data){
 				console.log(data);

@@ -6,7 +6,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +18,7 @@ import com.project.domain.MemberDTO;
 import com.project.service.MemberService;
 
 import lombok.extern.log4j.Log4j;
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("/member")
@@ -28,12 +31,12 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder; // 비밀번호 인코딩
 
-	// 회원가입 페이지
+	//회원가입 페이지
 	@GetMapping("join")
 	public void joinGet() {
 	}
 
-	// 회원가입
+	//회원가입
 	@PostMapping("/join")
 	public String joinPost(MemberDTO member) {
 
@@ -48,12 +51,12 @@ public class MemberController {
 		return "redirect:/mainHome";
 	}
 
-	// 로그인 페이지
+	//로그인 페이지
 	@GetMapping("/login")
 	public void loginGet() {
 	}
 
-	// 인코딩 후 로그인
+	//인코딩 후 로그인
 	@PostMapping("/login")
 	public String loginPost(HttpServletRequest request, MemberDTO member, RedirectAttributes rttr) throws Exception {
 
@@ -88,7 +91,7 @@ public class MemberController {
 		}
 	}
 
-	// 비동기 로그 아웃 ajax ResponseBody 사용
+	//비동기 로그아웃 ajax ResponseBody 사용
 	@PostMapping("/logout")
 	@ResponseBody
 	public String logoutGet(HttpServletRequest request) throws Exception {
@@ -98,7 +101,7 @@ public class MemberController {
 		return "redirect:/mainHome";
 	}
 
-	// 중복 아이디 검사
+	//중복 아이디 검사
 	@PostMapping("/idCheck")
 	@ResponseBody
 	public String idCheckPost(String memberId) {
@@ -111,4 +114,49 @@ public class MemberController {
 		else
 			return "success";
 	}
+
+	//회원정보 페이지
+	@GetMapping("/info")
+	public String infoGet(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession(); // 세션 생성
+		MemberDTO memberDto = (MemberDTO) session.getAttribute("member"); //세션 객체의 id값 저장
+		
+		if(memberDto == null) {
+			return "redirect:/mainHome";
+		}
+		
+		String memberId = memberDto.getMemberId();
+		log.info(memberId);
+		model.addAttribute("info", service.memberInfo(memberId)); // 해당 id memberDTO 객체 값 info로 View에서 사용
+		return "/member/info";
+	}
+
+	//회원정보 수정
+	@PostMapping("/modify")
+	public String modifyPost(MemberDTO member, HttpServletRequest request) {
+		
+		String beforePw = ""; // 인코딩 전 비밀번호
+		String encodePw = ""; // 인코딩 후 비밀번호
+
+		beforePw = member.getMemberPw(); // 원래 비밀번호
+		encodePw = pwEncoder.encode(beforePw); // 비밀번호 인코딩
+		member.setMemberPw(encodePw); // 인코딩 된 비밀번호 넣어줌
+		
+		service.memberModify(member);
+		HttpSession session = request.getSession(); // 세션 사용
+		session.invalidate(); 
+		return "redirect:/mainHome";
+	}
+	
+	//회원정보 삭제
+	@PostMapping("/delete")
+	public String deletePost(MemberDTO member, HttpServletRequest request) {
+		
+		service.memberDelete(member);
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return "redirect:/mainHome";
+	}
+	
+	
 }
