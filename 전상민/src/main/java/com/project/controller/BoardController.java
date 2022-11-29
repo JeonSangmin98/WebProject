@@ -18,7 +18,6 @@ import com.project.domain.Criteria;
 import com.project.domain.MemberDTO;
 import com.project.domain.PageDTO;
 import com.project.service.BoardService;
-import com.project.service.MemberService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -84,14 +83,9 @@ public class BoardController {
 	@PostMapping("/remove")
 	public String remove(Long boardNo, @ModelAttribute("cri")Criteria cri, RedirectAttributes rttr) {
 		log.info("remove : " + boardNo);
-		log.info("removeAll : "+ boardNo);
 		if (service.remove(boardNo) == 1) {
 			rttr.addFlashAttribute("result", "success");
 		}
-		
-//		if(service.removeAll(boardNo) == 1) {
-//			rttr.addFlashAttribute("result", "success");
-//		}
 		
 		return "redirect:/board/list" + cri.getListLink();
 	}

@@ -21,4 +21,6 @@ public interface CartMapper {
 	//카트 중복 확인
 	public CartDTO checkCart(CartDTO cart);
 	
+	//회원 카트 전체 삭제
+	public void deleteMemberCart(String memberId);
 }

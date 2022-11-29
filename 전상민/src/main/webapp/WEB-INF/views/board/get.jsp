@@ -5,49 +5,55 @@
 <%@ include file="../menu.jsp"%>
 <style>
 .pull-right{
-		float : right;
-	}
+	float : right;
+}
 .panel-body{
-	padding-top : 10px;
-	padding-bottom : 10px;
-	padding-left : 100px;
-	padding-right : 100px;
+	padding : 10px 100px;
 }
 .card{
-	padding-top : 10px;
-	padding-bottom : 10px;
-	padding-left : 100px;
-	padding-right : 100px;
+	padding : 10px 100px;
 }
 .editBtn{
+	justify-content : center;
 	padding-top : 10px;
+}
+#boardTitle{
+	margin : 20px;
+	text-align : center;
+}
+.form-group{
+	padding-bottom : 40px;
+}
+#btn{
+	padding-left : 20px;
+	padding-right : 20px;
 }
 </style>
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <div class="jumbotron">
 	<div class="page-header">
-		<h1 id="tables">${board.title}</h1>
+		<h1 id="boardTitle">${board.title}</h1>
 	</div>
 	<!-- <h1 class="display-3">글쓰기</h1> -->
 </div>
 <div class="panel-body">
 	<div class="form-group">
 		<label>글 번호</label> <input class="form-control" name="boardNo"
-			value="${board.boardNo}" readonly disabled="disabled">
+			value="${board.boardNo}" readonly="readonly">
 	</div>
 	<div class="form-group">
 		<label>글 제목</label> <input class="form-control" name="title"
-			value="${board.title}" readonly>
+			value="${board.title}" readonly="readonly">
 	</div>
 	<div class="form-group">
 		<label>글 내용</label>
-		<textarea class="form-control" rows="3" name="content" readonly>${board.content}</textarea>
+		<textarea class="form-control" rows="3" name="content" readonly="readonly">${board.content}</textarea>
 	</div>
 	<div class="form-group">
 		<label>작성자</label> <input class="form-control" name="writer"
-			value="${board.writer}" readonly disabled="disabled">
+			value="${board.writer}" readonly="readonly">
 	</div>
-	<div class="editBtn">
+	<div class="editBtn btn-group text-center" role="group" aria-label="Basic example">
 		<button id="btn" class="btn btn-success listBtn" data-oper="list">목록</button>
 		<c:if test="${member.memberId != null && member.memberId == board.writer || member.memberId eq 'admin'}">
 			<button id="btn" class="btn btn-warning modBtn" data-oper="modify">수정</button>

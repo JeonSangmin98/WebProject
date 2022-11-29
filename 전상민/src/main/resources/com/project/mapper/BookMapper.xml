@@ -35,8 +35,8 @@
 	<select id="getListWithPaging"
 		resultType="com.project.domain.BookDTO">
 	<![CDATA[
-		select bno, author, title, discount, pubdate, isbn, image, category, publisher, description, reviewCnt from(
-		select rownum rn, bno, author, title, discount, pubdate, isbn, image, category, publisher, description, reviewCnt
+		select bno, author, title, discount, pubdate, isbn, image, category, publisher, description, reviewCnt, bookCount, price from(
+		select rownum rn, bno, author, title, discount, pubdate, isbn, image, category, publisher, description, reviewCnt, bookCount, price
 		from tbl_book 
 		where
 		rownum <= #{pageNum} * #{amount})
@@ -63,4 +63,10 @@
 		update tbl_book set reviewCnt = reviewCnt +
 		#{amount} where bno = #{bno}
 	</update>
+	
+	<!-- 도서 카테고리 -->
+	<select id="categoryList"
+		resultType="com.project.domain.BookDTO">
+		select * from tbl_book where category = #{category}
+	</select>
 </mapper>

@@ -60,8 +60,4 @@ public class CartController {
 		service.deleteCart(cart.getCartBno());
 		return "redirect:/cart/list" + cart.getMemberId();
 	}
-	
-	
-	
-	
 }

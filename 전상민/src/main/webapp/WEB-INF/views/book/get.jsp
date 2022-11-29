@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <title>도서 상세정보</title>
 <link href="/resources/css/bootstrap.min.css?ver=1" rel="stylesheet">
 <style type="text/css">
@@ -11,9 +11,7 @@ img {
 	text-align: center;
 }
 .bookImg{
-	padding :10px;
-	padding-left : 30px;
-	padding-right : 30px;
+	padding :10px 30px;
 	float : left;
 }
 .info-title{
@@ -29,16 +27,10 @@ img {
 		float : right;
 	}
 .panel-body{
-	padding-top : 10px;
-	padding-bottom : 10px;
-	padding-left : 100px;
-	padding-right : 100px;
+	padding : 10px 100px;
 }
 .card{
-	padding-top : 10px;
-	padding-bottom : 10px;
-	padding-left : 100px;
-	padding-right : 100px;
+	padding : 10px 100px;
 }
 </style>
 	<jsp:include page="../menu.jsp" />
@@ -70,79 +62,79 @@ img {
 			<p class="card-text">
 				상세정보:<br> ${info.description}
 			</p>
-			<%-- <form action="/book/list" id="operForm" method="get">
-				<input type="hidden" name="bno" value="${board.bno}"> <input
-					type="hidden" name="pageNum" value="${cri.pageNum}"> <input
-					type="hidden" name="amount" value="${cri.amount}">
-			</form> --%>
 			<div class="bookBtn">
-				<button type="button" class="btn btn-primary">구매하기</button>
-				<button type="button" class="btn btn-info" id="basketBtn">장바구니</button>
-				<button type="button" class="btn btn-warning">대여하기</button>
-				<button type="button" class="btn btn-secondary" id="backBtn">뒤로가기</button>
+				<button type="button" class="btn btn-secondary" style="user-select: auto;" id="backBtn">뒤로가기</button>
+				<button type="button" class="btn btn-info" style="user-select: auto;" id="basketBtn">장바구니 담기</button>
+				<input type="text" class="inputCount" value="1"> 
+				<span>
+					<button class="minus_btn">-</button>
+					<button class="plus_btn">+</button>
+				</span>
 			</div>
+			<form action="/book/list" id="operForm" method="get">
+				<input type="hidden" name="bno" value="${info.bno}"> 
+				<input type="hidden" name="pageNum" value="${cri.pageNum}"> 
+				<input type="hidden" name="amount" value="${cri.amount}">
+		</form>
 		</div>
 	</div>
 	
 	
-	<div class="card mb-3">
-		<h3 class="card-header">리뷰</h3>
-		<c:if test="${member.memberId != null}">
-			<button id="addReviewBtn" type="button" class="btn btn-outline-info">새 리뷰</button>
-		</c:if>
-		<div class="card-body">
-			<ul class="list-group list-group-flush review">
-			</ul>
-		</div>
-		<div class="card-review-footer"></div>
+<div class="card mb-3">
+	<h3 class="card-header">리뷰</h3>
+	<c:if test="${member.memberId != null}">
+		<button id="addReviewBtn" type="button" class="btn btn-outline-info">새 리뷰</button>
+	</c:if>
+	<div class="card-body">
+		<ul class="list-group list-group-flush review">
+		</ul>
 	</div>
-	<div>
-		<span class="badge bg-secondary" style="user-select: auto;">책 한줄평</span>
-	</div>
+	<div class="card-review-footer"></div>
+</div>
 
-	<div class="modal" id="review-modal">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">리뷰창<span></span></h5>
+<div class="modal" id="review-modal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">리뷰창<span></span></h5>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label>내용</label><input class="form-control" name="review"
+						value="새로운 리뷰!!" maxlength="30" placeholder="최대 30자 까지 입력해주세요...">
 				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label>내용</label><input class="form-control" name="review"
-							value="새로운 리뷰!!" maxlength="30" placeholder="최대 30자 까지 입력해주세요...">
-					</div>
-					<div class="form-group">
-						<label>별점</label>
-						<select class="form-select" id="rating" name="rating">
-							<option value="1">★☆☆☆☆</option>
-		                    <option value="2">★★☆☆☆</option>
-		                    <option value="3">★★★☆☆</option>
-		                    <option value="4">★★★★☆</option>
-		                    <option value="5" selected>★★★★★</option>
-                    </select>
-					</div>
-					<div class="form-group">
-						<label>작성자</label><input class="form-control reviewer" name="reviewer"
-							value="reviewer" placeholder="${member.memberId}" value="${member.memberId}" disabled>
-					</div>
-					<div class="form-group">
-						<label>작성일</label><input class="form-control" name="reviewDate"
-							value="2022-11-18" disabled>
-					</div>
+				<div class="form-group">
+					<label>별점</label>
+					<select class="form-select" id="rating" name="rating">
+						<option value="1">★☆☆☆☆</option>
+	                    <option value="2">★★☆☆☆</option>
+	                    <option value="3">★★★☆☆</option>
+	                    <option value="4">★★★★☆</option>
+	                    <option value="5" selected>★★★★★</option>
+                   </select>
 				</div>
-				<div class="modal-footer">
-					<button id="review-modalRegisterBtn" type="button"
-						class="btn btn-primary">등록</button>
-					<button id="review-modalModBtn" type="button"
-						class="btn btn-warning">수정</button>
-					<button id="review-modalRemoveBtn" type="button"
-						class="btn btn-danger">삭제</button>
-					<button id="review-modalCloseBtn" type="button"
-						class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				<div class="form-group">
+					<label>작성자</label><input class="form-control reviewer" name="reviewer"
+						value="reviewer" placeholder="${member.memberId}" value="${member.memberId}" readonly="readonly">
 				</div>
+				<div class="form-group">
+					<label>작성일</label><input class="form-control" name="reviewDate"
+						value="2022-11-18" readonly="readonly">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="review-modalRegisterBtn" type="button"
+					class="btn btn-primary">등록</button>
+				<button id="review-modalModBtn" type="button"
+					class="btn btn-warning">수정</button>
+				<button id="review-modalRemoveBtn" type="button"
+					class="btn btn-danger">삭제</button>
+				<button id="review-modalCloseBtn" type="button"
+					class="btn btn-secondary" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
+</div>
 	<!-- 제이쿼리 먼지 등록 / 부트스트랩에서 제이쿼리를 사용 -->
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
@@ -217,7 +209,7 @@ img {
 			
 			var str ='<div class="pull-right"><ul class="pagination">';
 			if(prev){
-				str += '<li class="page-item disabled"><a class="page-link" href="' + (startNum - 1) + '">«</a></li>';
+				str += '<li class="page-item readonly"><a class="page-link" href="' + (startNum - 1) + '">«</a></li>';
 			}
 			for(var i = startNum; i <= endNum; i++){
 				var active = (pageNum == i) ? 'active' : '';
@@ -333,6 +325,27 @@ img {
 	});
 </script>
 <script type="text/javascript">
+	let countValue = $(".inputCount").val();
+	$(".plus_btn").on("click", function() {
+		$(".inputCount").val(++countValue);
+	});
+	$(".minus_btn").on("click", function() {
+		if (quantity > 1) {
+			$(".inputCount").val(--countValue);
+		}
+	});
+
+	function cartAlert(result) {
+		if (result == '0')
+			alert("장바구니 추가 불가");
+		else if (result == '1')
+			alert("장바구니 추가 완료");
+		else if (result == '2')
+			alert("장바구니에 이미 추가가 되어있습니다.");
+		else if (result == '5')
+			alert("로그인이 필요합니다.");
+	}
+
 	$(function() {
 
 		//뒤로가기 
@@ -344,18 +357,28 @@ img {
 	//장바구니 추가
 	$("#basketBtn").on("click", function() {
 
-		var image = '${info.image}';
-		var title = '${info.title}';
-		var discount = '${info.discount}';
-		var category = '${info.category}';
-		var bno = '${info.bno}';
+		const image = '${info.image}';
+		const title = '${info.title}';
+		const price = '${info.price}';
+		const category = '${info.category}';
+		const bno = '${info.bno}';
+		const cartCount = $(".inputCount").val();
+		const totalPrice = price * cartCount;
+		const memberId = '${member.memberId}';
+		const discount = '${info.discount}';
+		const bookCount = '${info.bookCount}';
 
-		var data = {
+		const data = {
 			bno : bno,
 			title : title,
-			discount : discount,
+			price : price,
 			category : category,
 			image : image,
+			cartCount : cartCount,
+			totalPrice : totalPrice,
+			memberId : memberId,
+			discount : discount,
+			bookCount : bookCount
 		};
 
 		$.ajax({
@@ -363,8 +386,7 @@ img {
 			type : "post",
 			data : data,
 			success : function(result) {
-				console.log("성공");
-				self.location = "/cart/list";
+				cartAlert(result);
 			},
 			error : function(error) {
 				console.log(error);

@@ -4,24 +4,25 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="../menu.jsp"%>
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<title>자유 게시판</title>
 <style>
-	.pull-right{
-		float : right;
-	}
-	.panel-heading{
-		padding : 10px;
-	}
-	#searchForm{
-		float : right;
-		padding-bottom : 10px;
-	}
-	.page-header{
-		padding-top : 30px;
-	}
-	#boardTitle{
-		margin : 20px;
-		text-align : center;
-	}
+.pull-right{
+	float : right;
+}
+.panel-heading{
+	padding : 10px;
+}
+#searchForm{
+	float : right;
+	padding-bottom : 10px;
+}
+.page-header{
+	padding-top : 30px;
+}
+#boardTitle{
+	margin : 20px;
+	text-align : center;
+}
 </style>
 <div class="page-header">
 	<h1 id="boardTitle">자유 게시판</h1>
