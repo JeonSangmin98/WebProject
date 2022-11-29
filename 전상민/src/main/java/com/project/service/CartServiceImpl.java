@@ -62,5 +62,4 @@ public class CartServiceImpl implements CartService{
 	public int deleteCart(Long cartBno) {
 		return mapper.deleteCart(cartBno);
 	}
-
 }

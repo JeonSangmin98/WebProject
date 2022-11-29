@@ -200,7 +200,7 @@
 					emailCheck = true;
 				}
 				//주소 유효성 검사
-				if (email == "") {
+				if (addr == "") {
 					$(".finalAddrCheck").css("display", "block");
 					addrCheck = false;
 				} else {

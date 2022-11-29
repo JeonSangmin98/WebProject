@@ -22,7 +22,7 @@
 			<textarea class="form-control" rows="3" name="content" id="content"></textarea>
 		</div>
 		<div class="form-group">
-			<label>작성자</label> <input class="form-control" name="writer" id="memberId" placeholder="${member.memberId}" value="${member.memberId}" disabled="disabled">
+			<label>작성자</label> <input class="form-control" name="writer" id="memberId" placeholder="${member.memberId}" value="${member.memberId}" readonly="readonly">
 		</div>
 		<div class="regBtn">
 			<button type="submit" class="btn btn-success" id="submit">등록</button>

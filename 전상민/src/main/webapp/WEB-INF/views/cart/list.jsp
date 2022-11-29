@@ -59,7 +59,7 @@ th, td {
 					<td style="user-select: auto;" class="cartTotal"><input
 						type="checkbox" class="form-check-input checkCart"
 						checked="checked"><input type="hidden"
-						class="hiddenCartDiscount" value="${cart.totalPrice}"> <input
+						class="hiddenCartTotalPrice" value="${cart.totalPrice}"> <input
 						type="hidden" class="hiddenCartCount" value="${cart.cartCount}">
 					<td style="user-select: auto;"><img src="${cart.image}"></td>
 					<td style="user-select: auto;">${cart.title}</td>
@@ -72,8 +72,8 @@ th, td {
 								value="${cart.cartCount}" name="cartCount">
 							<button class="btn btn-outline-dark plusBtn" type="button">+</button>
 						</div>
-							<button class="btn btn-dark updateCountBtn"
-								data-cartBno="${cart.cartBno}">변경</button>
+						<button class="btn btn-dark updateCountBtn"
+							data-cartBno="${cart.cartBno}">변경</button>
 					</td>
 					<td style="user-select: auto;">
 						<button class="btn btn-danger deleteBtn"
@@ -87,13 +87,15 @@ th, td {
 	<%--수량 수정 form --%>
 	<form action="/cart/update" method="post" class="updateForm">
 		<input type="hidden" name="cartBno" class="updateCartBno"> <input
-			type="hidden" name="count" class="updateCartCount">
+			type="hidden" name="cartCount" class="updateCartCount"> <input
+			type="hidden" name="memberId" value="${member.memberId}">
 	</form>
 
 
 	<%--삭제 form --%>
 	<form action="/cart/delete" method="post" class="deleteForm">
-		<input type="hidden" name="cartBno" class="deleteCartBno">
+		<input type="hidden" name="cartBno" class="deleteCartBno"> <input
+			type="hidden" name="memberId" value="${member.memberId}">
 	</form>
 
 	<%--추가 form --%>
@@ -101,10 +103,16 @@ th, td {
 
 	<div class="container">
 		<p>
-			총 가격: <span class="totalPrice text-warning"></span>원
+			원래 가격: <span class="totalPrice text-warning"></span>원
 		</p>
 		<p>
 			총 수량: <span class="totalCount text-muted"></span>개
+		</p>
+		<p>
+			할인 가격: <span class="salePrice text-warning">${cart.totalPrice-(cart.totalPrice*cart.discount)}</span>원
+		</p>
+		<p>
+			적립 포인트 : <span class="memberPoint text-info"></span>원
 		</p>
 		<button type="button" class="btn btn-primary"
 			style="user-select: auto;">구매하기</button>
@@ -116,7 +124,6 @@ th, td {
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-
 	//장바구니 수량 조절 +
 	$(".plusBtn").on("click", function() {
 		let countValue = $(this).parent("div").find("input").val();
@@ -135,7 +142,6 @@ th, td {
 	$(".updateCountBtn").on("click", function() {
 		let cartBno = $(this).data("cartbno");
 		let cartCount = $(this).parent("td").find("input").val();
-		/* let count = $(".countValue").val(); */
 		//수량 변경 버튼 클릭 시 Controller를 통해 DB에 전달
 		$(".updateCartBno").val(cartBno);
 		$(".updateCartCount").val(cartCount);
@@ -147,12 +153,16 @@ th, td {
 
 		let totalPrice = 0; //총 가격
 		let totalCount = 0; // 총 개수
+		let salePrice = "${cart.totalPrice-(cart.totalPrice*cart.discount)}";
+		let point = salePrice * 0.05;
+		point = Math.floor(point);
+		$(".memberPoint").text(point);
 
 		$(".cartTotal").each(function(index, element) {
 
 			if ($(element).find(".checkCart").is(":checked") === true) { //체크 여부 확인 | element td객체의 체크박스가 checked 상태면 true 반환
 				totalPrice += parseInt($(element).find( // 총 가격  | 
-				".hiddenCartDiscount").val());
+				".hiddenCartTotalPrice").val());
 				totalCount += parseInt($(element).find( // 총 개수
 				".hiddenCartCount").val());
 			}

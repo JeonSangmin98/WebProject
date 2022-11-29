@@ -17,11 +17,12 @@
 
 	<!-- 장바구니 추가 -->
 	<insert id="addCart">
-		insert into tbl_cart(cartBno, bno, title, discount,
-		category, image, cartCount, totalPrice, memberId)
+		insert into tbl_cart(cartBno, bno, title, price,
+		category, image, cartCount, totalPrice, memberId, discount, bookCount)
 		values
-		(seq_cart.nextval, #{bno}, #{title},#{discount},
-		#{category}, #{image}, #{cartCount}, #{totalPrice}, #{memberId})
+		(seq_cart.nextval, #{bno}, #{title},#{price},
+		#{category}, #{image},
+		#{cartCount}, #{totalPrice}, #{memberId}, #{discount}, #{bookCount})
 	</insert>
 
 	<!-- 장바구니 삭제 -->
@@ -34,4 +35,10 @@
 		update tbl_cart set cartCount = #{cartCount} where cartBno =
 		#{cartBno}
 	</update>
+	
+	<!-- 장바구니 회원 품목 삭제 (참조 무결성) -->
+	<delete id="deleteMemberCart">
+		delete from tbl_cart
+		where memberId = #{memberId}
+	</delete>
 </mapper>

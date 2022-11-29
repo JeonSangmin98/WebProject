@@ -13,5 +13,12 @@ public interface MemberService {
 	//로그인 
 	public MemberDTO memberLogin(MemberDTO member);
 	
-	public MemberDTO getMemberId(String memberId);
+	//회원정보
+	public MemberDTO memberInfo(String memberId);
+	
+	//회원정보 수정
+	public void memberModify(MemberDTO member);
+		
+	//회원정보 삭제
+	public void memberDelete(String memberId);
 }

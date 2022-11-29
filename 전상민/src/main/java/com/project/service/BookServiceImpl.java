@@ -1,6 +1,7 @@
 package com.project.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,28 +40,13 @@ public class BookServiceImpl implements BookService{
 	}
 	// 책 검색
 	@Override
-	public BookDTO searchList(String type, String keyword) {
+	public List<BookDTO> searchList(String type, String keyword) {
 		return mapper.searchList(type, keyword);
 	}
-	//IT
+	//도서 카테고리
 	@Override
-	public ArrayList<BookDTO> categoryList1() {
-		return mapper.categoryList1();
-	}
-	//여행
-	@Override
-	public ArrayList<BookDTO> categoryList2() {
-		return mapper.categoryList2();
-	}
-	//종교
-	@Override
-	public ArrayList<BookDTO> categoryList3() {
-		return mapper.categoryList3();
-	}
-	//역사
-	@Override
-	public ArrayList<BookDTO> categoryList4() {
-		return mapper.categoryList4();
+	public List<BookDTO> categoryList(String category) {
+		return mapper.categoryList(category);
 	}
 
 	//도서 전체 리스트 페이징 처리
@@ -74,11 +60,4 @@ public class BookServiceImpl implements BookService{
 	public int getTotal(Criteria cri) {
 		return mapper.getTotalCount(cri);
 	}
-
-	
-	
-
-
-
-
 }
