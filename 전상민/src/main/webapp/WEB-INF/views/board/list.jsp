@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="../menu.jsp"%>
-<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="/resources/css/bootstrap.min.css" rel="stylesheet"> -->
 <title>자유 게시판</title>
 <style>
 .pull-right{
@@ -86,7 +86,7 @@
 						</c:if>
 						
 						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-		                  <li class="page-item active ${pageMaker.cri.pageNum == num ? 'active' : ''}">
+		                  <li class="page-item ${pageMaker.cri.pageNum == num ? 'active' : ''}">
 		                    <a class="page-link" href="${num}">${num}</a>
 		                  </li>
 						</c:forEach>

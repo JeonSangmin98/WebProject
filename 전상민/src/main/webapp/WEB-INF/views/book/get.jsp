@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <title>도서 상세정보</title>
-<link href="/resources/css/bootstrap.min.css?ver=1" rel="stylesheet">
+<jsp:include page="../menu.jsp" />
 <style type="text/css">
 img {
 	width: 400px;
@@ -33,51 +33,50 @@ img {
 	padding : 10px 100px;
 }
 </style>
-	<jsp:include page="../menu.jsp" />
-	<div class="container" style="user-select: auto;">
-		<div class="page-header" id="banner" style="user-select: auto;">
-			<div class="row" style="user-select: auto;">
-				<div class="col-lg-8 col-md-7 col-sm-6 info-title" style="user-select: auto;">
-					<h1 style="user-select: auto;">도서 상세정보</h1>
-					<p class="text-info" style="user-select: auto;">상세정보 테스트</p>
-				</div>
-				<div class="col-lg-4 col-md-5 col-sm-6" style="user-select: auto;">
-					<div class="sponsor" style="user-select: auto;"></div>
-				</div>
+<div class="container">
+	<div class="page-header" id="banner">
+		<div class="row">
+			<div class="col-lg-8 col-md-7 col-sm-6 info-title">
+				<h1>도서 상세정보</h1>
+				<p class="text-info">상세정보 테스트</p>
+			</div>
+			<div class="col-lg-4 col-md-5 col-sm-6">
+				<div class="sponsor"></div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div class="infoDiv">
-		<div class="card border-light bookInfo">
-			<h3 class="card-header c_title">책 제목: ${info.title}</h3>
-			<div class="col-lg-4 bookImg">
-				<img src="${info.image}" class="d-block user-select-none img-responsive center-block">
-			</div>
-			<h5 class="card-title c_author">저자: ${info.author}</h5>
-			<h5 class="card-title c_discount">가격: ${info.discount}</h5>
-			<p>
-				<fmt:formatDate value="${info.pubdate}" pattern="yyyy-MM-dd" />
-			</p>
-			<p class="card-text">
-				상세정보:<br> ${info.description}
-			</p>
-			<div class="bookBtn">
-				<button type="button" class="btn btn-secondary" style="user-select: auto;" id="backBtn">뒤로가기</button>
-				<button type="button" class="btn btn-info" style="user-select: auto;" id="basketBtn">장바구니 담기</button>
-				<input type="text" class="inputCount" value="1"> 
-				<span>
-					<button class="minus_btn">-</button>
-					<button class="plus_btn">+</button>
-				</span>
-			</div>
-			<form action="/book/list" id="operForm" method="get">
-				<input type="hidden" name="bno" value="${info.bno}"> 
-				<input type="hidden" name="pageNum" value="${cri.pageNum}"> 
-				<input type="hidden" name="amount" value="${cri.amount}">
-		</form>
+<div class="infoDiv">
+	<div class="card border-light bookInfo">
+		<h3 class="card-header c_title">책 제목: ${info.title}</h3>
+		<div class="col-lg-4 bookImg">
+			<img src="${info.image}" class="d-block user-select-none img-responsive center-block">
 		</div>
+		<h5 class="card-title c_author">저자: ${info.author}</h5>
+		<h5 class="card-title c_discount">가격: ${info.discount}</h5>
+		<p>
+			<fmt:formatDate value="${info.pubdate}" pattern="yyyy-MM-dd" />
+		</p>
+		<p class="card-text">
+			상세정보:<br> ${info.description}
+		</p>
+		<div class="bookBtn">
+			<button type="button" class="btn btn-secondary" style="user-select: auto;" id="backBtn">뒤로가기</button>
+			<button type="button" class="btn btn-info" style="user-select: auto;" id="basketBtn">장바구니 담기</button>
+			<input type="text" class="inputCount" value="1"> 
+			<span>
+				<button class="minus_btn">-</button>
+				<button class="plus_btn">+</button>
+			</span>
+		</div>
+		<form action="/book/list" id="operForm" method="get">
+			<input type="hidden" name="bno" value="${info.bno}"> 
+			<input type="hidden" name="pageNum" value="${cri.pageNum}"> 
+			<input type="hidden" name="amount" value="${cri.amount}">
+	</form>
 	</div>
+</div>
 	
 	
 <div class="card mb-3">
@@ -347,7 +346,6 @@ img {
 	}
 
 	$(function() {
-
 		//뒤로가기 
 		$("#backBtn").on("click", function() {
 			self.location = "/book/list";

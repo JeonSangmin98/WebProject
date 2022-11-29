@@ -8,7 +8,7 @@
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <div class="jumbotron">
 	<div class="page-header">
-		<h1 id="tables">자유 게시판</h1>
+		<h1 id="tables">자유게시판 글쓰기</h1>
 	</div>
 	<!-- <h1 class="display-3">글쓰기</h1> -->
 </div>

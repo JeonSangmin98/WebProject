@@ -29,18 +29,15 @@
 	padding-right : 20px;
 }
 </style>
-<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="/resources/css/bootstrap.min.css" rel="stylesheet"> -->
 <div class="jumbotron">
 	<div class="page-header">
-		<h1 id="boardTitle">${board.title}</h1>
+		<h1 id="boardTitle">자유게시판</h1>
 	</div>
 	<!-- <h1 class="display-3">글쓰기</h1> -->
 </div>
 <div class="panel-body">
-	<div class="form-group">
-		<label>글 번호</label> <input class="form-control" name="boardNo"
-			value="${board.boardNo}" readonly="readonly">
-	</div>
+	<input type="hidden" class="form-control" name="boardNo" value="${board.boardNo}">
 	<div class="form-group">
 		<label>글 제목</label> <input class="form-control" name="title"
 			value="${board.title}" readonly="readonly">

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.project.domain.Criteria;
 import com.project.domain.ReviewVO;
+import com.project.domain.UpdateReviewDTO;
 
 public interface ReviewMapper {
 	public int insert(ReviewVO vo);	// 리뷰등록
@@ -23,4 +24,10 @@ public interface ReviewMapper {
 	
 	// 게시글 번호 카운트
 	public int getCountByBno(Long bno);
+	
+	// 평점 평균 구하기
+	public Double getRatingAvg(Long bno);
+		
+	// 평점 평균 반영
+	public int updateRating(UpdateReviewDTO dto);
 }
