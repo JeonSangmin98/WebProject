@@ -32,9 +32,9 @@
 	<select id="getListWithPaging"
 		resultType="com.project.domain.BoardVO">
 		<![CDATA[
-		select boardNo, title, content, writer, regdate, updateDate, replyCnt, reviewCnt
+		select boardNo, title, content, writer, regdate, updateDate, replyCnt
 		from ( select /*+ INDEX_DESC(tbl_board pk_tbl_board) */
-					rownum rn, boardNo, title, content, writer, regdate, updateDate, replyCnt, reviewCnt
+					rownum rn, boardNo, title, content, writer, regdate, updateDate, replyCnt
 					from tbl_board 
 					where 
 		]]>
@@ -91,9 +91,5 @@
 	<update id="updateReplyCnt">
 		update tbl_board set replyCnt = replyCnt + #{amount}
 		where boardNo = #{boardNo}
-	</update>
-	<update id="updateReviewCnt">
-		update tbl_board set reviewCnt = reviewCnt +
-		#{amount} where boardNo = #{boardNo}
 	</update>
 </mapper>

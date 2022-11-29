@@ -15,6 +15,14 @@
 .updateBtn {
 	display: none;
 }
+
+.updatePassword {
+	display: none;
+}
+
+.checkPassword {
+	display: none;
+}
 </style>
 </head>
 <body>
@@ -43,11 +51,13 @@
 					style="user-select: auto;" name="memberName"
 					value="${info.memberName}" readonly="readonly">
 			</div>
-			<div class="form-group" style="user-select: auto;">
+			<div class="form-group updatePassword" style="user-select: auto;">
 				<label class="form-label mt-4" style="user-select: auto;">회원
 					비밀번호</label> <input type="password"
 					class="form-control inputPw updateMember"
-					style="user-select: auto;" name="memberPw" value="${info.memberPw}">
+					style="user-select: auto;" name="memberPw"> <span
+					class="checkPassword text-warning">비밀번호를 입력해주세요.</span>
+
 			</div>
 			<div class="addrWrap" style="user-select: auto;">
 				<label class="form-label mt-4" style="user-select: auto;">회원
@@ -117,17 +127,34 @@
 <script type="text/javascript"
 	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
+	let pwCheck = false;
+
 	$(".modifyBtn").on("click", function() {
 		/* console.log("click modify"); */
 		$(".updateMember").attr("readonly", false);
 		$(".attrBtn").css("display", "inline");
 		$(".updateBtn").css("display", "inline");
 		$(".deleteBtn").css("display", "none");
+		$(".updatePassword").css("display", "inline");
 	});
 
 	$(".updateBtn").on("click", function() {
-		$(".modifyForm").submit();
-		alert("수정 되었습니다 다시 로그인 해주세요.");
+		let pw = $(".inputPw").val(); //pw 입력값
+
+		//비밀번호 유효성검사
+		if (pw == "") {
+			$(".checkPassword").css("display", "block");
+			pwCheck = false;
+		} else {
+			$(".checkPassword").css("display", "none");
+			pwCheck = true;
+		}
+
+		if (pwCheck == true) {
+			$(".modifyForm").submit();
+			alert("수정 되었습니다 다시 로그인 해주세요.");
+		}
+		return false;
 	});
 
 	$(".deleteBtn").on("click", function() {
@@ -147,6 +174,7 @@
 	$(".btn-close").on("click", function() {
 		$(".modal").modal("hide");
 	});
+
 	//다음 주소 api 사용
 	function executeDaumAddr() {
 		new daum.Postcode({

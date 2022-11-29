@@ -73,7 +73,8 @@ public class MemberController {
 			encodePw = loginDTO.getMemberPw();
 
 			if (pwEncoder.matches(beforePw, encodePw) == true) { // 비밀번호 인코딩 일치여부 확인
-				// log.info("비밀번호 일치");
+				log.info("beforePw: " + beforePw);
+				log.info("encodePw: " + encodePw);
 				loginDTO.setMemberPw(""); // 인코딩 비밀번호 정보 삭제
 				session.setAttribute("member", loginDTO); // session에 사용자정보 저장
 				return "redirect:/mainHome"; // 로그인 성공 시 main 화면으로 이동
@@ -150,9 +151,9 @@ public class MemberController {
 	
 	//회원정보 삭제
 	@PostMapping("/delete")
-	public String deletePost(MemberDTO member, HttpServletRequest request) {
+	public String deletePost(HttpServletRequest request, String memberId) {
 		
-		service.memberDelete(member);
+		service.memberDelete(memberId);
 		HttpSession session = request.getSession();
 		session.invalidate();
 		return "redirect:/mainHome";

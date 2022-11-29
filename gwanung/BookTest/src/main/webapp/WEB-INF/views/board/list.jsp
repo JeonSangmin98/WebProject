@@ -4,13 +4,32 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="../menu.jsp"%>
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
-<div class="jumbotron">
-	<!-- <h1 class="display-3">자유 게시판</h1> -->
-	<div class="page-header">
-		<h1 id="tables">자유 게시판</h1>
-	</div>
-</div>
+<style>
+.pull-right {
+	float: right;
+}
 
+.panel-heading {
+	padding: 10px;
+}
+
+#searchForm {
+	float: right;
+	padding-bottom: 10px;
+}
+
+.page-header {
+	padding-top: 30px;
+}
+
+#boardTitle {
+	margin: 20px;
+	text-align: center;
+}
+</style>
+<div class="page-header">
+	<h1 id="boardTitle">자유 게시판</h1>
+</div>
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel-heading">
@@ -20,17 +39,18 @@
 					<option value="T" ${pageMaker.cri.type == 'T' ? 'selected':''}>제목</option>
 					<option value="C" ${pageMaker.cri.type == 'C' ? 'selected':''}>내용</option>
 					<option value="W" ${pageMaker.cri.type == 'W' ? 'selected':''}>작성자</option>
-					<option value="TC" ${pageMaker.cri.type == 'TC' ? 'selected':''}>제목 + 내용</option>
-					<option value="TCW" ${pageMaker.cri.type == 'TCW' ? 'selected':''}>제목 + 내용 + 작성자</option>
-				</select>
-				<input type="text" name="keyword" value="${pageMaker.cri.keyword}">
+					<option value="TC" ${pageMaker.cri.type == 'TC' ? 'selected':''}>제목
+						+ 내용</option>
+					<option value="TCW" ${pageMaker.cri.type == 'TCW' ? 'selected':''}>제목
+						+ 내용 + 작성자</option>
+				</select> <input type="text" name="keyword" value="${pageMaker.cri.keyword}">
 				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 				<button class="btn btn-outline-primary">검색</button>
 			</form>
 			<table class="table table-hover">
 				<thead>
-					<tr>
+					<tr class="table-primary">
 						<th scope="col">번호</th>
 						<th scope="col">글 제목</th>
 						<th scope="col">작성자</th>
@@ -43,7 +63,8 @@
 						<tr>
 							<th scope="row">${board.boardNo}</th>
 							<td><a class='move' href='${board.boardNo}'>${board.title}
-								<b class="text-danger">${board.replyCnt}</b></a></td>
+									... <span class="badge bg-secondary">${board.replyCnt}</span>
+							</a></td>
 							<td>${board.writer}</td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${board.regdate}" /></td>
@@ -54,31 +75,39 @@
 				</tbody>
 			</table>
 			<div class="pull-right">
-			<form id="actionForm" action="/board/list" method="get">
-				<input type="hidden" name="pageNum" value='${pageMaker.cri.pageNum}'>
-				<input type="hidden" name="amount" value='${pageMaker.cri.amount}'>
-				<input type="hidden" name="type" value="${pageMaker.cri.type}">
-				<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}"> 
-			</form>
-				<ul class="pagination">
-				<c:if test="${pageMaker.prev}">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="${pageMaker.startPage - 1}">«</a>
-                  </li>
-				</c:if>
-				<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                  <li class="page-item active ${pageMaker.cri.pageNum == num ? 'active' : ''}">
-                    <a class="page-link" href="${num}">${num}</a>
-                  </li>
-				</c:forEach>
-                <c:if test="${pageMaker.next}">
-                  <li class="page-item">
-                    <a class="page-link" href="${pageMarker.endPage + 1}">»</a>
-                  </li>
-                </c:if>
-                </ul>
+				<form id="actionForm" action="/board/list" method="get">
+					<input type="hidden" name="pageNum"
+						value='${pageMaker.cri.pageNum}'> <input type="hidden"
+						name="amount" value='${pageMaker.cri.amount}'> <input
+						type="hidden" name="type" value="${pageMaker.cri.type}"> <input
+						type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+					<input type="hidden" name="memberId" value="${member.memberId}">
+				</form>
+				<div>
+					<ul class="pagination">
+						<c:if test="${pageMaker.prev}">
+							<li class="page-item previous"><a class="page-link"
+								href="${pageMaker.startPage - 1}">«</a></li>
+						</c:if>
+
+						<c:forEach var="num" begin="${pageMaker.startPage}"
+							end="${pageMaker.endPage}">
+							<li
+								class="page-item active ${pageMaker.cri.pageNum == num ? 'active' : ''}">
+								<a class="page-link" href="${num}">${num}</a>
+							</li>
+						</c:forEach>
+
+						<c:if test="${pageMaker.next}">
+							<li class="page-item next"><a class="page-link"
+								href="${pageMaker.endPage + 1}">»</a></li>
+						</c:if>
+					</ul>
+				</div>
 			</div>
-			<button id="regBtn" type="button" class="btn btn-outline-info">글쓰기</button>
+			<c:if test="${member.memberId != null}">
+				<button id="regBtn" type="button" class="btn btn-info">글쓰기</button>
+			</c:if>
 		</div>
 	</div>
 </div>
@@ -88,32 +117,17 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">알림창</h5>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
 			</div>
 			<div class="modal-body">
 				<p></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-secondary" id="modalCloseBtn"
+					data-dismiss="modal" aria-label="Close">닫기</button>
 			</div>
 		</div>
 	</div>
 </div>
-<style>
-	.pull-right{
-		float : right;
-	}
-	.panel-heading{
-		padding : 10px;
-	}
-	#searchForm{
-		float : right;
-		padding-bottom : 10px;
-	}
-</style>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script>
@@ -121,8 +135,10 @@
 		var result = '${result}';
 
 		checkModal(result);
+
 		history.replaceState({}, null, null);
-		console.log('${pageMarker}');
+
+		console.log('${pageMaker}');
 		function checkModal(result) {
 			if (result === '' || history.state) {
 				return;
@@ -139,29 +155,38 @@
 		$("#regBtn").click(function() {
 			self.location = "/board/register";
 		});
-		
+
+		$("#modalCloseBtn").click(function() {
+			$(".modal").modal('hide');
+		});
+
 		var actionForm = $('#actionForm');
-		$('.pagination a').on('click',function(e){
+		$('.pagination a').on('click', function(e) {
 			e.preventDefault();
 			console.log('click');
 			actionForm.find('input[name="pageNum"]').val($(this).attr('href'));
 			actionForm.submit();
 		});
-		
-		$('.move').on('click',function(e){
-			e.preventDefault();
-			actionForm.append('<input type="hidden" name="boardNo" value="' + $(this).attr('href') + '">');
-			actionForm.attr('action','/board/get');
-			actionForm.submit();
-		});
-		
-		$('#searchForm button').on('click',function(e){
+
+		$('.move')
+				.on(
+						'click',
+						function(e) {
+							e.preventDefault();
+							actionForm
+									.append('<input type="hidden" name="boardNo" value="'
+											+ $(this).attr('href') + '">');
+							actionForm.attr('action', '/board/get');
+							actionForm.submit();
+						});
+
+		$('#searchForm button').on('click', function(e) {
 			var searchForm = $('#searchForm');
-			if(!searchForm.find('option:selected').val()){
+			if (!searchForm.find('option:selected').val()) {
 				alert('검색 종류를 선택하세요.');
 				return false;
 			}
-			if(!searchForm.find('input[name="keyword"]').val()){
+			if (!searchForm.find('input[name="keyword"]').val()) {
 				alert("키워드를 입력하세요.");
 				return false;
 			}
@@ -171,4 +196,5 @@
 		});
 	});
 </script>
-<%-- <%@ include file="../includes/footer.jsp"  %> --%>
+</body>
+</html>

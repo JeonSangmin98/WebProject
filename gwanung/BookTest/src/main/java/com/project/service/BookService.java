@@ -19,4 +19,5 @@ public interface BookService {
 	
 	public int getTotal(Criteria cri); //총 도서 개수
 	
+	public List<BookDTO> categoryList(String category); //도서 카테고리
 }

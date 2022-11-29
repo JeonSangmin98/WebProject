@@ -42,6 +42,8 @@ th, td {
 				<th scope="col" style="user-select: auto;">이미지</th>
 				<th scope="col" style="user-select: auto;">저자</th>
 				<th scope="col" style="user-select: auto;">가격</th>
+				<th scope="col" style="user-select: auto;">도서 수량</th>
+				<th scope="col" style="user-select: auto;">도서 할인율</th>
 			</tr>
 		</thead>
 		<tbody style="user-select: auto;">
@@ -51,7 +53,9 @@ th, td {
 					<td style="user-select: auto;"><a class="moveBtn" data-bno="${s.bno}"><img
 							src="${s.image}"></a></td>
 					<td style="user-select: auto;">${s.author}</td>
-					<td style="user-select: auto;">${s.discount}</td>
+					<td style="user-select: auto;">${s.price}</td>
+					<td style="user-select: auto;">${s.bookCount}권</td>
+					<td style="user-select: auto;">${s.discount}%</td>
 				</tr>
 			</c:forEach>
 		</tbody>

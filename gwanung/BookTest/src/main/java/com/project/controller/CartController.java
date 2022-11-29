@@ -66,7 +66,4 @@ public class CartController {
 		return "redirect:/cart/list/" + cart.getMemberId();
 	}
 	
-	
-	
-	
 }

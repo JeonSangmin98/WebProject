@@ -1,5 +1,8 @@
 package com.project.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.domain.BoardVO;
 import com.project.domain.Criteria;
+import com.project.domain.MemberDTO;
 import com.project.domain.PageDTO;
 import com.project.service.BoardService;
 
@@ -44,8 +48,12 @@ public class BoardController {
 
 //	등록 처리
 	@PostMapping("/register")
-	public String register(BoardVO board, RedirectAttributes rttr) {
+	public String register(BoardVO board, RedirectAttributes rttr, HttpServletRequest request) {
 		log.info("register : " + board);
+		HttpSession session = request.getSession();
+		MemberDTO writer = (MemberDTO) session.getAttribute("member");
+		String memberId = writer.getMemberId();
+		board.setWriter(memberId);
 		service.register(board);
 		rttr.addFlashAttribute("result", board.getBoardNo());
 
@@ -67,11 +75,6 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
-//		rttr.addAttribute("pageNum", cri.getPageNum());
-//		rttr.addAttribute("amount", cri.getAmount());
-//		rttr.addAttribute("type", cri.getType());
-//		rttr.addAttribute("keyword", cri.getKeyword());
-		
 		return "redirect:/board/list" + cri.getListLink();
 	}
 
@@ -82,12 +85,7 @@ public class BoardController {
 		if (service.remove(boardNo) == 1) {
 			rttr.addFlashAttribute("result", "success");
 		}
-		
-//		rttr.addAttribute("pageNum", cri.getPageNum());
-//		rttr.addAttribute("amount", cri.getAmount());
-//		rttr.addAttribute("type", cri.getType());
-//		rttr.addAttribute("keyword", cri.getKeyword());
-		
+
 		return "redirect:/board/list" + cri.getListLink();
 	}
 

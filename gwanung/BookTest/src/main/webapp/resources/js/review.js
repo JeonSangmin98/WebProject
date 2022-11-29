@@ -19,10 +19,10 @@ var reviewService = (function() {
 	}// end add
 	
 	function getList(param, callback, error) {
-		var boardNo = param.boardNo;
+		var bno = param.bno;
 		var page = param.page || 1;
 		
-		$.getJSON("/reviews/pages/" + boardNo + "/" + page + ".json",
+		$.getJSON("/reviews/pages/" + bno + "/" + page + ".json",
 			function(data) {
 				if(callback) {
 					// callback(data); //댓글 목록만 가져오는 경우 

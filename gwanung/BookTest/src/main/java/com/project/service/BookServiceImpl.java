@@ -1,6 +1,5 @@
 package com.project.service;
 
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,10 +49,9 @@ public class BookServiceImpl implements BookService{
 		return mapper.getTotalCount(cri);
 	}
 
-	
-	
-
-
-
-
+	//도서 카테고리
+	@Override
+	public List<BookDTO> categoryList(String category) {
+		return mapper.categoryList(category);
+	}
 }

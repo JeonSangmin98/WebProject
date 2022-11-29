@@ -12,17 +12,17 @@
 </div>
 <div class="panel-body">
 	<form>
-		<input type="hidden" name="pageNum" value="${cri.pageNum}">
-		<input type="hidden" name="amount" value="${cri.amount}">
-		<input type="hidden" name="keyword" value="${cri.keyword}">
-		<input type="hidden" name="type" value="${cri.type}">
+		<input type="hidden" name="pageNum" value="${cri.pageNum}"> <input
+			type="hidden" name="amount" value="${cri.amount}"> <input
+			type="hidden" name="keyword" value="${cri.keyword}"> <input
+			type="hidden" name="type" value="${cri.type}">
 		<div class="form-group">
 			<label>글 번호</label> <input class="form-control" name="boardNo"
-			value="${board.boardNo}" readonly>
+				value="${board.boardNo}">
 		</div>
 		<div class="form-group">
 			<label>글 제목</label> <input class="form-control" name="title"
-			value="${board.title}">
+				value="${board.title}">
 		</div>
 		<div class="form-group">
 			<label>글 내용</label>
@@ -30,7 +30,7 @@
 		</div>
 		<div class="form-group">
 			<label>작성자</label> <input class="form-control" name="writer"
-			value="${board.writer}" readonly>
+				value="${board.writer}" readonly disabled="disabled">
 		</div>
 		<button class="btn btn-success" data-oper="list">목록</button>
 		<button class="btn btn-warning" data-oper="modify">수정</button>
@@ -41,33 +41,33 @@
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script>
-	 $(function(){
-		var formObj = $("form"); 
-		$("button").on("click", function(e){
+	$(function() {
+		var formObj = $("form");
+		$("button").on("click", function(e) {
 			e.preventDefault();
 			var operation = $(this).data("oper");
 			console.log(operation);
-			if(operation === 'remove'){
+			if (operation === 'remove') {
 				formObj.attr({
-					"action":"/board/remove",
-					"method":"post"
+					"action" : "/board/remove",
+					"method" : "post"
 				});
-			} else if(operation === 'modify') {
+			} else if (operation === 'modify') {
 				formObj.attr({
-					"action":"/board/modify",
-					"method":"post"
+					"action" : "/board/modify",
+					"method" : "post"
 				});
-			} else if(operation === 'list'){
+			} else if (operation === 'list') {
 				formObj.attr({
-					"action":"/board/list",
-					"method":"get"
+					"action" : "/board/list",
+					"method" : "get"
 				});
-				
+
 				var pageNumTag = $('input[name="pageNum"]').clone();
 				var amountTag = $('input[name="amount"]').clone();
 				var keywordTag = $('input[name="keyword"]').clone();
 				var typeTag = $('input[name="type"]').clone();
-				
+
 				formObj.empty();
 				formObj.append(pageNumTag);
 				formObj.append(amountTag);
@@ -76,6 +76,7 @@
 			}
 			formObj.submit();
 		});
-	 });
-	 
+	});
 </script>
+</body>
+</html>

@@ -3,6 +3,7 @@ package com.project.service;
 import java.util.List;
 
 import com.project.domain.CartDTO;
+import com.project.domain.MemberDTO;
 
 public interface CartService {
 
@@ -18,5 +19,4 @@ public interface CartService {
 	//장바구니 삭제
 	public int deleteCart(Long cartBno);
 	
-
 }

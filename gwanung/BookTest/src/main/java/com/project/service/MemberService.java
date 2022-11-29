@@ -20,5 +20,5 @@ public interface MemberService {
 	public void memberModify(MemberDTO member);
 	
 	//회원정보 삭제
-	public void memberDelete(MemberDTO member);
+	public void memberDelete(String memberId);
 }

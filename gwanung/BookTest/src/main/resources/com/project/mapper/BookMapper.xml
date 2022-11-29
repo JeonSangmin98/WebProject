@@ -28,13 +28,12 @@
 		</if>
 	</select>
 
-
 	<!-- 페이징 처리 -->
 	<select id="getListWithPaging"
 		resultType="com.project.domain.BookDTO">
 	<![CDATA[
-		select bno, author, title, discount, pubdate, isbn, image, category, publisher, description from(
-		select rownum rn, bno, author, title, discount, pubdate, isbn, image, category, publisher, description 
+		select bno, author, title, discount, pubdate, isbn, image, category, publisher, description, bookCount, price from(
+		select rownum rn, bno, author, title, discount, pubdate, isbn, image, category, publisher, description, bookCount, price 
 		from tbl_book 
 		where
 		rownum <= #{pageNum} * #{amount})
@@ -53,6 +52,20 @@
 		insert into tbl_book values
 		(seq_book.nextval,
 		#{author}, #{title}, #{discount}, #{pubdate}, #{isbn}, #{image},
-		#{category}, #{publisher}, #{description})
+		#{category}, #{publisher}, #{description}, #{price}, #{bookCount})
 	</insert>
+
+	<!-- 도서 카테고리 -->
+	<select id="categoryList"
+		resultType="com.project.domain.BookDTO">
+		select * from tbl_book where category = #{category}
+	</select>
+
+	<!-- 리뷰 갯수 -->
+	<update id="updateReviewCnt">
+		update tbl_book set reviewCnt = reviewCnt +
+		#{amount}
+		where bno = #{bno}
+	</update>
+
 </mapper>

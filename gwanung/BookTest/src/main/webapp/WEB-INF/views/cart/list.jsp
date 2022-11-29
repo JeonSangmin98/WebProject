@@ -59,7 +59,7 @@ th, td {
 					<td style="user-select: auto;" class="cartTotal"><input
 						type="checkbox" class="form-check-input checkCart"
 						checked="checked"><input type="hidden"
-						class="hiddenCartDiscount" value="${cart.totalPrice}"> <input
+						class="hiddenCartTotalPrice" value="${cart.totalPrice}"> <input
 						type="hidden" class="hiddenCartCount" value="${cart.cartCount}">
 					<td style="user-select: auto;"><img src="${cart.image}"></td>
 					<td style="user-select: auto;">${cart.title}</td>
@@ -103,10 +103,16 @@ th, td {
 
 	<div class="container">
 		<p>
-			총 가격: <span class="totalPrice text-warning"></span>원
+			원래 가격: <span class="totalPrice text-warning"></span>원
 		</p>
 		<p>
 			총 수량: <span class="totalCount text-muted"></span>개
+		</p>
+		<p>
+			할인 가격: <span class="salePrice text-warning">${cart.totalPrice-(cart.totalPrice*cart.discount)}</span>원
+		</p>
+		<p>
+			적립 포인트 : <span class="memberPoint text-info"></span>원
 		</p>
 		<button type="button" class="btn btn-primary"
 			style="user-select: auto;">구매하기</button>
@@ -147,12 +153,16 @@ th, td {
 
 		let totalPrice = 0; //총 가격
 		let totalCount = 0; // 총 개수
+		let salePrice = "${cart.totalPrice-(cart.totalPrice*cart.discount)}";
+		let point = salePrice * 0.05;
+		point = Math.floor(point);
+		$(".memberPoint").text(point);
 
 		$(".cartTotal").each(function(index, element) {
 
 			if ($(element).find(".checkCart").is(":checked") === true) { //체크 여부 확인 | element td객체의 체크박스가 checked 상태면 true 반환
 				totalPrice += parseInt($(element).find( // 총 가격  | 
-				".hiddenCartDiscount").val());
+				".hiddenCartTotalPrice").val());
 				totalCount += parseInt($(element).find( // 총 개수
 				".hiddenCartCount").val());
 			}

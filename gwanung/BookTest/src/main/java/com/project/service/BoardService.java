@@ -7,9 +7,9 @@ import com.project.domain.Criteria;
 
 public interface BoardService {
 	public void register(BoardVO vo);
-	public BoardVO get(Long bno);
+	public BoardVO get(Long boardNo);
 	public int modify(BoardVO vo);
-	public int remove(Long bno);
+	public int remove(Long boardNo);
 	public List<BoardVO> getList();
 	
 	public List<BoardVO> getList(Criteria cri);

@@ -10,6 +10,7 @@ import com.project.domain.Criteria;
 import com.project.domain.ReviewDTO;
 import com.project.domain.ReviewVO;
 import com.project.mapper.BoardMapper;
+import com.project.mapper.BookMapper;
 import com.project.mapper.ReviewMapper;
 
 import lombok.extern.log4j.Log4j;
@@ -20,12 +21,12 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private ReviewMapper mapper;
 	@Autowired
-	private BoardMapper boardMapper;
+	private BookMapper bookMapper;
 
 	@Transactional
 	@Override
 	public int register(ReviewVO vo) {
-		boardMapper.updateReviewCnt(vo.getBoardNo(), 1);
+		bookMapper.updateReviewCnt(vo.getBno(), 1);
 		return mapper.insert(vo);
 	}
 
@@ -43,20 +44,20 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int remove(Long reviewNo) {
 		ReviewVO vo = mapper.read(reviewNo);
-		boardMapper.updateReviewCnt(vo.getBoardNo(), -1);
+		bookMapper.updateReviewCnt(vo.getBno(), -1);
 		return mapper.delete(reviewNo);
 	}
 
 	@Override
-	public List<ReviewVO> getList(Criteria cri, Long boardNo) {
-		return mapper.getListWithPaging(cri, boardNo);
+	public List<ReviewVO> getList(Criteria cri, Long bno) {
+		return mapper.getListWithPaging(cri, bno);
 	}
 
 	@Override
-	public ReviewDTO getListPage(Criteria cri, Long boardNo) {
+	public ReviewDTO getListPage(Criteria cri, Long bno) {
 		return new ReviewDTO(
-				mapper.getCountByBoardNo(boardNo), 
-				mapper.getListWithPaging(cri, boardNo));
+				mapper.getCountByBno(bno), 
+				mapper.getListWithPaging(cri, bno));
 	}
 
 }

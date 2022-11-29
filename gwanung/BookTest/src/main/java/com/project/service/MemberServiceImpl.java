@@ -2,8 +2,10 @@ package com.project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.domain.MemberDTO;
+import com.project.mapper.CartMapper;
 import com.project.mapper.MemberMapper;
 
 import lombok.extern.log4j.Log4j;
@@ -14,6 +16,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberMapper mapper;
+	
+	@Autowired
+	private CartMapper cartMapper;
 
 	// 회원가입
 	@Override
@@ -46,10 +51,12 @@ public class MemberServiceImpl implements MemberService {
 		mapper.memberModify(member);
 	}
 
-//	회원정보 삭제
+	//	회원정보 삭제
 	@Override
-	public void memberDelete(MemberDTO member) {
-		mapper.memberDelete(member);
+	@Transactional
+	public void memberDelete(String memberId) {
+		cartMapper.deleteMemberCart(memberId);
+		mapper.memberDelete(memberId);
 	}
 
 }

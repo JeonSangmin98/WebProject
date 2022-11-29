@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -15,9 +16,13 @@ import com.project.domain.Criteria;
 import com.project.domain.PageDTO;
 import com.project.service.BookService;
 
+import jdk.internal.org.jline.utils.Log;
+import lombok.extern.log4j.Log4j;
+
 
 @Controller
 @RequestMapping("/book")
+@Log4j
 public class BookController {
 	
 	@Autowired
@@ -25,14 +30,14 @@ public class BookController {
 	
 	//책 검색
 	@GetMapping("/searchList")
-	public void list(@RequestParam(value = "type") String type, @RequestParam(value = "keyword") String keyword, Model model) {
+	public void searchListGet(@RequestParam(value = "type") String type, @RequestParam(value = "keyword") String keyword, Model model) {
 		List<BookDTO> bookDto = service.searchList(type, keyword);
 		model.addAttribute("search", bookDto);
 	}
 	
 	//도서 리스트
 	@GetMapping("/list")
-	public void test(Criteria cri, Model model) {
+	public void bookList(Criteria cri, Model model) {
 		model.addAttribute("bookList", service.getList(cri));
 		int total = service.getTotal(cri);
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
@@ -41,8 +46,14 @@ public class BookController {
 	
 	//도서 상세정보
 	@GetMapping("/get")
-	public void test2(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model) {
+	public void bookGet(@RequestParam("bno") Long bno, Criteria cri, Model model) {
 		model.addAttribute("info", service.get(bno));
+	}
+	
+	//도서 카테고리
+	@GetMapping("/category")
+	public void categoryListGet(Model model, String category) {
+		model.addAttribute("category", service.categoryList(category));
 	}
 
 }
