@@ -7,7 +7,8 @@
 	<!-- 장바구니 리스트 -->
 	<select id="getCart" resultType="com.project.domain.CartDTO">
 		select * from tbl_cart
-		where memberId = #{memberId}
+		where
+		memberId = #{memberId}
 	</select>
 
 	<!-- 장바구니 중복 체크 -->
@@ -22,9 +23,10 @@
 		insert into tbl_cart(cartBno, bno, title, price,
 		category, image, cartCount, totalPrice, memberId, discount, bookCount)
 		values
-		(seq_cart.nextval, #{bno}, #{title},#{price},
-		#{category}, #{image},
-		#{cartCount}, #{totalPrice}, #{memberId}, #{discount}, #{bookCount})
+		(seq_cart.nextval, #{bno}, #{title}, #{price},
+		#{category}, #{image}, #{cartCount}, #{totalPrice},
+		#{memberId},
+		#{discount}, #{bookCount})
 	</insert>
 
 	<!-- 장바구니 삭제 -->
@@ -37,7 +39,8 @@
 	<update id="modifyCount">
 		update tbl_cart
 		set cartCount = #{cartCount}
-		where cartBno = #{cartBno}
+		where
+		cartBno = #{cartBno}
 	</update>
 
 	<!-- 장바구니 회원 품목 삭제 (참조 무결성) -->

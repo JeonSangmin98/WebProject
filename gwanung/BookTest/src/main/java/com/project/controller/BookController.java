@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,7 +14,6 @@ import com.project.domain.Criteria;
 import com.project.domain.PageDTO;
 import com.project.service.BookService;
 
-import jdk.internal.org.jline.utils.Log;
 import lombok.extern.log4j.Log4j;
 
 
@@ -41,7 +38,6 @@ public class BookController {
 		model.addAttribute("bookList", service.getList(cri));
 		int total = service.getTotal(cri);
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
-		
 	}
 	
 	//도서 상세정보
@@ -55,5 +51,6 @@ public class BookController {
 	public void categoryListGet(Model model, String category) {
 		model.addAttribute("category", service.categoryList(category));
 	}
-
+	
+	
 }

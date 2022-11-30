@@ -27,5 +27,10 @@ public interface BookMapper {
 	
 	// 도서의 리뷰가 추가/삭제 될때마다 댓글 수 업데이트
 	public void updateReviewCnt(@Param("bno") Long bno, @Param("amount") int amount); 
+	
+	public List<BookDTO> discountList(); // 높은 할인율 리스트
 
+	public BookDTO bookCountTest(); // 도서 개수 0개
+	
+	public BookDTO updateSoldOutImage(String image); //이미지 변경
 }

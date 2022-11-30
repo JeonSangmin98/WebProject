@@ -18,7 +18,8 @@ public class CartDTO {
 	private double discount; //도서 할인
 	private Long bookCount; //도서 수량
 	
-	private Long point; //
+	private Long point; // 적립 포인트
+	private Long totalPoint; //여러 구매 시 적립 포인트
 	
 	//회원 값
 	private String memberId; // 회원 아이디 (PK)
@@ -30,9 +31,11 @@ public class CartDTO {
 	
 	//장바구니 총 가격
 	public void totalPrice() {
-		this.totalPrice = this.price * this.cartCount;
-//		this.salePrice =  (long) (this.price * (1-this.discount));
-//		this.totalPrice = this.salePrice * this.cartCount;
+//		this.totalPrice = this.price * this.cartCount;
+		this.salePrice = (long) (this.price * (1 - (this.discount/100))); //할인 가격 = 정가 x 100% - 할인율
+		this.totalPrice = this.salePrice * this.cartCount; // 총 가격 = 카트 개수 x 할인금액
+		this.point = (long) Math.floor(this.salePrice * 0.05);
+		this.totalPoint = this.point * this.cartCount;
 	}
 	
 }

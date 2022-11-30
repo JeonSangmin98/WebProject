@@ -61,6 +61,11 @@ th, td {
 						checked="checked"><input type="hidden"
 						class="hiddenCartTotalPrice" value="${cart.totalPrice}"> <input
 						type="hidden" class="hiddenCartCount" value="${cart.cartCount}">
+						<input type="hidden" class="hiddenPrice" value="${cart.price}">
+						<input type="hidden" class="hiddenbookCount"
+						value="${cart.bookCount}"> <input type="hidden"
+						class="hiddenPoint" value="${cart.point}"> <input
+						type="hidden" class="hiddenTotalPoint" value="${cart.totalPoint}">
 					<td style="user-select: auto;"><img src="${cart.image}"></td>
 					<td style="user-select: auto;">${cart.title}</td>
 					<td style="user-select: auto;">${cart.category}</td>
@@ -103,16 +108,19 @@ th, td {
 
 	<div class="container">
 		<p>
-			원래 가격: <span class="totalPrice text-warning"></span>원
+			총 수량: <span class="totalCount text-warning"></span>개
 		</p>
 		<p>
-			총 수량: <span class="totalCount text-muted"></span>개
+			할인 가격: <span class="totalPrice text-warning"></span>원
 		</p>
 		<p>
-			할인 가격: <span class="salePrice text-warning">${cart.totalPrice-(cart.totalPrice*cart.discount)}</span>원
+			총 적립 포인트 : <span class="totalPoint text-info"></span>원
 		</p>
 		<p>
-			적립 포인트 : <span class="memberPoint text-info"></span>원
+			배송비 : <span class="deliveryCost text-info"></span>원
+		</p>
+		<p>
+			총 결제 금액 : <span class="finalTotalPrice text-info"></span>원
 		</p>
 		<button type="button" class="btn btn-primary"
 			style="user-select: auto;">구매하기</button>
@@ -151,25 +159,42 @@ th, td {
 	//장바구니 총 수량 가격 정보
 	function setCartTotal() {
 
-		let totalPrice = 0; //총 가격
+		let totalPrice = 0; // 총 가격
 		let totalCount = 0; // 총 개수
-		let salePrice = "${cart.totalPrice-(cart.totalPrice*cart.discount)}";
-		let point = salePrice * 0.05;
-		point = Math.floor(point);
-		$(".memberPoint").text(point);
+		let totalKind = 0; // 상품 총 종류
+		let totalPoint = 0; // 총 마일리지
+		let deliveryCost = 0; // 배송비
+		let finalTotalPrice = 0; // 최종 가격
 
 		$(".cartTotal").each(function(index, element) {
 
 			if ($(element).find(".checkCart").is(":checked") === true) { //체크 여부 확인 | element td객체의 체크박스가 checked 상태면 true 반환
-				totalPrice += parseInt($(element).find( // 총 가격  | 
+				totalPrice += parseInt($(element).find( // 총 가격   
 				".hiddenCartTotalPrice").val());
 				totalCount += parseInt($(element).find( // 총 개수
 				".hiddenCartCount").val());
+				totalKind += 1; // 총 종류 
+				totalPoint += parseInt($(element).find( // 총 마일리지
+				".hiddenTotalPoint").val());
 			}
+
+			if (totalPrice >= 40000) // 총 금액 4만원 이상 배달비 무료
+				deliveryCost = 0;
+			else if (totalPrice == 0) //상품이 없는 경우
+				deliveryCost = 0;
+			else
+				deliveryCost = 3000;
+
+			finalTotalPrice = totalPrice + deliveryCost; // 최종 가격 = 총 가격 + 배송비
+
 			// 전달받은 값 삽입
 			$(".totalPrice").text(totalPrice.toLocaleString()); //통화 형식으로 출력 toLocaleString() 추가
+			$(".finalTotalPrice").text(finalTotalPrice.toLocaleString());
+			$(".totalPoint").text(totalPoint.toLocaleString());
 			$(".totalCount").text(totalCount);
+			$(".deliveryCost").text(deliveryCost);
 		});
+
 	}
 
 	$(document).ready(function() {
