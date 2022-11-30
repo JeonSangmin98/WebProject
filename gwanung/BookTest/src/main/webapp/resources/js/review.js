@@ -25,8 +25,8 @@ var reviewService = (function() {
 		$.getJSON("/reviews/pages/" + bno + "/" + page + ".json",
 			function(data) {
 				if(callback) {
-					// callback(data); //댓글 목록만 가져오는 경우 
-					callback(data.reviewCnt, data.list); //댓글 숫자와 목록을 가져오는 경우
+					// callback(data); //리뷰 목록만 가져오는 경우 
+					callback(data.reviewCnt, data.list); //리뷰 숫자와 목록을 가져오는 경우
 				}
 			}).fail(function(xhr, status, err) {
 				if(error) { error(er) }

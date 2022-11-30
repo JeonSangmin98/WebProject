@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.domain.Criteria;
 import com.project.domain.ReviewDTO;
 import com.project.domain.ReviewVO;
+import com.project.domain.UpdateReviewDTO;
 import com.project.mapper.BoardMapper;
 import com.project.mapper.BookMapper;
 import com.project.mapper.ReviewMapper;
@@ -27,6 +28,7 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int register(ReviewVO vo) {
 		bookMapper.updateReviewCnt(vo.getBno(), 1);
+		setRating(vo.getBno());
 		return mapper.insert(vo);
 	}
 
@@ -37,6 +39,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public int modify(ReviewVO vo) {
+		setRating(vo.getBno());
 		return mapper.update(vo);
 	}
 
@@ -45,6 +48,7 @@ public class ReviewServiceImpl implements ReviewService {
 	public int remove(Long reviewNo) {
 		ReviewVO vo = mapper.read(reviewNo);
 		bookMapper.updateReviewCnt(vo.getBno(), -1);
+		setRating(vo.getBno());
 		return mapper.delete(reviewNo);
 	}
 
@@ -60,4 +64,22 @@ public class ReviewServiceImpl implements ReviewService {
 				mapper.getListWithPaging(cri, bno));
 	}
 
+	
+	//도서 별점 평균 반영
+	public void setRating(Long bno) {
+		Double ratingAvg = mapper.getRatingAvg(bno);
+		
+		if(ratingAvg == null) {
+			ratingAvg = 0.0;
+		}
+		
+		ratingAvg = (double) (Math.round(ratingAvg*10));
+		ratingAvg = ratingAvg / 10;
+		
+		UpdateReviewDTO urd = new UpdateReviewDTO();
+		urd.setBno(bno);
+		urd.setRatingAvg(ratingAvg);
+		
+		mapper.updateRating(urd);
+	}
 }
