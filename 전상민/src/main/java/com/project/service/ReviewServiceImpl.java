@@ -26,9 +26,10 @@ public class ReviewServiceImpl implements ReviewService {
 	@Transactional
 	@Override
 	public int register(ReviewVO vo) {
+		int result = mapper.insert(vo);
 		bookMapper.updateReviewCnt(vo.getBno(), 1);
 		setRating(vo.getBno());
-		return mapper.insert(vo);
+		return result;
 	}
 
 	@Override
@@ -38,17 +39,19 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public int modify(ReviewVO vo) {
+		int result = mapper.update(vo);
 		setRating(vo.getBno());
-		return mapper.update(vo);
+		return result;
 	}
 
 	@Transactional
 	@Override
 	public int remove(Long reviewNo) {
 		ReviewVO vo = mapper.read(reviewNo);
+		int result = mapper.delete(reviewNo);
 		bookMapper.updateReviewCnt(vo.getBno(), -1);
 		setRating(vo.getBno());
-		return mapper.delete(reviewNo);
+		return result;
 	}
 
 	@Override
@@ -64,13 +67,14 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	public void setRating(Long bno) {
-		Double ratingAvg = mapper.getRatingAvg(bno);
+		double ratingAvg = mapper.getRatingAvg(bno);
 		
-		if(ratingAvg == null) {
-			ratingAvg = 0.0;
-		}
+//		if(ratingAvg == null) {
+//			ratingAvg = 0.0;
+//		}
 		
-		ratingAvg = (double) (Math.round(ratingAvg*10));
+		// 소수점 첫째 자리까지 표현
+		ratingAvg = (double) (Math.round(ratingAvg * 10));
 		ratingAvg = ratingAvg / 10;
 		
 		UpdateReviewDTO urd = new UpdateReviewDTO();
