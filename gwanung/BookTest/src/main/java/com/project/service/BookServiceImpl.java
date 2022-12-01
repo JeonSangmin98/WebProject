@@ -55,10 +55,16 @@ public class BookServiceImpl implements BookService{
 		return mapper.categoryList(category);
 	}
 
-	//높은 할인율 리스트
+	//높은 할인도서 리스트
 	@Override
 	public List<BookDTO> discountList() {
 		return mapper.discountList();
+	}
+
+	//인기도서 리스트
+	@Override
+	public List<BookDTO> popularList() {
+		return mapper.popularList();
 	}
 
 }

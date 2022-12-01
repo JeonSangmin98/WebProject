@@ -27,9 +27,10 @@ public class ReviewServiceImpl implements ReviewService {
 	@Transactional
 	@Override
 	public int register(ReviewVO vo) {
+		int result = mapper.insert(vo);
 		bookMapper.updateReviewCnt(vo.getBno(), 1);
 		setRating(vo.getBno());
-		return mapper.insert(vo);
+		return result;
 	}
 
 	@Override
@@ -39,8 +40,9 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public int modify(ReviewVO vo) {
+		int result = mapper.update(vo);
 		setRating(vo.getBno());
-		return mapper.update(vo);
+		return result;
 	}
 
 	@Transactional
@@ -48,8 +50,9 @@ public class ReviewServiceImpl implements ReviewService {
 	public int remove(Long reviewNo) {
 		ReviewVO vo = mapper.read(reviewNo);
 		bookMapper.updateReviewCnt(vo.getBno(), -1);
+		int result = mapper.delete(reviewNo);
 		setRating(vo.getBno());
-		return mapper.delete(reviewNo);
+		return result;
 	}
 
 	@Override
@@ -59,27 +62,24 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public ReviewDTO getListPage(Criteria cri, Long bno) {
-		return new ReviewDTO(
-				mapper.getCountByBno(bno), 
-				mapper.getListWithPaging(cri, bno));
+		return new ReviewDTO(mapper.getCountByBno(bno), mapper.getListWithPaging(cri, bno));
 	}
 
-	
-	//도서 별점 평균 반영
+	// 도서 별점 평균 반영
 	public void setRating(Long bno) {
 		Double ratingAvg = mapper.getRatingAvg(bno);
-		
-		if(ratingAvg == null) {
+
+		if (ratingAvg == null) {
 			ratingAvg = 0.0;
 		}
 		
-		ratingAvg = (double) (Math.round(ratingAvg*10));
+		ratingAvg = (double) (Math.round(ratingAvg * 10));
 		ratingAvg = ratingAvg / 10;
-		
+
 		UpdateReviewDTO urd = new UpdateReviewDTO();
 		urd.setBno(bno);
 		urd.setRatingAvg(ratingAvg);
-		
+
 		mapper.updateRating(urd);
 	}
 }

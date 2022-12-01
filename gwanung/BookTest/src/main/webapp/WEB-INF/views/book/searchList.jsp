@@ -17,7 +17,7 @@ th, td {
 	vertical-align: middle;
 }
 </style>
-<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/bootstrap.min.css?ver=1" rel="stylesheet">
 </head>
 <body>
 	<jsp:include page="../menu.jsp" />

@@ -26,7 +26,7 @@
 	padding-top: 10px;
 }
 </style>
-<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/bootstrap.min.css?ver=1" rel="stylesheet">
 <div class="jumbotron">
 	<div class="page-header">
 		<h1 id="tables">${board.title}</h1>

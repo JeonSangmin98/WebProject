@@ -30,7 +30,8 @@ public interface BookMapper {
 	
 	public List<BookDTO> discountList(); // 높은 할인율 리스트
 
-	public BookDTO bookCountTest(); // 도서 개수 0개
+	public List<BookDTO> popularList(); // 인기도서 리스트
 	
+	public BookDTO bookCountTest(); // 도서 개수 0개
 	public BookDTO updateSoldOutImage(String image); //이미지 변경
 }

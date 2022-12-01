@@ -34,6 +34,7 @@ var reviewService = (function() {
 	}// getList
 	
 	function remove(reviewNo, callback, error) {
+		console.log("delete review..........");
 		$.ajax({
 			type : 'delete',
 			url : '/reviews/' + reviewNo,

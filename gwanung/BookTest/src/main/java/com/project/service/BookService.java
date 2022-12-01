@@ -21,6 +21,8 @@ public interface BookService {
 
 	public List<BookDTO> categoryList(String category); // 도서 카테고리
 
-	public List<BookDTO> discountList(); // 높은 할인율 리스트
+	public List<BookDTO> discountList(); // 높은 할인도서 리스트
+	
+	public List<BookDTO> popularList(); //인기도서 리스트
 	
 }

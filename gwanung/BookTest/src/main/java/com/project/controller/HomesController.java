@@ -22,6 +22,7 @@ public class HomesController {
 	@GetMapping("/mainHome")
 	public void mainHome(Model model) {
 		model.addAttribute("discount", service.discountList());
+		model.addAttribute("popular", service.popularList());
 	}
 
 

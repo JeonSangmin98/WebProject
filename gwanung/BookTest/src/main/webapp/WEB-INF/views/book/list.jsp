@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Book store</title>
-<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/bootstrap.min.css?ver=1" rel="stylesheet">
 <style type="text/css">
 img {
 	width: 200px;
