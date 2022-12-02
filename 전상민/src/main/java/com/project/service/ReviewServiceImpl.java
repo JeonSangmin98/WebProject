@@ -44,12 +44,12 @@ public class ReviewServiceImpl implements ReviewService {
 		return result;
 	}
 
-	@Transactional
 	@Override
+	@Transactional
 	public int remove(Long reviewNo) {
 		ReviewVO vo = mapper.read(reviewNo);
-		int result = mapper.delete(reviewNo);
 		bookMapper.updateReviewCnt(vo.getBno(), -1);
+		int result = mapper.delete(reviewNo);
 		setRating(vo.getBno());
 		return result;
 	}

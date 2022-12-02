@@ -3,11 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="../menu.jsp"%>
-<!-- <link href="/resources/css/bootstrap.min.css" rel="stylesheet"> -->
-<title>자유 게시판</title>
 <style>
 .pull-right{
 	float : right;
+	width: 500px;
+}
+.page-item{
+	float: left;
 }
 .panel-heading{
 	padding : 10px;
@@ -16,93 +18,93 @@
 	float : right;
 	padding-bottom : 10px;
 }
-.page-header{
+.card-title{
 	padding-top : 30px;
+	margin: auto 0;
 }
 #boardTitle{
 	margin : 20px;
 	text-align : center;
 }
+.card{
+	padding : 10px;
+}
 </style>
-<div class="page-header">
-	<h1 id="boardTitle">자유 게시판</h1>
-</div>
-<div class="row">
-	<div class="col-lg-12">
-		<div class="panel-heading">
-			<form id="searchForm" action="/board/list" method="get">
-				<select name="type">
-					<option value="" ${pageMaker.cri.type == null ? 'selected':''}>---</option>
-					<option value="T" ${pageMaker.cri.type == 'T' ? 'selected':''}>제목</option>
-					<option value="C" ${pageMaker.cri.type == 'C' ? 'selected':''}>내용</option>
-					<option value="W" ${pageMaker.cri.type == 'W' ? 'selected':''}>작성자</option>
-					<option value="TC" ${pageMaker.cri.type == 'TC' ? 'selected':''}>제목 + 내용</option>
-					<option value="TCW" ${pageMaker.cri.type == 'TCW' ? 'selected':''}>제목 + 내용 + 작성자</option>
-				</select>
-				<input type="text" name="keyword" value="${pageMaker.cri.keyword}">
-				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-				<button class="btn btn-outline-primary">검색</button>
-			</form>
-			<table class="table table-hover">
-				<thead>
-					<tr class="table-primary">
-						<th scope="col">번호</th>
-						<th scope="col">글 제목</th>
-						<th scope="col">작성자</th>
-						<th scope="col">작성일</th>
-						<th scope="col">수정일</th>
+<div class="card">
+	<div class="card-body">
+		<h1 id="card-title">자유 게시판</h1>
+		<form id="searchForm" action="/board/list" method="get">
+			<select name="type">
+				<option value="" ${pageMaker.cri.type == null ? 'selected':''}>---</option>
+				<option value="T" ${pageMaker.cri.type == 'T' ? 'selected':''}>제목</option>
+				<option value="C" ${pageMaker.cri.type == 'C' ? 'selected':''}>내용</option>
+				<option value="W" ${pageMaker.cri.type == 'W' ? 'selected':''}>작성자</option>
+				<option value="TC" ${pageMaker.cri.type == 'TC' ? 'selected':''}>제목 + 내용</option>
+				<option value="TCW" ${pageMaker.cri.type == 'TCW' ? 'selected':''}>제목 + 내용 + 작성자</option>
+			</select>
+			<input type="text" name="keyword" value="${pageMaker.cri.keyword}">
+			<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+			<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+			<button class="btn btn-outline-primary">검색</button>
+		</form>
+		<table class="table table-hover table-striped">
+			<thead>
+				<tr class="table-primary">
+					<th scope="col">번호</th>
+					<th scope="col">글 제목</th>
+					<th scope="col">작성자</th>
+					<th scope="col">작성일</th>
+					<th scope="col">수정일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${list}" var="board">
+					<tr>
+						<th scope="row">${board.boardNo}</th>
+						<td><a class='move' href='${board.boardNo}'>${board.title} ...  
+							<span class="badge bg-secondary">${board.replyCnt}</span></a></td>
+						<td>${board.writer}</td>
+						<td><fmt:formatDate pattern="yyyy-MM-dd"
+								value="${board.regdate}" /></td>
+						<td><fmt:formatDate pattern="yyyy-MM-dd"
+								value="${board.updateDate}" /></td>
 					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${list}" var="board">
-						<tr>
-							<th scope="row">${board.boardNo}</th>
-							<td><a class='move' href='${board.boardNo}'>${board.title} ...  
-								<span class="badge bg-secondary">${board.replyCnt}</span></a></td>
-							<td>${board.writer}</td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${board.regdate}" /></td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${board.updateDate}" /></td>
-						</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		<div class="pull-right">
+			<form id="actionForm" action="/board/list" method="get">
+				<input type="hidden" name="pageNum" value='${pageMaker.cri.pageNum}'>
+				<input type="hidden" name="amount" value='${pageMaker.cri.amount}'>
+				<input type="hidden" name="type" value="${pageMaker.cri.type}">
+				<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+				<input type="hidden" name="memberId" value="${member.memberId}"> 
+			</form>
+			<div>
+                <ul class="pagination">
+                  	<c:if test="${pageMaker.prev}">
+	                  <li class="page-item previous">
+	                    <a class="page-link" href="${pageMaker.startPage - 1}">«</a>
+	                  </li>
+					</c:if>
+					
+					<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+	                  <li class="page-item ${pageMaker.cri.pageNum == num ? 'active' : ''}">
+	                    <a class="page-link" href="${num}">${num}</a>
+	                  </li>
 					</c:forEach>
-				</tbody>
-			</table>
-			<div class="pull-right">
-				<form id="actionForm" action="/board/list" method="get">
-					<input type="hidden" name="pageNum" value='${pageMaker.cri.pageNum}'>
-					<input type="hidden" name="amount" value='${pageMaker.cri.amount}'>
-					<input type="hidden" name="type" value="${pageMaker.cri.type}">
-					<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
-					<input type="hidden" name="memberId" value="${member.memberId}"> 
-				</form>
-				<div>
-	                <ul class="pagination">
-	                  	<c:if test="${pageMaker.prev}">
-		                  <li class="page-item previous">
-		                    <a class="page-link" href="${pageMaker.startPage - 1}">«</a>
-		                  </li>
-						</c:if>
-						
-						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-		                  <li class="page-item ${pageMaker.cri.pageNum == num ? 'active' : ''}">
-		                    <a class="page-link" href="${num}">${num}</a>
-		                  </li>
-						</c:forEach>
-						
-						 <c:if test="${pageMaker.next}">
-		                  <li class="page-item next">
-		                    <a class="page-link" href="${pageMaker.endPage + 1}">»</a>
-		                  </li>
-		                </c:if>
-	                </ul>
-              </div>
-			</div>
-			<c:if test="${member.memberId != null}">
-				<button id="regBtn" type="button" class="btn btn-info">글쓰기</button>
-			</c:if>
+					
+					 <c:if test="${pageMaker.next}">
+	                  <li class="page-item next">
+	                    <a class="page-link" href="${pageMaker.endPage + 1}">»</a>
+	                  </li>
+	                </c:if>
+                </ul>
+             </div>
 		</div>
+		<c:if test="${member.memberId != null}">
+			<button id="regBtn" type="button" class="btn btn-info">글쓰기</button>
+		</c:if>
 	</div>
 </div>
 

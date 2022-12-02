@@ -60,8 +60,9 @@
 	
 	<!-- 리뷰 갯수 -->
 	<update id="updateReviewCnt">
-		update tbl_book set reviewCnt = reviewCnt +
-		#{amount} where bno = #{bno}
+		update tbl_book 
+		set reviewCnt = reviewCnt + #{amount} 
+		where bno = #{bno}
 	</update>
 	
 	<!-- 도서 카테고리 -->
