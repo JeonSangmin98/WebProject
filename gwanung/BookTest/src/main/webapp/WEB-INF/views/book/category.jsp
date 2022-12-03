@@ -49,7 +49,7 @@ img {
 			<ul id="imgClick">
 				<c:forEach items="${category}" var="book">
 					<li><a class="move" href="${book.bno}"><img
-							src="${book.image}"></a></li>
+							src="${book.image}" data-bookcount="${book.bookCount}" class="image"></a></li>
 				</c:forEach>
 			</ul>
 		</div>
@@ -60,6 +60,7 @@ img {
 </body>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resources/js/bookCount.js?ver=1"></script>
 <script type="text/javascript">
 	const actionForm = $(".actionForm");
 

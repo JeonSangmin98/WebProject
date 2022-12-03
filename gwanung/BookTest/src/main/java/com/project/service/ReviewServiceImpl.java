@@ -24,6 +24,8 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private BookMapper bookMapper;
 
+	
+	//리뷰 등록
 	@Transactional
 	@Override
 	public int register(ReviewVO vo) {
@@ -32,12 +34,14 @@ public class ReviewServiceImpl implements ReviewService {
 		setRating(vo.getBno());
 		return result;
 	}
-
+	
+	//리뷰 조회
 	@Override
 	public ReviewVO get(Long reviewNo) {
 		return mapper.read(reviewNo);
 	}
 
+	//리뷰 수정
 	@Override
 	public int modify(ReviewVO vo) {
 		int result = mapper.update(vo);
@@ -45,6 +49,7 @@ public class ReviewServiceImpl implements ReviewService {
 		return result;
 	}
 
+	//리뷰 삭제
 	@Transactional
 	@Override
 	public int remove(Long reviewNo) {
@@ -54,7 +59,7 @@ public class ReviewServiceImpl implements ReviewService {
 		setRating(vo.getBno());
 		return result;
 	}
-
+	
 	@Override
 	public List<ReviewVO> getList(Criteria cri, Long bno) {
 		return mapper.getListWithPaging(cri, bno);

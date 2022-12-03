@@ -51,7 +51,7 @@ th, td {
 				<tr class="table-light" style="user-select: auto;">
 					<th scope="row" style="user-select: auto;">${s.title}</th>
 					<td style="user-select: auto;"><a class="moveBtn" data-bno="${s.bno}"><img
-							src="${s.image}"></a></td>
+							src="${s.image}" data-bookCount="${s.bookCount}" class="image"></a></td>
 					<td style="user-select: auto;">${s.author}</td>
 					<td style="user-select: auto;">${s.price}</td>
 					<td style="user-select: auto;">${s.bookCount}권</td>
@@ -66,6 +66,7 @@ th, td {
 </body>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resources/js/bookCount.js?ver=1"></script>
 <script type="text/javascript">
 	$(".moveBtn").on("click", function (e) {
 		e.preventDefault();

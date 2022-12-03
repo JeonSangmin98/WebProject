@@ -154,7 +154,8 @@ a {
 			</c:forEach>
 		</ul>
 	</div>
-	
+
+
 
 	<a href="https://www.flaticon.com/kr/free-icons/" title="매진 아이콘">매진
 		아이콘 제작자: Freepik - Flaticon</a>
@@ -163,6 +164,7 @@ a {
 </body>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resources/js/bookCount.js?ver=1"></script>
 <script type="text/javascript">
 	const actionForm = $(".actionForm");
 
@@ -182,13 +184,11 @@ a {
 				actionForm.attr("action", "/book/get");
 				actionForm.submit();
 			});
-	
-	
-	$(".image").each(function(index, element) {
+
+/* 	$(".image").each(function(index, element) {
 		if ($(element).data("bookcount") == 0) {
 			$(element).attr("src", "/resources/img/soldout.png");
 		}
-	});
-	
+	}); */
 </script>
 </html>

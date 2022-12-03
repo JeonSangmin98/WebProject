@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.domain.BookDTO;
@@ -39,14 +40,14 @@ public class CartController {
 	//장바구니 추가
 	@PostMapping("/addCart")
 	@ResponseBody
- 	public String addCartPost(CartDTO cart, HttpServletRequest request){
+ 	public String addCartPost(CartDTO cart, HttpServletRequest request, @RequestParam("bno") Long bno){
 		HttpSession session = request.getSession(); //세션 생성
 		MemberDTO dto = (MemberDTO) session.getAttribute("member");
 		
 		if(dto == null) {
 			return "5";
 		}
-		int result = service.addCart(cart);
+		int result = service.addCart(cart, bno);
 		
 		return result + "";
 		

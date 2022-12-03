@@ -89,16 +89,11 @@
 		]]>
 	</select>
 
-	<!-- 책 0권 테스트 -->
-	<select id="bookCountTest"
-		resultType="com.project.domain.BookDTO">
+	<!-- 도서개수 검사 -->
+	<select id="bookCountTest" resultType="com.project.domain.BookDTO">
 		select * from tbl_book
-		where bookCount = 0
+		where bookCount = 0 
+		and bno = #{bno}
 	</select>
-
-	<!-- 이미지 변경 -->
-	<update id="updateSoldOutImage">
-		update tbl_book
-		set image = ${image}
-	</update>
+	
 </mapper>

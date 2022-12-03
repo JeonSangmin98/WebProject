@@ -53,8 +53,8 @@ img {
 		<div class="container bookList">
 			<ul id="imgClick">
 				<c:forEach items="${bookList}" var="book">
-					<li><a class="move" href="${book.bno}"><img
-							src="${book.image}"></a></li>
+					<li><a class="move" href="${book.bno}"><img class="image"
+							src="${book.image}" data-bookCount="${book.bookCount}"></a></li>
 				</c:forEach>
 			</ul>
 		</div>
@@ -87,6 +87,7 @@ img {
 </body>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resources/js/bookCount.js?ver=1"></script>
 <script type="text/javascript">
 	const actionForm = $(".actionForm");
 

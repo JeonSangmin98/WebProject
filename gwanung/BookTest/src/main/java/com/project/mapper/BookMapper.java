@@ -32,6 +32,5 @@ public interface BookMapper {
 
 	public List<BookDTO> popularList(); // 인기도서 리스트
 	
-	public BookDTO bookCountTest(); // 도서 개수 0개
-	public BookDTO updateSoldOutImage(String image); //이미지 변경
+	public BookDTO bookCountTest(Long bno); //도서개수 검사
 }

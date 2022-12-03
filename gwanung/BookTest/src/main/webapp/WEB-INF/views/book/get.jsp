@@ -75,13 +75,25 @@ img {
 			<h3 class="card-header c_title">도서 제목 : ${info.title}</h3>
 			<div class="col-lg-4 bookImg">
 				<img src="${info.image}"
-					class="d-block user-select-none img-responsive center-block">
+					class="d-block user-select-none img-responsive center-block image"
+					data-bookcount="${info.bookCount}">
 			</div>
 			<h5 class="card-title authorInfo">저자 : ${info.author}</h5>
-			<h5 class="card-title priceInfo">정가 : <fmt:formatNumber value="${info.price}" pattern="#,### 원" /></h5>
-			<h5 class="card-title discountInfo">할인 가 : <fmt:formatNumber value="${info.price - (info.price * (info.discount/100))}" pattern="#,### 원" /></h5>
-			<p> 적립 포인트: <span class="addPoint"></span> 원</p>
-			<p>도서 출판일 : 
+			<h5 class="card-title priceInfo">
+				정가 :
+				<fmt:formatNumber value="${info.price}" pattern="#,### 원" />
+			</h5>
+			<h5 class="card-title discountInfo">
+				할인 가 :
+				<fmt:formatNumber
+					value="${info.price - (info.price * (info.discount/100))}"
+					pattern="#,### 원" />
+			</h5>
+			<p>
+				적립 포인트: <span class="addPoint"></span> 원
+			</p>
+			<p>
+				도서 출판일 :
 				<fmt:formatDate value="${info.pubdate}" pattern="yyyy-MM-dd" />
 			</p>
 			<p class="card-text">
@@ -167,6 +179,7 @@ img {
 <!-- 제이쿼리 먼지 등록 / 부트스트랩에서 제이쿼리를 사용 -->
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resources/js/bookCount.js?ver=1"></script>
 <script src="/resources/js/review.js?ver=1"></script>
 <script>
 	$(function() {
@@ -392,6 +405,8 @@ img {
 			alert("장바구니에 이미 추가가 되어있습니다.");
 		else if (result == '5')
 			alert("로그인이 필요합니다.");
+		else if (result == '6')
+			alert("해당 상품이 품절입니다.");
 	}
 
 	$(function() {
@@ -399,13 +414,13 @@ img {
 		$("#backBtn").on("click", function() {
 			self.location = "/book/list";
 		})
-		
+
 		//적립 포인트
 		let salePrice = '${info.price - (info.price * (info.discount/100))}';
 		let point = salePrice * 0.05;
 		point = Math.floor(point);
 		$(".addPoint").text(point);
-		
+
 	});
 
 	//장바구니 추가

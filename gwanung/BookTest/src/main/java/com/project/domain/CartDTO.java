@@ -30,9 +30,9 @@ public class CartDTO {
 	private Long salePrice;
 	
 	//장바구니 총 가격
-	public void totalPrice() {
+	public void infoPrice() {
 //		this.totalPrice = this.price * this.cartCount;
-		this.salePrice = (long) (this.price * (1 - (this.discount/100))); //할인 가격 = 정가 x 100% - 할인율
+		this.salePrice = (long) (this.price * (1 - (this.discount/100))); //할인 가격 = 정가 x (1 - (할인/100)) 
 		this.totalPrice = this.salePrice * this.cartCount; // 총 가격 = 카트 개수 x 할인금액
 		this.point = (long) Math.floor(this.salePrice * 0.05);
 		this.totalPoint = this.point * this.cartCount;
