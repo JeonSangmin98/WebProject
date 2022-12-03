@@ -46,15 +46,25 @@
 		memberName = #{memberName},
 		memberPw = #{memberPw},
 		memberAddr1 = #{memberAddr1},
-		memberAddr2 = #{memberAddr2},
+		memberAddr2 =
+		#{memberAddr2},
 		memberAddr3 = #{memberAddr3},
 		memberMail = #{memberMail}
 		where memberId = #{memberId}
 	</update>
-	
+
 	<!-- 회원 정보 삭제 -->
 	<delete id="memberDelete">
 		delete from tbl_member
 		where memberId = #{memberId}
 	</delete>
+
+	<!-- 주문자 정보 -->
+	<select id="getMemberInfo"
+		resultType="com.project.domain.MemberDTO">
+		select memberId, memberName, memberMail, memberAddr1, memberAddr2,
+		memberAddr3, point
+		from tbl_member
+		where memberId = #{memberId}
+	</select>
 </mapper>

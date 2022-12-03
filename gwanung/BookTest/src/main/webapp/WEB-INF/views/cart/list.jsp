@@ -66,6 +66,8 @@ th, td {
 						value="${cart.bookCount}"> <input type="hidden"
 						class="hiddenPoint" value="${cart.point}"> <input
 						type="hidden" class="hiddenTotalPoint" value="${cart.totalPoint}">
+						<!-- 구매 input --> <input type="hidden" class="hiddenBookBno"
+						value="${cart.bno}">
 					<td style="user-select: auto;"><img src="${cart.image}"></td>
 					<td style="user-select: auto;">${cart.title}</td>
 					<td style="user-select: auto;">${cart.category}</td>
@@ -103,8 +105,9 @@ th, td {
 			type="hidden" name="memberId" value="${member.memberId}">
 	</form>
 
-	<%--추가 form --%>
-	<form action=""></form>
+	<!-- 주문 form -->
+	<form action="/order/list/${member.memberId}" method="get"
+		class="orderForm"></form>
 
 	<div class="container">
 		<p>
@@ -122,7 +125,7 @@ th, td {
 		<p>
 			총 결제 금액 : <span class="finalTotalPrice text-info"></span>원
 		</p>
-		<button type="button" class="btn btn-primary"
+		<button type="button" class="btn btn-primary orderBtn"
 			style="user-select: auto;">구매하기</button>
 		<button type="button" class="btn btn-warning"
 			style="user-select: auto;">대여하기</button>
@@ -228,6 +231,47 @@ th, td {
 
 		setCartTotal($(".cartTotal"));
 	});
+
+	/* 주문 페이지 이동 */
+	$(".orderBtn")
+			.on(
+					"click",
+					function() {
+
+						if ($(".totalPrice").text() == undefined
+								|| $(".totalPrice").text() == 0) {
+							alert("장바구니에 담긴 물품이 없습니다.");
+						} else {
+							let form_contents = '';
+							let orderNumber = 0;
+
+							$(".cartTotal")
+									.each(
+											function(index, element) {
+												if ($(element).find(
+														".checkCart").is(
+														":checked") === true) {
+
+													let bno = $(element).find(
+															".hiddenBookBno")
+															.val();
+													let bookCount = $(element)
+															.find(
+																	".hiddenCartCount")
+															.val();
+													let inputBno = "<input name='orders[" + orderNumber + "].bno' type='hidden' value='" + bno + "'>";
+													form_contents += inputBno;
+
+													let inputBookCount = "<input name='orders[" + orderNumber + "].bookCount' type='hidden' value='" + bookCount + "'>";
+													form_contents += inputBookCount;
+
+													orderNumber += 1;
+												}
+											});
+							$(".orderForm").html(form_contents);
+							$(".orderForm").submit();
+						}
+					});
 </script>
 
 </html>

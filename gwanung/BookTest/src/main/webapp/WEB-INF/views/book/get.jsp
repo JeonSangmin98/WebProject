@@ -391,7 +391,7 @@ img {
 		$(".inputCount").val(++countValue);
 	});
 	$(".minus_btn").on("click", function() {
-		if (quantity > 1) {
+		if (countValue > 1) {
 			$(".inputCount").val(--countValue);
 		}
 	});

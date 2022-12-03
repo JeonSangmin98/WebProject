@@ -58,5 +58,12 @@ public class MemberServiceImpl implements MemberService {
 		cartMapper.deleteMemberCart(memberId);
 		mapper.memberDelete(memberId);
 	}
+	
+	/* 주문자 정보 */
+	@Override
+	public MemberDTO getMemberInfo(String memberId) {		
+		return mapper.getMemberInfo(memberId);
+	}
+	
 
 }

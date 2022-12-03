@@ -21,4 +21,7 @@ public interface MemberService {
 	
 	//회원정보 삭제
 	public void memberDelete(String memberId);
+	
+	/* 주문자 정보 */
+	public MemberDTO getMemberInfo(String memberId);
 }
