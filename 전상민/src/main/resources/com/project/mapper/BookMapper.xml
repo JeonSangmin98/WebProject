@@ -35,8 +35,8 @@
 	<select id="getListWithPaging"
 		resultType="com.project.domain.BookDTO">
 	<![CDATA[
-		select bno, author, title, discount, pubdate, isbn, image, category, publisher, description, reviewCnt, bookCount, price from(
-		select rownum rn, bno, author, title, discount, pubdate, isbn, image, category, publisher, description, reviewCnt, bookCount, price
+		select bno, author, title, discount, pubdate, isbn, image, category, publisher, description, bookCount, price from(
+		select rownum rn, bno, author, title, discount, pubdate, isbn, image, category, publisher, description, bookCount, price
 		from tbl_book 
 		where
 		rownum <= #{pageNum} * #{amount})
@@ -55,8 +55,14 @@
 		insert into tbl_book values
 		(seq_book.nextval,
 		#{author}, #{title}, #{discount}, #{pubdate}, #{isbn}, #{image},
-		#{category}, #{publisher}, #{description})
+		#{category}, #{publisher}, #{description}, #{price}, #{bookCount})
 	</insert>
+	
+	<!-- 도서 카테고리 -->
+	<select id="categoryList"
+		resultType="com.project.domain.BookDTO">
+		select * from tbl_book where category = #{category}
+	</select>
 	
 	<!-- 리뷰 갯수 -->
 	<update id="updateReviewCnt">
@@ -65,9 +71,31 @@
 		where bno = #{bno}
 	</update>
 	
-	<!-- 도서 카테고리 -->
-	<select id="categoryList"
+	<!-- 높은 할인도서 리스트 -->
+	<select id="discountList"
 		resultType="com.project.domain.BookDTO">
-		select * from tbl_book where category = #{category}
+		<![CDATA[
+			select * from  
+	    	(select * from tbl_book
+			order by discount desc)
+	        where rownum <=5
+		]]>
+	</select>
+	
+		<!-- 인기도서 리스트 -->
+	<select id="popularList" resultType="com.project.domain.BookDTO">
+		<![CDATA[
+			select * from  
+	    	(select * from tbl_book
+			order by ratingAvg desc)
+	        where rownum <=5
+		]]>
+	</select>
+	
+	<!-- 도서개수 검사 -->
+	<select id="bookCountTest" resultType="com.project.domain.BookDTO">
+		select * from tbl_book
+		where bookCount = 0 
+		and bno = #{bno}
 	</select>
 </mapper>

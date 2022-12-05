@@ -28,17 +28,16 @@
   <link href="/resources/assets/css/style.css" rel="stylesheet">
 </head>
 <body>
-	<%-- <jsp:include page="../menu.jsp" /> --%>
 <main>
    <div class="container">
 
      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
        <div class="container">
          <div class="row justify-content-center">
-           <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+           <div class="col-lg-6 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
              <div class="d-flex justify-content-center py-4">
-               <a href="index.html" class="logo d-flex align-items-center w-auto">
+               <a href="/mainHome" class="logo d-flex align-items-center w-auto">
                  <img src="/resources/assets/img/logo.png" alt="">
                  <span class="d-none d-lg-block">Book Store</span>
                </a>
@@ -80,44 +79,20 @@
                  </form>
                </div>
              </div>
+             <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+              </div>
            </div>
          </div>
        </div>
      </section>
    </div>
  </main>
-  
-	<%-- <div class="bs-docs-section">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="page-header" id="banner">
-					<h1 id="containers">로그인</h1>
-					<p class="text-info">로그인 테스트</p>
-				</div>
-			</div>
-		</div>
-		<div class="page-body">
-			<form action="/member/login" method="post" class="loginForm">
-				<div class="form-group">
-					<label class="col-form-label col-form-label-lg mt-4" for="inputLarge">아이디</label>
-					<input type="text" class="form-control inputId" placeholder="ID" name="memberId">
-				</div>
-				<div class="form-group">
-					<label class="col-form-label col-form-label-lg mt-4" for="inputLarge">비밀번호</label>
-					<input type="password" class="form-control" placeholder="Password" name="memberPw">
-				</div>
-				<c:if test="${result==0}">
-					<div>
-						<p class="text-danger">사용자 ID 또는 비밀번호를 잘못 입력하셨습니다.</p>
-					</div>
-				</c:if>
-				<div class="form-group" id="loginBtn">
-					<input type="button" class="btn btn-lg btn-primary loginBtn" value="로그인">
-				</div>
-			</form>
-		</div>
-	</div> --%>
-</body>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
 <!-- <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script> -->
 <!-- Vendor JS Files -->
@@ -132,6 +107,7 @@
 
 <!-- Template Main JS File -->
 <script src="/resources/assets/js/main.js"></script>
+</body>
 <script type="text/javascript">
 	$(".loginBtn").click(function() {
 		$(".loginForm").submit();

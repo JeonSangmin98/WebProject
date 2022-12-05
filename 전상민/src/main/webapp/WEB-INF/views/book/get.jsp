@@ -2,142 +2,138 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<title>도서 상세정보</title>
-<jsp:include page="../menu.jsp" />
-<style type="text/css">
-img {
-	width: 400px;
-	height: 400px;
-	text-align: center;
-}
-.bookImg{
-	padding :10px 30px;
-	float : left;
-}
-.info-title{
-	padding : 10px;
-}
-.bookInfo{
-	padding : 30px;
-}
-.infoDiv{
-	padding-bottom : 10px;
-}
+<script src="/resources/js/review.js"></script>
+<%@ include file="../menu.jsp"%>
+<style>
 .pull-right{
-		float : right;
-	}
-.panel-body{
-	padding : 10px 100px;
+	float: right;
 }
-.card{
-	padding : 10px 100px;
+.bookBtn{
+	padding-bottom : 20px;
+	padding-top: 20px; 
+}
+.numBtn{
+	display: flex;
+	padding: 10px;
+}
+.plus, .minus{
+	margin : auto 0;
+}
+.inCnt{
+	padding: 0px 5px 0px 5px;
 }
 </style>
-<div class="container">
-	<div class="page-header" id="banner">
-		<div class="row">
-			<div class="col-lg-8 col-md-7 col-sm-6 info-title">
-				<h1>도서 상세정보</h1>
-				<p class="text-info">상세정보 테스트</p>
-			</div>
-			<div class="col-lg-4 col-md-5 col-sm-6">
-				<div class="sponsor"></div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="infoDiv">
-	<div class="card border-light bookInfo">
-		<h3 class="card-header c_title">책 제목: ${info.title}</h3>
-		<div class="col-lg-4 bookImg">
-			<img src="${info.image}" class="d-block user-select-none img-responsive center-block">
-		</div>
-		<h5 class="card-title c_author">저자: ${info.author}</h5>
-		<h5 class="card-title c_discount">가격: ${info.discount}</h5>
-		<p>
-			<fmt:formatDate value="${info.pubdate}" pattern="yyyy-MM-dd" />
-		</p>
-		<p class="card-text">
-			상세정보:<br> ${info.description}
-		</p>
-		<div class="bookBtn">
-			<button type="button" class="btn btn-secondary" style="user-select: auto;" id="backBtn">뒤로가기</button>
-			<button type="button" class="btn btn-info" style="user-select: auto;" id="basketBtn">장바구니 담기</button>
-			<input type="text" class="inputCount" value="1"> 
-			<span>
-				<button class="minus_btn">-</button>
-				<button class="plus_btn">+</button>
-			</span>
-		</div>
-		<form action="/book/list" id="operForm" method="get">
-			<input type="hidden" name="bno" value="${info.bno}"> 
-			<input type="hidden" name="pageNum" value="${cri.pageNum}"> 
-			<input type="hidden" name="amount" value="${cri.amount}">
+<main id="main" class="main">
+	<div class="pagetitle">
+		<h1>도서 상세정보</h1>
+    </div>
+    
+	<form action="/book/list" id="operForm" method="get">
+		<input type="hidden" name="bno" value="${info.bno}"> 
+		<input type="hidden" name="pageNum" value="${cri.pageNum}"> 
+		<input type="hidden" name="amount" value="${cri.amount}">
 	</form>
-	</div>
-</div>
 	
+	<section class="section">
+		<div class="row align-items-top">
+			<div class="card">
+				<div class="card-body">
+					<div class="row g-0">
+						<h1 class="card-title">제목 : ${info.title}</h1>
+						<div class="col-md-4">
+							<img src="${info.image}" class="img-fluid rounded-start">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-text">저자: ${info.author}</h5>
+								<h5 class="card-text priceInfo">가격 : <fmt:formatNumber value="${info.price}" pattern="#,### 원" /></h5>
+								<h5 class="card-text discountInfo">할인가 : <fmt:formatNumber value="${info.price - (info.price * (info.discount/100))}" pattern="#,### 원" /></h5>
+								<p> 적립 포인트: <span class="addPoint"></span> 원</p>
+								<p>도서 출판일 :
+									<fmt:formatDate value="${info.pubdate}" pattern="yyyy-MM-dd" />
+								</p>
+								<p class="card-text" style="text-overflow: ellipsis;">
+									상세정보:<br> ${info.description}
+								</p>
+							</div>
+						</div>
+						<div class="bookBtn" style="padding-left: 10px;">
+							<button type="button" class="btn btn-secondary" id="backBtn">뒤로가기</button>
+							<button type="button" class="btn btn-info" id="basketBtn">장바구니 담기</button>
+						</div>
+						<div class="col-md-4 numBtn">
+							<div class="minus">
+								<button class="btn btn-primary minus_btn"><i class="bi bi-bag-dash"></i></button>
+							</div>
+							<div class="inCnt">
+								<input type="number" class="inputCount form-control" value="1" min="1">
+							</div> 
+							<div class="plus">
+								<button class="btn btn-primary plus_btn"><i class="bi bi-bag-plus"></i></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="card">
+				<h3 class="card-header">리뷰</h3>
+				<c:if test="${member.memberId != null}">
+					<div class="d-grid gap-2 mt-3">
+						<button id="addReviewBtn" type="button" class="btn btn-outline-info">새 리뷰</button>
+					</div>
+				</c:if>
+				<div class="card-body">
+					<ul class="list-group list-group-flush review">
+					</ul>
+				</div>
+				<div class="card-review-footer"></div>
+			</div>
+		</div>
+	</section>
 	
-<div class="card mb-3">
-	<h3 class="card-header">리뷰</h3>
-	<c:if test="${member.memberId != null}">
-		<button id="addReviewBtn" type="button" class="btn btn-outline-info">새 리뷰</button>
-	</c:if>
-	<div class="card-body">
-		<ul class="list-group list-group-flush review">
-		</ul>
-	</div>
-	<div class="card-review-footer"></div>
-</div>
 
-<div class="modal" id="review-modal">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">리뷰창<span></span></h5>
-			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<label>내용</label><input class="form-control" name="review"
-						value="새로운 리뷰!!" maxlength="30" placeholder="최대 30자 까지 입력해주세요...">
+	<div class="modal fade" id="review-modal" tabindex="-1" style="display: none;" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">리뷰창</h5>
 				</div>
-				<div class="form-group">
-					<label>별점</label>
-					<select class="form-select" id="rating" name="rating">
-						<option value="1">★☆☆☆☆</option>
-	                    <option value="2">★★☆☆☆</option>
-	                    <option value="3">★★★☆☆</option>
-	                    <option value="4">★★★★☆</option>
-	                    <option value="5" selected>★★★★★</option>
-                   </select>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>내용</label>
+						<input class="form-control" name="review" value="새로운 리뷰!!" maxlength="30" placeholder="최대 30자 까지 입력해주세요...">
+					</div>
+					<div class="form-group">
+						<label>별점</label>
+						<select class="form-select" id="rating" name="rating">
+							<option value="1">★☆☆☆☆</option>
+		                    <option value="2">★★☆☆☆</option>
+		                    <option value="3">★★★☆☆</option>
+		                    <option value="4">★★★★☆</option>
+		                    <option value="5" selected>★★★★★</option>
+	                   </select>
+					</div>
+					<div class="form-group">
+						<label>작성자</label>
+						<input class="form-control reviewer" name="reviewer" value="reviewer" placeholder="${member.memberId}" value="${member.memberId}" readonly="readonly">
+					</div>
+					<div class="form-group">
+						<label>작성일</label>
+						<input class="form-control" name="reviewDate" value="2022-11-18" readonly="readonly">
+					</div>
 				</div>
-				<div class="form-group">
-					<label>작성자</label><input class="form-control reviewer" name="reviewer"
-						value="reviewer" placeholder="${member.memberId}" value="${member.memberId}" readonly="readonly">
+				<div class="modal-footer">
+					<button id="review-modalRegisterBtn" type="button" class="btn btn-primary">등록</button>
+					<button id="review-modalModBtn" type="button" class="btn btn-warning">수정</button>
+					<button id="review-modalRemoveBtn" type="button" class="btn btn-danger">삭제</button>
+					<button id="review-modalCloseBtn" type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 				</div>
-				<div class="form-group">
-					<label>작성일</label><input class="form-control" name="reviewDate"
-						value="2022-11-18" readonly="readonly">
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button id="review-modalRegisterBtn" type="button"
-					class="btn btn-primary">등록</button>
-				<button id="review-modalModBtn" type="button"
-					class="btn btn-warning">수정</button>
-				<button id="review-modalRemoveBtn" type="button"
-					class="btn btn-danger">삭제</button>
-				<button id="review-modalCloseBtn" type="button"
-					class="btn btn-secondary" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
-</div>
-	<!-- 제이쿼리 먼지 등록 / 부트스트랩에서 제이쿼리를 사용 -->
-<script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
-<script src="/resources/js/review.js"></script>
+</main>
+
 <script>
 	$(function() {
 		/* console.log(replyService);
@@ -167,7 +163,7 @@ img {
 							str += '<div>';
 							str += '<div class="card-body">';
 							str += '<strong>' + list[i].reviewer + '</strong>';
-							str += '<div class="pull-right">';
+							str += '<div class="pull-right"><h5>';
 							str += '<span class="badge bg-warning">평점 : ';
 							if(list[i].rating == 1){
 								str += '★☆☆☆☆ ';
@@ -181,7 +177,7 @@ img {
 								str += '★★★★★ ';
 							}
 							str += list[i].rating + '</span>';
-							str += '</div>';
+							str += '</h5></div>';
 							str += '<small class="d-flex w-100 justify text-muted">'
 									+ reviewService.displayTime(list[i].reviewDate)
 									+ '</small>';
@@ -329,7 +325,7 @@ img {
 		$(".inputCount").val(++countValue);
 	});
 	$(".minus_btn").on("click", function() {
-		if (quantity > 1) {
+		if (countValue > 1) {
 			$(".inputCount").val(--countValue);
 		}
 	});
@@ -351,6 +347,19 @@ img {
 			self.location = "/book/list";
 		})
 	});
+	$(function() {
+		//뒤로가기 
+		$("#backBtn").on("click", function() {
+			self.location = "/book/list";
+		})
+		
+		//적립 포인트
+		let salePrice = '${info.price - (info.price * (info.discount/100))}';
+		let point = salePrice * 0.05;
+		point = Math.floor(point);
+		$(".addPoint").text(point);
+		
+	});
 
 	//장바구니 추가
 	$("#basketBtn").on("click", function() {
@@ -365,7 +374,7 @@ img {
 		const memberId = '${member.memberId}';
 		const discount = '${info.discount}';
 		const bookCount = '${info.bookCount}';
-
+		
 		const data = {
 			bno : bno,
 			title : title,
@@ -376,7 +385,7 @@ img {
 			totalPrice : totalPrice,
 			memberId : memberId,
 			discount : discount,
-			bookCount : bookCount
+			bookCount : bookCount,
 		};
 
 		$.ajax({
@@ -392,5 +401,4 @@ img {
 		});
 	});
 </script>
-</body>
-</html>
+<%@ include file="../footer.jsp" %>

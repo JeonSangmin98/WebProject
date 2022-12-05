@@ -20,12 +20,6 @@ public class BookServiceImpl implements BookService{
 	
 	@Autowired
 	private BookMapper mapper;
-//		
-//	//책 리스트 
-//	@Override
-//	public ArrayList<BookDTO> getList() {
-//		return mapper.getList();
-//	}
 	
 	//책 api 데이터 등록
 	@Override
@@ -43,12 +37,6 @@ public class BookServiceImpl implements BookService{
 	public List<BookDTO> searchList(String type, String keyword) {
 		return mapper.searchList(type, keyword);
 	}
-	//도서 카테고리
-	@Override
-	public List<BookDTO> categoryList(String category) {
-		return mapper.categoryList(category);
-	}
-
 	//도서 전체 리스트 페이징 처리
 	@Override
 	public ArrayList<BookDTO> getList(Criteria cri) {
@@ -60,4 +48,23 @@ public class BookServiceImpl implements BookService{
 	public int getTotal(Criteria cri) {
 		return mapper.getTotalCount(cri);
 	}
+
+	//도서 카테고리
+	@Override
+	public List<BookDTO> categoryList(String category) {
+		return mapper.categoryList(category);
+	}
+
+	//높은 할인도서 리스트
+	@Override
+	public List<BookDTO> discountList() {
+		return mapper.discountList();
+	}
+
+	//인기도서 리스트
+	@Override
+	public List<BookDTO> popularList() {
+		return mapper.popularList();
+	}
+
 }

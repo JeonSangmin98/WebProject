@@ -2,112 +2,92 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<script src="/resources/js/reply.js"></script>
 <%@ include file="../menu.jsp"%>
-<style>
-.pull-right{
-	float : right;
-}
-.panel-body{
-	padding : 10px 100px;
-}
-.card{
-	padding : 10px 100px;
-}
-.editBtn{
-	justify-content : center;
-	padding-top : 10px;
-}
-#boardTitle{
-	margin : 20px;
-	text-align : center;
-}
-.form-group{
-	padding-bottom : 40px;
-}
-#btn{
-	padding-left : 20px;
-	padding-right : 20px;
-}
-</style>
-<!-- <link href="/resources/css/bootstrap.min.css" rel="stylesheet"> -->
-<div class="jumbotron">
-	<div class="page-header">
-		<h1 id="boardTitle">자유게시판</h1>
-	</div>
-	<!-- <h1 class="display-3">글쓰기</h1> -->
-</div>
-<div class="panel-body">
-	<input type="hidden" class="form-control" name="boardNo" value="${board.boardNo}">
-	<div class="form-group">
-		<label>글 제목</label> <input class="form-control" name="title"
-			value="${board.title}" readonly="readonly">
-	</div>
-	<div class="form-group">
-		<label>글 내용</label>
-		<textarea class="form-control" rows="3" name="content" readonly="readonly">${board.content}</textarea>
-	</div>
-	<div class="form-group">
-		<label>작성자</label> <input class="form-control" name="writer"
-			value="${board.writer}" readonly="readonly">
-	</div>
-	<div class="editBtn btn-group text-center" role="group" aria-label="Basic example">
-		<button id="btn" class="btn btn-success listBtn" data-oper="list">목록</button>
-		<c:if test="${member.memberId != null && member.memberId == board.writer || member.memberId eq 'admin'}">
-			<button id="btn" class="btn btn-warning modBtn" data-oper="modify">수정</button>
-		</c:if>
-	</div>
-	<form id='actionForm' action="/board/list" method="get">
-		<input type="hidden" name="boardNo" value="${board.boardNo}"> 
-		<input type="hidden" name="pageNum" value="${cri.pageNum}">
-		<input type="hidden" name="amount" value="${cri.amount}"> 
-		<input type="hidden" name="keyword" value="${cri.keyword}"> 
-		<input type="hidden" name="type" value="${cri.type}">
-	</form>
-</div>
-
-<div class="card mb-3">
-	<h3 class="card-header">댓글</h3>
-	<c:if test="${member.memberId != null}">
-		<button id="addReplyBtn" type="button" class="btn btn-outline-info">새 댓글</button>
-	</c:if>
-	<div class="card-body">
-		<ul class="list-group list-group-flush chat">
-		</ul>
-	</div>
-	<div class="card-reply-footer">
-	</div>
-</div>
-
-<div class="modal" id="reply-modal">
-	<div class="modal-dialog" role="document">
+<main id="main" class="main">
+	<div class="pagetitle">
+      <h1>자유게시판</h1>
+    </div><!-- End Page Title -->
+	
+	<section class="section">
+		<div class="row align-items-top">
+			<div class="card">
+				<div class="card-body">
+					<h3 class="card-title">제목 : ${board.title}</h3>
+					<input type="hidden" class="form-control" name="boardNo" value="${board.boardNo}">
+					<hr>
+					<form class="row g-3">
+						<div class="col-md-12">
+							<label for="writer" class="form-label">작성자</label>
+							<input type="text" class="form-control" id="writer" name="writer" value="${board.writer}" readonly="readonly"> 
+						</div>
+						<div class="col-12">
+							<label for="content" class="form-label">내용</label>
+							<textarea class="form-control" rows="3" name="content" readonly="readonly" style="height: 100px">${board.content}</textarea>
+						</div>
+						<div class="text-center editBtn">
+							<button id="btn" class="btn btn-secondary listBtn" data-oper="list">목록</button>
+							<c:if test="${member.memberId != null && member.memberId == board.writer || member.memberId eq 'admin'}">
+								<button id="btn" class="btn btn-warning modBtn" data-oper="modify">수정</button>
+							</c:if>
+						</div>
+					</form>
+					<form id='actionForm' action="/board/list" method="get">
+						<input type="hidden" name="boardNo" value="${board.boardNo}"> 
+						<input type="hidden" name="pageNum" value="${cri.pageNum}">
+						<input type="hidden" name="amount" value="${cri.amount}"> 
+						<input type="hidden" name="keyword" value="${cri.keyword}"> 
+						<input type="hidden" name="type" value="${cri.type}">
+					</form>
+				</div>
+			</div> 
+					
+			<div class="card">
+				<h3 class="card-header">댓글</h3>
+				<c:if test="${member.memberId != null}">
+					<div class="d-grid gap-2 mt-3">
+		                <button  id="addReplyBtn" class="btn btn-outline-info" type="button">새 댓글</button>
+		            </div>
+				</c:if>
+				<div class="card-body">
+					<ul class="list-group list-group-flush chat">
+					</ul>
+				</div>
+				<div class="card-footer">
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+<div class="modal fade" id="reply-modal" tabindex="-1" style="display: none;" aria-hidden="true">             
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">댓글 알림창</h5>
+				<h5 class="modal-title">알림창</h5>
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-					<label>내용</label><input class="form-control" name="reply" value="New Reply!!">
+					<label>내용</label>
+					<input class="form-control" name="reply" value="New Reply!!">
 				</div>
 				<div class="form-group">
-					<label>작성자</label><input class="form-control" name="replyer" placeholder="${member.memberId}" value="${member.memberId}" disabled="disabled">
+					<label>작성자</label>
+					<input class="form-control" name="replyer" placeholder="${member.memberId}" value="${member.memberId}" readonly="readonly">
 				</div>
 				<div class="form-group">
-					<label>작성일</label><input class="form-control" name="replyDate" value="2022-11-23" disabled>
+					<label>작성일</label>
+					<input class="form-control" name="replyDate" value="2022-11-23" readonly="readonly">
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button id="modalRegisterBtn" type="button" class="btn btn-primary">등록</button>
 				<button id="modalModBtn" type="button" class="btn btn-warning">수정</button>
 				<button id="modalRemoveBtn" type="button" class="btn btn-danger">삭제</button>
-				<button id="modalCloseBtn" type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				<button type="button" class="btn btn-secondary" id="modalCloseBtn" data-bs-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
 </div>
-
-<script src="/resources/js/reply.js"></script>
-<script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script>
 	$(function() {
 		/* console.log(replyService);
@@ -149,7 +129,7 @@
 			
 		
 		var pageNum = 1;
-		var replyPageFooter = $(".card-reply-footer");
+		var replyPageFooter = $(".card-footer");
 		function showReplyPage(replyCnt){
 			var endNum = Math.ceil(pageNum / 10.0) * 10; 
 			var startNum = endNum - 9; 
@@ -158,7 +138,7 @@
 			if(endNum * 10 >= replyCnt){ endNum = Math.ceil(replyCnt / 10.0); }
 			if(endNum * 10 < replyCnt){ next = true; }
 			
-			var str ='<div class="pull-right"><ul class="pagination">';
+			var str ='<nav aria-label="Page navigation example"><ul class="pagination justify-content-end">';
 			if(prev){
 				str += '<li class="page-item disabled"><a class="page-link" href="' + (startNum - 1) + '">«</a></li>';
 			}// end if
@@ -169,7 +149,7 @@
 			if(next){
 				str += '<li class="page-item"><a class="page-link" href="' + (endNum + 1) + '">»</a></li>';
 			}// end if
-			str+='</ul></div>';
+			str+='</ul></nav>';
 			replyPageFooter.html(str);
 		}//showReplyPage()
 		
@@ -270,7 +250,7 @@
 		
 				
 		modalRemoveBtn.on("click", function(){
-			var replyNo = reply_modal.data("replyno");
+			var replyNo = reply_modal.data("replyNo");
 			replyService.remove(replyNo, function(result){
 				alert(result);
 				reply_modal.modal("hide");
@@ -295,5 +275,4 @@
 		});// end click
 	});// end function
 </script>
-</body>
-</html>
+<%@ include file="../footer.jsp" %>

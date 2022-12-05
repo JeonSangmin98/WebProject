@@ -4,127 +4,121 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="../menu.jsp"%>
 <style>
-.pull-right{
-	float : right;
-	width: 500px;
+#searchForm{
+	float: right;
 }
-.page-item{
+#regBtn{
 	float: left;
 }
-.panel-heading{
-	padding : 10px;
-}
-#searchForm{
-	float : right;
-	padding-bottom : 10px;
-}
-.card-title{
-	padding-top : 30px;
-	margin: auto 0;
-}
-#boardTitle{
-	margin : 20px;
-	text-align : center;
-}
-.card{
-	padding : 10px;
+#search{
+	padding: 10px;
+	justify-content: flex-end;
 }
 </style>
-<div class="card">
-	<div class="card-body">
-		<h1 id="card-title">자유 게시판</h1>
-		<form id="searchForm" action="/board/list" method="get">
-			<select name="type">
-				<option value="" ${pageMaker.cri.type == null ? 'selected':''}>---</option>
-				<option value="T" ${pageMaker.cri.type == 'T' ? 'selected':''}>제목</option>
-				<option value="C" ${pageMaker.cri.type == 'C' ? 'selected':''}>내용</option>
-				<option value="W" ${pageMaker.cri.type == 'W' ? 'selected':''}>작성자</option>
-				<option value="TC" ${pageMaker.cri.type == 'TC' ? 'selected':''}>제목 + 내용</option>
-				<option value="TCW" ${pageMaker.cri.type == 'TCW' ? 'selected':''}>제목 + 내용 + 작성자</option>
-			</select>
-			<input type="text" name="keyword" value="${pageMaker.cri.keyword}">
-			<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-			<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-			<button class="btn btn-outline-primary">검색</button>
-		</form>
-		<table class="table table-hover table-striped">
-			<thead>
-				<tr class="table-primary">
-					<th scope="col">번호</th>
-					<th scope="col">글 제목</th>
-					<th scope="col">작성자</th>
-					<th scope="col">작성일</th>
-					<th scope="col">수정일</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${list}" var="board">
-					<tr>
-						<th scope="row">${board.boardNo}</th>
-						<td><a class='move' href='${board.boardNo}'>${board.title} ...  
-							<span class="badge bg-secondary">${board.replyCnt}</span></a></td>
-						<td>${board.writer}</td>
-						<td><fmt:formatDate pattern="yyyy-MM-dd"
-								value="${board.regdate}" /></td>
-						<td><fmt:formatDate pattern="yyyy-MM-dd"
-								value="${board.updateDate}" /></td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-		<div class="pull-right">
-			<form id="actionForm" action="/board/list" method="get">
-				<input type="hidden" name="pageNum" value='${pageMaker.cri.pageNum}'>
-				<input type="hidden" name="amount" value='${pageMaker.cri.amount}'>
-				<input type="hidden" name="type" value="${pageMaker.cri.type}">
-				<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
-				<input type="hidden" name="memberId" value="${member.memberId}"> 
-			</form>
-			<div>
-                <ul class="pagination">
-                  	<c:if test="${pageMaker.prev}">
-	                  <li class="page-item previous">
-	                    <a class="page-link" href="${pageMaker.startPage - 1}">«</a>
-	                  </li>
-					</c:if>
-					
-					<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-	                  <li class="page-item ${pageMaker.cri.pageNum == num ? 'active' : ''}">
-	                    <a class="page-link" href="${num}">${num}</a>
-	                  </li>
-					</c:forEach>
-					
-					 <c:if test="${pageMaker.next}">
-	                  <li class="page-item next">
-	                    <a class="page-link" href="${pageMaker.endPage + 1}">»</a>
-	                  </li>
-	                </c:if>
-                </ul>
-             </div>
-		</div>
-		<c:if test="${member.memberId != null}">
-			<button id="regBtn" type="button" class="btn btn-info">글쓰기</button>
-		</c:if>
-	</div>
-</div>
+<main id="main" class="main">
+	<div class="pagetitle">
+		<h1>자유게시판</h1>
+	</div><!-- End Page Title -->
 
-<div class="modal">
-	<div class="modal-dialog" role="document">
+    <section class="section">
+      <div class="row">
+			<div class="card">
+				<div id="search" class="search-bar">
+					<form id="searchForm" action="/board/list" method="get" class="search-form d-flex align-items-center">
+						<select name="type" class="form-select">
+							<option value="" ${pageMaker.cri.type == null ? 'selected':''}>---</option>
+							<option value="T" ${pageMaker.cri.type == 'T' ? 'selected':''}>제목</option>
+							<option value="C" ${pageMaker.cri.type == 'C' ? 'selected':''}>내용</option>
+							<option value="W" ${pageMaker.cri.type == 'W' ? 'selected':''}>작성자</option>
+							<option value="TC" ${pageMaker.cri.type == 'TC' ? 'selected':''}>제목 + 내용</option>
+							<option value="TCW" ${pageMaker.cri.type == 'TCW' ? 'selected':''}>제목 + 내용 + 작성자</option>
+						</select>
+						<input type="text" class="form-control" name="keyword" value="${pageMaker.cri.keyword}">
+						<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+						<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+						<button type="button" class="btn btn-outline-primary" id="searchBtn"><i class="bi bi-search"></i></button>
+					</form>
+				</div>
+				<div class="card-body">
+					<table class="table table-hover table-striped">
+						<thead>
+							<tr class="table-primary">
+								<th scope="col">번호</th>
+								<th scope="col">글 제목</th>
+								<th scope="col">작성자</th>
+								<th scope="col">작성일</th>
+								<th scope="col">수정일</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${list}" var="board">
+								<tr>
+									<th scope="row">${board.boardNo}</th>
+									<td><a class='move' href='${board.boardNo}'>${board.title} ...  
+										<span class="badge bg-secondary">${board.replyCnt}</span></a></td>
+									<td>${board.writer}</td>
+									<td><fmt:formatDate pattern="yyyy-MM-dd"
+											value="${board.regdate}" /></td>
+									<td><fmt:formatDate pattern="yyyy-MM-dd"
+											value="${board.updateDate}" /></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<div class="pull-right">
+						<form id="actionForm" action="/board/list" method="get">
+							<input type="hidden" name="pageNum" value='${pageMaker.cri.pageNum}'>
+							<input type="hidden" name="amount" value='${pageMaker.cri.amount}'>
+							<input type="hidden" name="type" value="${pageMaker.cri.type}">
+							<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+							<input type="hidden" name="memberId" value="${member.memberId}"> 
+						</form>
+						<div>
+			                <ul class="pagination justify-content-center">
+			                  	<c:if test="${pageMaker.prev}">
+				                  <li class="page-item previous">
+				                    <a class="page-link" href="${pageMaker.startPage - 1}">«</a>
+				                  </li>
+								</c:if>
+								
+								<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+				                  <li class="page-item ${pageMaker.cri.pageNum == num ? 'active' : ''}">
+				                    <a class="page-link" href="${num}">${num}</a>
+				                  </li>
+								</c:forEach>
+								
+								 <c:if test="${pageMaker.next}">
+				                  <li class="page-item next">
+				                    <a class="page-link" href="${pageMaker.endPage + 1}">»</a>
+				                  </li>
+				                </c:if>
+			                </ul>
+			             </div>
+					</div>
+				 		<c:if test="${member.memberId != null}">
+							<button type="button" class="btn btn-primary" id="regBtn">글쓰기</button>
+						</c:if>
+				</div>
+			</div>
+
+        </div>
+    </section>
+</main>
+
+<div class="modal fade" id="verticalycentered" tabindex="-1" style="display: none;" aria-hidden="true">             
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">알림창</h5>
 			</div>
 			<div class="modal-body">
-				<p></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" id="modalCloseBtn" data-dismiss="modal" aria-label="Close">닫기</button>
+				<button type="button" class="btn btn-secondary" id="modalCloseBtn" data-bs-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
 </div>
-<script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 <script>
 	$(function() {
 		var result = '${result}';
@@ -186,5 +180,4 @@
 		});
 	});
 </script>
-</body>
-</html>
+<%@ include file="../footer.jsp" %>

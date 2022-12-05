@@ -67,11 +67,11 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	public void setRating(Long bno) {
-		double ratingAvg = mapper.getRatingAvg(bno);
+		Double ratingAvg = mapper.getRatingAvg(bno);
 		
-//		if(ratingAvg == null) {
-//			ratingAvg = 0.0;
-//		}
+		if(ratingAvg == null) {
+			ratingAvg = 0.0;
+		}
 		
 		// 소수점 첫째 자리까지 표현
 		ratingAvg = (double) (Math.round(ratingAvg * 10));

@@ -7,7 +7,7 @@ import com.project.domain.CartDTO;
 public interface CartService {
 
 	//장바구니 추가
-	public int addCart(CartDTO cart);
+	public int addCart(CartDTO cart, Long bno);
 	
 	//장바구니 리스트
 	public List<CartDTO> getCartList(String memberId);
@@ -18,5 +18,4 @@ public interface CartService {
 	//장바구니 삭제
 	public int deleteCart(Long cartBno);
 	
-
 }

@@ -43,8 +43,9 @@ public class ReplyServiceImpl implements ReplyService {
 	@Override
 	public int remove(Long replyNo) {
 		ReplyVO vo = mapper.read(replyNo);
+		int result = mapper.delete(replyNo);
 		boardMapper.updateReplyCnt(vo.getBoardNo(), -1);
-		return mapper.delete(replyNo);
+		return result;
 	}
 
 	@Override

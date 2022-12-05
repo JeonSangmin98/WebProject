@@ -23,4 +23,5 @@ public interface CartMapper {
 	
 	//회원 카트 전체 삭제
 	public void deleteMemberCart(String memberId);
+	
 }

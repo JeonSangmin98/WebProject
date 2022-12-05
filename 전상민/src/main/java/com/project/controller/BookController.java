@@ -49,8 +49,7 @@ public class BookController {
 	
 	//도서 카테고리
 	@GetMapping("/category")
-	public void categoryListGet(Model model, @RequestParam("category") String category) {
+	public void categoryListGet(Model model, String category) {
 		model.addAttribute("category", service.categoryList(category));
 	}
-
 }

@@ -5,139 +5,176 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
-<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<head>
+ <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<!-- Favicons -->
+  <link href="/resources/assets/img/favicon.png" rel="icon">
+  <link href="/resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/resources/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="/resources/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="/resources/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/resources/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/resources/assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.4.1
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
 <style type="text/css">
 .idTrue {
 	display: none;
 }
-
 .idFalse {
 	display: none;
 }
-
 .finalIdCheck {
 	display: none;
 }
-
 .finalPwCheck {
 	display: none;
 }
-
 .finalPwsCheck {
 	display: none;
 }
-
 .finalNameCheck {
 	display: none;
 }
-
 .finalAddrCheck {
 	display: none;
 }
-
 .finalEmailCheck {
 	display: none;
 }
-
 .inputPwsTrue {
 	display: none;
 }
-
 .inputPwsFalse {
 	display: none;
 }
 </style>
-</head>
 <body>
-	<jsp:include page="../menu.jsp" />
-	<div class="container" style="user-select: auto;">
-		<div class="page-header" id="banner" style="user-select: auto;">
-			<div class="row" style="user-select: auto;">
-				<div class="col-lg-8 col-md-7 col-sm-6" style="user-select: auto;">
-					<h1 style="user-select: auto;">회원가입</h1>
-					<p class="text-info" style="user-select: auto;">회원가입 테스트</p>
-				</div>
-				<div class="col-lg-4 col-md-5 col-sm-6" style="user-select: auto;">
-					<div class="sponsor" style="user-select: auto;"></div>
-				</div>
-			</div>
-		</div>
-	</div>
+  <main>
+    <div class="container">
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
-	<div class="container">
-		<form method="post" class="joinForm" action="/member/join">
-			<div class="form-group" style="user-select: auto;">
-				<label class="form-label mt-4" style="user-select: auto;">아이디</label>
-				<input type="text" class="form-control inputId" placeholder="ID"
-					style="user-select: auto;" name="memberId" oninput="checkId()">
-				<small class="form-text text-success idTrue"
-					style="user-select: auto;">사용 가능한 아이디입니다.</small> <small
-					class="form-text text-danger idFalse" style="user-select: auto;">아이디가
-					이미 존재합니다.</small> <span class="finalIdCheck text-warning">아이디를
-					입력해주세요.</span>
-			</div>
-			<div class="form-group" style="user-select: auto;">
-				<label class="form-label mt-4" style="user-select: auto;">비밀번호</label>
-				<input type="password" class="form-control inputPw"
-					placeholder="Password" style="user-select: auto;" name="memberPw">
-				<span class="finalPwCheck text-warning">비밀번호를 입력해주세요.</span>
-			</div>
-			<div class="form-group" style="user-select: auto;">
-				<label class="form-label mt-4" style="user-select: auto;">비밀번호
-					확인</label> <input type="password" class="form-control inputPws"
-					placeholder="Password confirm" style="user-select: auto;"
-					name="memberPws" oninput="checkPw()"> <span
-					class="finalPwsCheck text-warning">비밀번호 확인을 입력해주세요.</span> <span
-					class="inputPwsTrue text-success">비밀번호가 일치합니다.</span> <span
-					class="inputPwsFalse text-danger">비밀번호가 일치하지 않습니다.</span>
-			</div>
-			<div class="addrWrap" style="user-select: auto;">
-				<label class="form-label mt-4" style="user-select: auto;">주소
-				</label>
-				<div class="addr1">
-					<input class="inputAddr1" style="user-select: auto;"
-						name="memberAddr1" readonly="readonly">
-					<button type="button" onclick="executeDaumAddr()"
-						class="btn btn-primary">주소 찾기</button>
-				</div>
-				<div class="clearfix"></div>
-				<div class="addr2">
-					<input class="form-control inputAddr2" style="user-select: auto;"
-						name="memberAddr2" readonly="readonly">
-				</div>
-				<input class="form-control inputAddr3" style="user-select: auto;"
-					name="memberAddr3" readonly="readonly"> <span
-					class="finalAddrCheck text-warning">상세주소를 입력해주세요.</span>
-			</div>
-			<div class="form-group" style="user-select: auto;">
-				<label class="form-label mt-4" style="user-select: auto;">이름</label>
-				<input type="text" class="form-control inputName" placeholder="이름"
-					style="user-select: auto;" name="memberName"> <span
-					class="finalNameCheck text-warning">이름을 입력해주세요.</span>
-			</div>
-			<div class="form-group" style="user-select: auto;">
-				<label class="form-label mt-4" style="user-select: auto;">이메일
-				</label> <input type="email" class="form-control inputEmail"
-					aria-describedby="emailHelp" placeholder="abc@naver.com"
-					style="user-select: auto;" name="memberMail"> <span
-					class="finalEmailCheck text-warning">이메일을 입력해주세요.</span>
-			</div>
-			<div class="container text-center" style="margin-top: 40px">
-				<input type="button" value="가입하기" class="btn btn-info joinBtn">
-				<input type="reset" value="다시 작성" class="btn btn-warning">
-			</div>
-		</form>
-	</div>
+              <div class="d-flex justify-content-center py-4">
+                <a href="/mainHome" class="logo d-flex align-items-center w-auto">
+                  <img src="/resources/assets/img/logo.png" alt="">
+                  <span class="d-none d-lg-block">Book Store</span>
+                </a>
+              </div><!-- End Logo -->
 
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">회원가입</h5>
+                    <p class="text-center small">회원가입을 위한 정보를 입력해주세요</p>
+                  </div>
 
+                  <form class="row g-3 needs-validation" method="post" class="joinForm" action="/member/join">
+                    <div class="col-12">
+                      <label for="yourName" class="form-label">아이디</label>
+                      <input type="text" class="form-control inputId" placeholder="ID" name="memberId" oninput="checkId()">
+					  <small class="form-text text-success idTrue">사용 가능한 아이디입니다.</small> 
+					  <small class="form-text text-danger idFalse">아이디가 이미 존재합니다.</small> 
+					  <span class="finalIdCheck text-warning">아이디를 입력해주세요.</span>
+                    </div>
+					
+					<div class="col-6">
+                      <label for="yourPassword" class="form-label">비밀번호</label>
+                      <input type="password" class="form-control inputPw" placeholder="Password" name="memberPw">
+					  <span class="finalPwCheck text-warning">비밀번호를 입력해주세요.</span>
+                    </div>
+                    
+                    <div class="col-6">
+                      <label for="yourPassword" class="form-label">비밀번호 확인</label>
+                      <input type="password" class="form-control inputPws" placeholder="Password confirm" name="memberPws" oninput="checkPw()"> 
+					  <span class="finalPwsCheck text-warning">비밀번호 확인을 입력해주세요.</span> 
+					  <span class="inputPwsTrue text-success">비밀번호가 일치합니다.</span> 
+					  <span class="inputPwsFalse text-danger">비밀번호가 일치하지 않습니다.</span>
+                    </div>
+                    
+                    <div class="col-6">
+	                    <label for="yourEmail" class="form-label">주소</label>
+						<input class="form-control inputAddr1" name="memberAddr1" readonly="readonly">
+						<button type="button" onclick="executeDaumAddr()" class="btn btn-primary">주소 찾기</button>
+					</div>
+					<div class="col-12">
+						<input class="form-control inputAddr2" name="memberAddr2" readonly="readonly">
+					</div>
+					<div class="col-12">
+						<input class="form-control inputAddr3" name="memberAddr3" readonly="readonly"> 
+						<span class="finalAddrCheck text-warning">상세주소를 입력해주세요.</span>
+					</div>
+                    <div class="col-12">
+                    	<label for="yourUsername" class="form-label">이름</label>
+                    	<input type="text" class="form-control inputName" placeholder="이름" name="memberName"> 
+						<span class="finalNameCheck text-warning">이름을 입력해주세요.</span>
+                    </div>
+                    <div class="col-12">
+                    	<label for="yourUsername" class="form-label">메일</label>
+                    	<input type="email" class="form-control inputEmail" aria-describedby="emailHelp" placeholder="abc@naver.com" name="memberMail"> 
+						<span class="finalEmailCheck text-warning">이메일을 입력해주세요.</span>
+                    </div>
 
+                    <div class="col-12">
+                      <button class="btn btn-primary w-100 joinBtn" type="submit">회원가입</button>
+                    </div>
+                    <div class="col-12">
+                      <p class="small mb-0">계정을 이미 가지고 계십니까? <a href="/member/login">로그인</a></p>
+                    </div>
+                  </form>
+                </div>
+              </div>
 
+              <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+              </div>
 
-</body>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main><!-- End #main -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!-- <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script> -->
+<!-- Vendor JS Files -->
+<script src="/resources/assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="/resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/resources/assets/vendor/chart.js/chart.min.js"></script>
+<script src="/resources/assets/vendor/echarts/echarts.min.js"></script>
+<script src="/resources/assets/vendor/quill/quill.min.js"></script>
+<script src="/resources/assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="/resources/assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="/resources/assets/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="/resources/assets/js/main.js"></script>
+<script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 	//유효성 검사
 	let idCheck = false; //아이디
@@ -317,4 +354,5 @@
 		}
 	}
 </script>
+</body>
 </html>

@@ -21,4 +21,7 @@ public interface MemberMapper {
 	
 	//회원 정보 삭제
 	public void memberDelete(String memberId);
+	
+	/* 주문자 주소 정보 */
+	public MemberDTO getMemberInfo(String memberId);
 }

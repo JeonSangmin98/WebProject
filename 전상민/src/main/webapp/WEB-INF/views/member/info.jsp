@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>마이페이지</title>
-<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<%@ include file="../menu.jsp"%>
 <style type="text/css">
 .attrBtn {
 	display: none;
@@ -16,106 +11,68 @@
 	display: none;
 }
 </style>
-</head>
-<body>
-	<jsp:include page="../menu.jsp" />
-	<div class="container" style="user-select: auto;">
-		<div class="page-header" id="banner" style="user-select: auto;">
-			<div class="row" style="user-select: auto;">
-				<div class="col-lg-8 col-md-7 col-sm-6" style="user-select: auto;">
-					<h1 style="user-select: auto;">마이페이지</h1>
-					<p class="text-info" style="user-select: auto;">
-						<strong class="text-muted">${info.memberName}</strong>님 회원 정보
-					</p>
+<main id="main" class="main">
+	<div class="pagetitle">
+      <h1>마이페이지</h1>
+    </div>
+	
+	<div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><strong class="text-muted">${info.memberName}</strong>님 회원 정보</h5>
+              <form action="/member/modify" method="post" class="row g-3 modifyForm">
+                <div class="col-md-12">
+                  <label for="inputName5" class="form-label">이름</label>
+                  <input type="text" class="form-control inputName updateMember" value="${info.memberName}" name="memberName" readonly="readonly">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputEmail5" class="form-label">메일</label>
+                  <input type="email" class="form-control  inputEmail updateMember" name="memberMail" value="${info.memberMail}">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputPassword5" class="form-label">비밀번호</label>
+                  <input type="password" class="form-control inputPw updateMember" name="memberPw" value="${info.memberPw}">
+                </div>
+                <div class="col-12">
+                  <label for="inputAddress5" class="form-label">주소</label>
+                  <input type="text" class="form-control inputAddr1 updateMember" name="memberAddr1" value="${info.memberAddr1}" readonly="readonly">
+                  <button type="button" class="btn btn-primary attrBtn" onclick="executeDaumAddr()">주소 찾기</button>
+                </div>
+                <div class="col-12">
+                  <input type="text" class="form-control inputAddr2 updateMember" name="memberAddr2" value="${info.memberAddr2}" readonly="readonly">
+                </div>
+                <div class="col-12">
+                  <input type="text" class="form-control inputAddr3 updateMember" name="memberAddr3" value="${info.memberAddr3}" readonly="readonly">
+                </div>
+                <div class="text-center">
+                 	<input type="button" value="정보 수정" class="btn btn-warning modifyBtn">
+					<input type="button" value="회원 탈퇴" class="btn btn-danger deleteBtn">
+					<input type="button" value="수정 완료" class="btn btn-info updateBtn">
+                </div>
+              </form>
+            </div>
+          </div>
+	
+	<div class="modal fade" id="verticalycentered" tabindex="-1" style="display: none;" aria-hidden="true">             
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">회원 탈퇴</h5>
 				</div>
-				<div class="col-lg-4 col-md-5 col-sm-6" style="user-select: auto;">
-					<div class="sponsor" style="user-select: auto;"></div>
+				<div class="modal-body">
+					<p>정말 회원탈퇴를 하시겠습니까?</p>
 				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="container">
-		<form action="/member/modify" method="post" class="modifyForm">
-			<div class="form-group" style="user-select: auto;">
-				<label class="form-label mt-4" style="user-select: auto;">회원
-					이름</label> <input type="text" class="form-control inputName updateMember"
-					style="user-select: auto;" name="memberName"
-					value="${info.memberName}" readonly="readonly">
-			</div>
-			<div class="form-group" style="user-select: auto;">
-				<label class="form-label mt-4" style="user-select: auto;">회원
-					비밀번호</label> <input type="password"
-					class="form-control inputPw updateMember"
-					style="user-select: auto;" name="memberPw" value="${info.memberPw}">
-			</div>
-			<div class="addrWrap" style="user-select: auto;">
-				<label class="form-label mt-4" style="user-select: auto;">회원
-					주소 </label>
-				<div class="addr1">
-					<input class="inputAddr1 updateMember" style="user-select: auto;"
-						name="memberAddr1" value="${info.memberAddr1}" readonly="readonly">
-					<button type="button" class="btn btn-primary attrBtn"
-						onclick="executeDaumAddr()">주소 찾기</button>
-				</div>
-				<div class="clearfix"></div>
-				<div class="addr2">
-					<input class="form-control inputAddr2 updateMember"
-						style="user-select: auto;" name="memberAddr2"
-						value="${info.memberAddr2}" readonly="readonly">
-				</div>
-				<input class="form-control inputAddr3 updateMember"
-					style="user-select: auto;" name="memberAddr3"
-					value="${info.memberAddr3}" readonly="readonly">
-			</div>
-			<div class="form-group" style="user-select: auto;">
-				<label class="form-label mt-4" style="user-select: auto;">회원
-					이메일 </label> <input type="email"
-					class="form-control inputEmail updateMember"
-					style="user-select: auto;" name="memberMail"
-					value="${info.memberMail}">
-			</div>
-			<div class="container text-center" style="margin-top: 40px">
-				<input type="button" value="정보 수정" class="btn btn-warning modifyBtn">
-				<input type="button" value="회원 탈퇴" class="btn btn-danger deleteBtn">
-				<input type="button" value="수정 완료" class="btn btn-info updateBtn">
-			</div>
-			<input type="hidden" name="memberId" value="${member.memberId}">
-		</form>
-	</div>
-
-	<div class="modal" style="user-select: auto;">
-		<div class="modal-dialog" role="document" style="user-select: auto;">
-			<div class="modal-content" style="user-select: auto;">
-				<div class="modal-header" style="user-select: auto;">
-					<h5 class="modal-title" style="user-select: auto;">회원 탈퇴</h5>
-					<button type="button" class="btn-close" aria-label="Close"
-						style="user-select: auto;">
-						<span aria-hidden="true" style="user-select: auto;"></span>
-					</button>
-				</div>
-				<div class="modal-body" style="user-select: auto;">
-					<p style="user-select: auto;">정말 회원탈퇴를 하시겠습니까?</p>
-				</div>
-				<div class="modal-footer" style="user-select: auto;">
-					<button type="button" class="btn btn-primary realDeleteBtn"
-						style="user-select: auto;">네</button>
-					<button type="button" class="btn btn-secondary closeBtn"
-						style="user-select: auto;">아니요</button>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary realDeleteBtn">네</button>
+					<button type="button" class="btn btn-secondary closeBtn">아니요</button>
 				</div>
 			</div>
 		</div>
 	</div>
-
 	<form action="/member/delete" method="post" class="deleteForm">
 		<input type="hidden" name="memberId" value="${member.memberId}">
 	</form>
-</body>
-
-<script type="text/javascript" src="/resources/js/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</main>
+<script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 	$(".modifyBtn").on("click", function() {
 		/* console.log("click modify"); */
@@ -199,4 +156,4 @@
 		}).open();
 	} //end executeDaumAddr()
 </script>
-</html>
+<%@ include file="../footer.jsp" %>
