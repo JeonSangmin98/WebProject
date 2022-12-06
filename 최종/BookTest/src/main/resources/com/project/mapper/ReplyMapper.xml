@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.ReplyMapper">
+	<insert id="insert">
+		insert into tbl_reply(replyNo, boardNo, reply, replyer)
+		values(seq_reply.nextval, #{boardNo}, #{reply}, #{replyer})
+	</insert>
+
+	<select id="read" resultType="com.project.domain.ReplyVO">
+		select * from tbl_reply where replyNo = #{replyNo}
+	</select>
+
+	<delete id="delete">
+		delete from tbl_reply where replyNo = #{replyNo}
+	</delete>
+
+	<update id="update">
+		update tbl_reply set reply = #{reply},
+		updateDate = sysdate where replyNo = #{replyNo}
+	</update>
+
+	<select id="getListWithPaging"
+		resultType="com.project.domain.ReplyVO">
+ 		<![CDATA[
+		select boardNo, replyNo, reply, replyer, replyDate, updatedate
+		from
+		    (select /*+INDEX(tbl_reply idx_tbl_reply) */ 
+		    rownum rn, boardNo, replyNo, reply, replyer, replyDate, updatedate
+		    from tbl_reply
+		    where boardNo = #{boardNo} 
+		    and replyNo > 0
+		    and rownum <=#{cri.pageNum} * #{cri.amount})
+		where rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
+	</select>
+	<select id="getCountByBoardNo" resultType="int">
+		select count(*) from
+		tbl_reply where boardNo = #{boardNo}
+	</select>
+
+	<delete id="allDeleteReply">
+		delete from tbl_reply
+		where boardNo = #{boardNo}
+	</delete>
+</mapper>

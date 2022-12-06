@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.project.mapper.ReviewMapper">
+ 	<insert id="insert">
+ 		insert into tbl_review(reviewNo, bno, review, reviewer, rating)
+ 		values(seq_review.nextval, #{bno}, #{review}, #{reviewer}, #{rating})
+ 	</insert>
+ 	
+ 	<select id="read" resultType="com.project.domain.ReviewVO">
+ 		select * from tbl_review where reviewNo = #{reviewNo}
+ 	</select>
+ 	
+ 	<delete id="delete">
+ 		delete from tbl_review where reviewNo = #{reviewNo}
+ 	</delete>
+ 	
+ 	<update id="update">
+ 		update tbl_review set review = #{review}, 
+ 		updateDate = sysdate, rating = #{rating} where reviewNo = #{reviewNo}
+ 	</update>
+ 	
+ 	<select id="getListWithPaging" resultType="com.project.domain.ReviewVO">
+ 		<![CDATA[
+		select bno, reviewNo, review, reviewer, reviewDate, updatedate, rating
+		from
+		    (select /*+INDEX(tbl_review idx_tbl_review) */ 
+		    rownum rn, bno, reviewNo, review, reviewer, reviewDate, updatedate, rating
+		    from tbl_review
+		    where bno = #{bno} 
+		    and reviewNo > 0
+		    and rownum <=#{cri.pageNum} * #{cri.amount})
+		where rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
+ 	</select>
+ 	
+ 	<select id="getCountByBno" resultType="int">
+		select count(*) from tbl_review where bno = #{bno} 
+	</select>
+	
+	<!-- 별점 평균 -->
+	<select id="getRatingAvg" resultType="double">
+		select avg(rating) from tbl_review where bno = #{bno}
+	</select>
+	
+	<!-- 평균 별점 업데이트 -->
+	<update id="updateRating">
+		update tbl_book set ratingAvg = #{ratingAvg} where bno = #{bno}
+	</update>
+ </mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.MemberMapper">
+	<!-- 회원가입 -->
+	<insert id="memberJoin">
+		insert into tbl_member
+		values
+		(#{memberId},
+		#{memberPw}, #{memberName}, #{memberMail},
+		#{memberAddr1},
+		#{memberAddr2}, #{memberAddr3}, sysdate, 5000)
+	</insert>
+
+	<!-- 아이디 중복 검사 -->
+	<select id="idCheck" resultType="int">
+		select count(memberId)
+		from
+		tbl_member
+		where memberId = #{memberId}
+	</select>
+
+	<!-- 로그인 -->
+	<select id="memberLogin"
+		resultType="com.project.domain.MemberDTO">
+		select memberId, memberPw, memberName, point
+		from tbl_member
+		where
+		memberId = #{memberId}
+	</select>
+	<!-- select memberId, memberName from tbl_member where memberId = #{memberId} 
+		and memberPw = #{memberPw} -->
+
+	<!-- 회원 정보 -->
+	<select id="memberInfo"
+		resultType="com.project.domain.MemberDTO">
+		select * from tbl_member
+		where memberId = #{memberId}
+	</select>
+
+	<!-- 회원 정보 수정 -->
+	<update id="memberModify">
+		update tbl_member
+		set
+		memberName = #{memberName},
+		memberPw = #{memberPw},
+		memberAddr1 = #{memberAddr1},
+		memberAddr2 =
+		#{memberAddr2},
+		memberAddr3 = #{memberAddr3},
+		memberMail = #{memberMail}
+		where memberId = #{memberId}
+	</update>
+
+	<!-- 회원 정보 삭제 -->
+	<delete id="memberDelete">
+		delete from tbl_member
+		where memberId = #{memberId}
+	</delete>
+
+	<!-- 주문자 정보 -->
+	<select id="getMemberInfo"
+		resultType="com.project.domain.MemberDTO">
+		select memberId, memberName, memberMail, memberAddr1, memberAddr2,
+		memberAddr3, point
+		from tbl_member
+		where memberId = #{memberId}
+	</select>
+</mapper>
