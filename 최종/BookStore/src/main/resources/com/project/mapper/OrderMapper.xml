@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.project.mapper.OrderMapper">
+  	<!-- 주문 상품 정보 -->
+  	<select id="getGoodsInfo" resultType="com.project.domain.OrderPageItemDTO">
+  		
+  		select bno, title, Price, Discount, image
+  		from tbl_book 
+  		where bno = #{bno}
+  		
+  	</select>
+  	
+  	<select id="getOrderInfo" resultType="com.project.domain.OrderItemDTO">
+  	
+  		select bno, price, discount
+  		from tbl_book where bno = #{bno}
+  	
+  	</select>
+  	
+  	<!-- 주문 테이블 등록 -->
+  	<insert id="enrollOrder">
+  		
+  		insert into tbl_order(orderId, addressee, memberId, memberAddr1, memberAddr2, memberAddr3, orderState, deliveryCost, usePoint)
+  		values(#{orderId},#{addressee}, #{memberId}, #{memberAddr1}, #{memberAddr2}, #{memberAddr3}, '배송준비', #{deliveryCost}, #{usePoint})
+  		
+  	</insert>
+  	
+  	<!-- 주문 아이템 테이블 등록 -->
+	<insert id="enrollOrderItem">
+	
+		insert into tbl_orderItem(orderitemId, orderId, bookBno, orderCount, bookPrice, bookDiscount, savePoint)
+		values(seq_orderItem.nextval, #{orderId}, #{bno}, #{bookCount}, #{price}, #{discount}, #{savePoint})
+	
+	</insert>
+	
+	<!-- 포인트 차감 -->
+	<update id="deductPoint">
+	
+		update tbl_member set point = #{point} where memberid = #{memberId}
+		
+	</update>
+	
+	<!-- 주문 재고 차감 -->
+	<update id="deductStock">
+	
+		update tbl_book set bookCount = #{bookCount} where bno = #{bno}
+	
+	</update>
+	
+	 <delete id="deleteOrderCart">
+	
+		delete from tbl_cart where memberId = #{memberId} and bno = #{bno}
+	
+	</delete>
+	
+	<select id="checkCartInfo" resultType="com.project.domain.OrderPageItemDTO">
+		select cartbno
+		from tbl_cart
+		where memberId = #{memberId} and bno= {#bno}
+	</select>
+  </mapper>
