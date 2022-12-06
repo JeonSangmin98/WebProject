@@ -130,15 +130,6 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="/order/list">
-                <i class="bi bi-box-seam"></i>
-                <span>주문 / 배송</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
 			 <li>
               <a class="dropdown-item d-flex align-items-center logoutBtn">
                 <i class="bi bi-box-arrow-right"></i>
@@ -223,12 +214,6 @@
 	      <a class="nav-link collapsed" href="/cart/list/${member.memberId}">
 	        <i class="bi bi-bag-check"></i>
 	        <span>장바구니</span>
-	      </a>
-	    </li>
-	    <li class="nav-item">
-	      <a class="nav-link collapsed" href="/order/list">
-	        <i class="bi bi-box-seam"></i>
-	        <span>주문 / 배송</span>
 	      </a>
 	    </li>
 	    <li class="nav-item">
