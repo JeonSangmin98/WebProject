@@ -74,7 +74,7 @@ public class OrderServiceImpl implements OrderService{
 		/*DB 주문,주문상품(,배송정보) 넣기*/
 		/* orderId만들기 및 OrderDTO객체 orderId에 저장 */
 		Date date = new Date();
-		SimpleDateFormat format = new SimpleDateFormat("_yyyyMMddmm");
+		SimpleDateFormat format = new SimpleDateFormat("_yyMMddHHmmss");
 		String orderId = member.getMemberId() + format.format(date);
 		ord.setOrderId(orderId);
 		

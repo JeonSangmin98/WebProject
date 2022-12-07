@@ -79,7 +79,7 @@ th, td {
 													<i class="bi bi-dash-lg"></i>
 												</button>
 												<input type="number" class="form-control countValue"
-													value="${cart.cartCount}" name="cartCount" min="1">
+													value="${cart.cartCount}" name="cartCount" min="1" max="${cart.bookCount}" data-bookCount="${cart.bookCount}">
 												<button class="btn btn-outline-primary plusBtn"
 													type="button">
 													<i class="bi bi-plus-lg"></i>
@@ -139,12 +139,23 @@ th, td {
 		</div>
 	</section>
 </main>
-<%@ include file="../footer.jsp"%>
 <script type="text/javascript">
+
+
+
+
 	//장바구니 수량 조절 +
+	let bookCount = $(".countValue").data("bookcount");
+	
 	$(".plusBtn").on("click", function() {
 		let countValue = $(this).parent("div").find("input").val();
-		$(this).parent("div").find("input").val(++countValue);
+		console.log(countValue);
+		console.log(bookCount);
+		if(bookCount > countValue){
+			$(this).parent("div").find("input").val(++countValue);
+		}else{
+			$(".plusBtn").off("click");
+		}
 	});
 	//장바구니 수량 조절 -
 	$(".minusBtn").on("click", function() {
@@ -254,6 +265,7 @@ th, td {
 												}
 											});
 							$(".orderForm").html(form_contents);
+							console.log(form_contents);
 							$(".orderForm").submit();
 						}
 					});

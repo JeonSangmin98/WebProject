@@ -39,7 +39,7 @@
 				<div class="col-md-6">
 					<label for="inputEmail5" class="form-label">메일</label> <input
 						type="email" class="form-control  inputEmail updateMember"
-						name="memberMail" value="${info.memberMail}">
+						name="memberMail" value="${info.memberMail}" readonly="readonly">
 				</div>
 				<div class="col-md-6 updatePassword">
 					<label for="inputPassword5" class="form-label">비밀번호</label> <input
@@ -68,6 +68,7 @@
 						value="회원 탈퇴" class="btn btn-danger deleteBtn"> <input
 						type="button" value="수정 완료" class="btn btn-info updateBtn">
 				</div>
+				<input type="hidden" name="memberId" value="${member.memberId}">
 			</form>
 		</div>
 	</div>

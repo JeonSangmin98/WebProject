@@ -88,7 +88,7 @@
                     <p class="text-center small">회원가입을 위한 정보를 입력해주세요</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" method="post" class="joinForm" action="/member/join">
+                  <form class="row g-3 needs-validation joinForm" method="post" action="/member/join">
                     <div class="col-12">
                       <label for="yourName" class="form-label">아이디</label>
                       <input type="text" class="form-control inputId" placeholder="ID" name="memberId" oninput="checkId()">
@@ -135,7 +135,8 @@
                     </div>
 
                     <div class="col-12">
-                      <button class="btn btn-primary w-100 joinBtn" type="submit">회원가입</button>
+                      <!-- <button class="btn btn-primary w-100 joinBtn" type="submit">회원가입</button> -->
+                      <input type="button" value="회원가입" class="btn btn-primary w-100 joinBtn">
                     </div>
                     <div class="col-12">
                       <p class="small mb-0">계정을 이미 가지고 계십니까? <a href="/member/login">로그인</a></p>
@@ -189,6 +190,7 @@
 	
 	$(".joinBtn").click(
 			function() {
+				console.log("test");
 				let id = $(".inputId").val(); //id 입력 값
 				let pw = $(".inputPw").val(); //pw 입력 값
 				let pws = $(".inputPws").val(); //pw 확인 입력 값
@@ -247,6 +249,7 @@
 				//최종 유효성 검사 모든값이 true이면 submit 
 				if (idCheck && idsCheck && pwCheck && pwsCheck && pwscheckCheck
 						&& addrCheck && emailCheck && nameCheck) {
+					
 					$(".joinForm").submit();
 				}
 				

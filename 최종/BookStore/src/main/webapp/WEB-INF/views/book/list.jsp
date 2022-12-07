@@ -49,6 +49,11 @@
 	<form action="/book/list" class="actionForm">
 		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 		<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+		<!-- <input type="hidden" name="bno" class="hiddenBno"> -->
+	</form>
+	
+	<!-- 상세 페이지 -->
+	<form action="/book/get" class="getForm">
 		<input type="hidden" name="bno" class="hiddenBno">
 	</form>
 </main>
@@ -65,11 +70,9 @@
 
 	$(".move").on("click",	function(e) {
 		e.preventDefault();
-		/* actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>"); */
 		let bno = $(this).attr("href");
 		$(".hiddenBno").val(bno);
-		actionForm.attr("action", "/book/get");
-		actionForm.submit();
+		$(".getForm").submit();
 	});
 </script>
 <%@ include file="../footer.jsp" %>

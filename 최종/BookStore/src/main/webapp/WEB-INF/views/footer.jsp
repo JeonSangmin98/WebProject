@@ -1,6 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <footer id="footer" class="footer">
     <div class="copyright">
-      © Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+      Â© Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->

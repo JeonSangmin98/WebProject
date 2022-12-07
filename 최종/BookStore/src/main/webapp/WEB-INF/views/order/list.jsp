@@ -339,9 +339,9 @@ th, td {
 
 		/* 버튼 색상 변경 */
 		/* 모든 색상 동일 */
-		$(".address_btn").css('backgroundColor', '#CF8083');
+		$(".address_btn").css('backgroundColor', '#5C636A');
 		/* 지정 색상 변경 */
-		$(".address_btn_" + className).css('backgroundColor', '#66A593');
+		$(".address_btn_" + className).css('backgroundColor', '#0B5ED7');
 		/* selectAddress T/F */
 		/* 모든 selectAddress F만들기 */
 		$(".addressInfo_input_div").each(function(i, obj) {
